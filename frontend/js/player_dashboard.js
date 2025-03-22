@@ -6,7 +6,7 @@ firebase.auth().onAuthStateChanged((user) => {
   });
   
 function loadSharedUI() {
-    fetch('../components/header.html')
+    fetch('/components/header.html')
       .then(res => res.text())
       .then(data => {
         document.getElementById('header-container').innerHTML = data;
@@ -18,7 +18,7 @@ function loadSharedUI() {
         };
       });
   
-    fetch('../components/footer.html')
+    fetch('/components/footer.html')
       .then(res => res.text())
       .then(data => {
         document.getElementById('footer-container').innerHTML = data;
@@ -30,7 +30,7 @@ function loadSharedUI() {
   function logout() {
     firebase.auth().signOut()
       .then(() => {
-        window.location.href = "../index.html";
+        window.location.href = "/index.html";
       })
       .catch((error) => {
         console.error("Logout error:", error);
