@@ -2,9 +2,6 @@ const isHosted = window.location.hostname.includes("netlify.app");
 const basePath = isHosted ? '/components/' : '../components/';
 const loginPath = isHosted ? '/index.html' : '../index.html';
 
-// Hide body by default until auth check passes
-// document.body.style.display = "none";
-
 firebase.auth().onAuthStateChanged((user) => {
   if (!user) {
     window.location.replace(loginPath);

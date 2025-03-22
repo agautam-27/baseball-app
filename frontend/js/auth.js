@@ -163,9 +163,9 @@ loginForm.addEventListener('submit', (e) => {
 
         // ✅ Redirect based on role
         if (userData.role === 'coach') {
-          window.location.href = "pages/coach_dashboard.html";
+          window.location.href = "pages/coachDashboard.html";
         } else {
-          window.location.href = "pages/player_dashboard.html";
+          window.location.href = "pages/playerDashboard.html";
         }
       }
     } else {
