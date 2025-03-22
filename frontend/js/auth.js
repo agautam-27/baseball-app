@@ -174,7 +174,14 @@ loginForm.addEventListener('submit', (e) => {
 });
 
 document.getElementById('back-to-role').addEventListener('click', () => {
-    document.getElementById('form-container').style.display = 'none';
-    document.getElementById('role-select').style.display = 'block';
-  });
-  
+  // Hide both forms
+  document.getElementById('signup-form').style.display = 'none';
+  document.getElementById('login-form').style.display = 'none';
+
+  // Hide form container and show role buttons
+  document.getElementById('form-container').style.display = 'none';
+  document.getElementById('role-select').style.display = 'block';
+
+  // Reset selectedRole so user has to choose again
+  selectedRole = null;
+});
