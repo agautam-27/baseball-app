@@ -110,19 +110,23 @@ signupForm.addEventListener('submit', (e) => {
       .then(() => {
         authMessage.textContent = `✅ Signed up successfully as ${selectedRole}`;
         signupForm.reset();
-  
+      
         setTimeout(() => {
-            authMessage.textContent = "";
-            signupForm.style.display = "none";
-            loginForm.style.display = "block";
-            
-            // Show coach ID input in login only if role is coach
-            if (selectedRole === 'coach') {
-              document.getElementById('coach-id-wrapper').style.display = 'none';
-            }
-          }, 2000);
-          
+          authMessage.textContent = "";
+      
+          // Swap views
+          signupForm.style.display = "none";
+          loginForm.style.display = "block";
+      
+          // Ensure role stays selected and login screen is clean
+          formContainer.style.display = "block";
+          roleSelect.style.display = "none";
+      
+          // Hide coach ID on login view
+          document.getElementById('coach-id-wrapper').style.display = "none";
+        }, 1500);
       })
+      
       .catch((error) => {
         authMessage.textContent = `❌ ${error.message}`;
       });
