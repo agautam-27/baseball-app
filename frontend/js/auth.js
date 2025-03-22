@@ -173,15 +173,12 @@ loginForm.addEventListener('submit', (e) => {
     });
 });
 
-document.getElementById('back-to-role').addEventListener('click', () => {
-  // Hide both forms
-  document.getElementById('signup-form').style.display = 'none';
-  document.getElementById('login-form').style.display = 'none';
-
-  // Hide form container and show role buttons
-  document.getElementById('form-container').style.display = 'none';
-  document.getElementById('role-select').style.display = 'block';
-
-  // Reset selectedRole so user has to choose again
-  selectedRole = null;
+document.querySelectorAll('.back-to-role').forEach(btn => {
+  btn.addEventListener('click', () => {
+    signupForm.style.display = 'none';
+    loginForm.style.display = 'none';
+    formContainer.style.display = 'none';
+    roleSelect.style.display = 'block';
+    selectedRole = null;
+  });
 });
