@@ -1,0 +1,109 @@
+/* Default body style (for login/signup) */
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Pages that have fixed header and footer (dashboard pages) */
+body.with-header-footer {
+  padding-top: 60px;
+  padding-bottom: 70px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.container {
+  max-width: 400px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+button {
+  padding: 10px 15px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.role-btn {
+  width: 45%;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.form-toggle button {
+  width: 48%;
+  background-color: #eee;
+  border: none;
+  border-radius: 6px;
+}
+
+.form-container {
+  max-width: 360px;
+  margin: 0 auto;
+  background: white;
+  padding: 30px 24px;
+  border-radius: 16px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.form-container h2 {
+  margin-bottom: 24px;
+  font-size: 1.4rem;
+}
+
+.form-container h3 {
+  margin-top: 0;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.form-container label {
+  display: block;
+  text-align: left;
+  margin: 10px 0 4px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+.form-container button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 1rem;
+  background-color: #1f2937;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.form-toggle-link {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: #007bff;
+  cursor: pointer;
+}

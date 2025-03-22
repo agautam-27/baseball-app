@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baseball App - Login</title>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome to Baseball App</h2>
+
+    <!-- Role Selection -->
+    <div id="role-select">
+      <button class="role-btn" data-role="player">Continue as Player</button>
+      <button class="role-btn" data-role="coach">Continue as Coach</button>
+    </div>
+
+    <!-- Auth Forms -->
+    <div class="form-container" id="form-container" style="display: none;">
+      <form id="signup-form">
+        <label>Name</label>
+        <input type="text" id="signup-name" required />
+        
+        <label>Email</label>
+        <input type="email" id="signup-email" required />
+        
+        <label>Password</label>
+        <input type="password" id="signup-password" required />
+        
+        <!-- ✅ Coach ID wrapper (clean version) -->
+        <div id="coach-id-wrapper" style="display: none;">
+          <label for="coach-id">Coach ID</label>
+          <input type="text" id="coach-id" />
+        </div>
+        
+        <button type="submit">Sign Up</button>
+        <p class="form-toggle-link" id="show-login">Already have an account? Log in</p>
+        <p class="form-toggle-link" id="back-to-role">⬅️ Back to role selection</p>
+        
+      </form>
+
+      <form id="login-form" style="display:none;">
+        <label>Email</label>
+        <input type="email" id="login-email" required />
+
+        <label>Password</label>
+        <input type="password" id="login-password" required />
+
+        <button type="submit">Login</button>
+        <p class="form-toggle-link" id="show-signup">Don't have an account? Sign up</p>
+        <p class="form-toggle-link" id="back-to-role">⬅️ Back to role selection</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <!-- Config & Auth Logic -->
+  <script src="../backend/firebase/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
