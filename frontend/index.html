@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Baseball App - Login</title>
   <link rel="stylesheet" href="styles/style.css">
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/icons/AppLogo.png" />
+  <meta name="theme-color" content="#1f2937" />
+  
+
 </head>
 <body>
   <div class="container">
@@ -63,5 +68,19 @@
   <!-- Config & Auth Logic -->
   <script src="../backend/firebase/firebase-config.js"></script>
   <script src="js/auth.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(function (registration) {
+            console.log('✅ Service Worker registered with scope:', registration.scope);
+          }, function (err) {
+            console.log('❌ Service Worker registration failed:', err);
+          });
+      });
+    }
+  </script>
+  
 </body>
 </html>
