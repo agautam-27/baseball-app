@@ -2,23 +2,12 @@ const isHosted = window.location.hostname.includes("netlify.app");
 const basePath = isHosted ? '/components/' : '../components/';
 const loginPath = isHosted ? '/index.html' : '../index.html';
 
-function waitForFirebaseAuthReady() {
-  return new Promise((resolve) => {
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-      unsubscribe(); // ensure this only fires once
-      resolve(user); // return user once Firebase is ready
-    });
-  });
-}
-
-waitForFirebaseAuthReady().then((user) => {
-  if (user) {
-    console.log("Authenticated:", user.email);
-  } else {
-    console.log("No user, redirecting to login...");
-    window.location.href = loginPath;
+firebase.auth().onAuthStateChanged((user) => {
+  if (!user) {
+    window.location.replace("../index.html");
   }
 });
+
 
 
 function loadSharedUI() {
@@ -46,7 +35,8 @@ loadSharedUI();
 function logout() {
   firebase.auth().signOut()
     .then(() => {
-      window.location.href = loginPath;
+      // Use replace() so the dashboard page isn’t in history
+      window.location.replace("../index.html"); 
     })
     .catch((error) => {
       console.error("Logout error:", error);
