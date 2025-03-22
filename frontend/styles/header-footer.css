@@ -1,7 +1,6 @@
 body {
-  display: none; /* Hide everything initially */
+  display: none;
 }
-
 /* --- HEADER --- */
 .app-header {
     background-color: white;
