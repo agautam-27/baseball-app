@@ -4,11 +4,11 @@ const loginPath = isHosted ? '/index.html' : '../index.html';
 
 firebase.auth().onAuthStateChanged((user) => {
   if (!user) {
-    window.location.replace("../index.html");
+    window.location.replace(loginPath);
+  } else {
+    document.body.style.display = "block";
   }
 });
-
-
 
 function loadSharedUI() {
   fetch(basePath + 'header.html')
@@ -35,10 +35,8 @@ loadSharedUI();
 function logout() {
   firebase.auth().signOut()
     .then(() => {
-      // Use replace() so the dashboard page isn’t in history
-      window.location.replace("../index.html"); 
+      window.location.replace(loginPath); 
     })
     .catch((error) => {
-      console.error("Logout error:", error);
     });
 }
