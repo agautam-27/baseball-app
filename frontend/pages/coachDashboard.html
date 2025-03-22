@@ -3,30 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Player Dashboard</title>
+  <title>Coach Dashboard</title>
   <link rel="stylesheet" href="../styles/style.css" />
   <link rel="stylesheet" href="../styles/header-footer.css" />
-  
+
 </head>
-<style>
-
-</style>
-<body class="with-header-footer fade-in">
-  
+<body class="with-header-footer">
     <div id="header-container"></div>
+  <h2>Welcome, Coach!</h2>
+  <p>This is your dashboard. You’ll be able to manage tryouts here.</p>
 
-    <main id="player-content">
-      <h2>Welcome, Player!</h2>
-      <p>This is your performance dashboard. You’ll see your tryout stats here.</p>
-    </main>
-  
-    <div id="footer-container"></div>
+  <!-- Placeholder for tryout sessions, stats, etc. -->
+  <div id="coach-content">
+    <!-- Will populate later -->
+  </div>
+  <div id="footer-container"></div>
 
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   <script src="../js/firebase-config.js"></script>
-  <script src="../js/authGuard.js"></script>
-  <!-- <script src="../js/player_dashboard.js"></script> -->
+  <script src="../js/authGuard.js"></script>  
 </body>
 </html>

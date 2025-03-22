@@ -1,0 +1,122 @@
+/* Container */
+#base-running-content {
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+  }
+  
+  /* Title */
+  #base-running-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+  }
+  
+  /* Attempt Card */
+  .attempt-card {
+    background-color: #f0f0f0;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  
+  /* Timer Row */
+  .timer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .timer-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .remove-btn {
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    color: red;
+    cursor: pointer;
+  }
+  
+  /* Dropdown */
+  .attempt-card select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  /* Start/Stop Button */
+  .timer-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    background-color: #6a1b9a;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  
+  .timer-btn:hover {
+    background-color: #4a148c;
+  }
+  
+  /* Add New Attempt Button */
+  #add-attempt-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    background-color: #6200ee;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    cursor: pointer;
+  }
+  
+  #add-attempt-btn:hover {
+    background-color: #4500c3;
+  }
+  
+  /* Notes */
+  .notes-label {
+    font-size: 1rem;
+    margin-bottom: 6px;
+    font-weight: bold;
+  }
+  
+  #notes-input {
+    width: 95%;
+    height: 80px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    resize: vertical;
+    margin-bottom: 20px;
+  }
+  
+  /* Save Button */
+  #save-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  #save-btn:hover {
+    background-color: darkgreen;
+  }
+  
