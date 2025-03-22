@@ -11,3 +11,12 @@ self.addEventListener('install', (event) => {
     // No offline support – everything goes to the network
   });
   
+
+  self.addEventListener('install', (e) => {
+    self.skipWaiting(); // 🚀 Forces the new service worker to activate immediately
+  });
+  
+  self.addEventListener('activate', (e) => {
+    clients.claim(); // 🚀 Takes control of all pages
+  });
+  
