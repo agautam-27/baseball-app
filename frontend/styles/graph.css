@@ -1,0 +1,13 @@
+#chartContainer {
+    width: 70%;  /* Make it narrower */
+    height: 400px;
+    max-height: 400px;
+    position: relative;
+    margin: auto; /* Center it */
+}
+
+
+canvas {
+    width: 90%;
+    height: 100%;
+}

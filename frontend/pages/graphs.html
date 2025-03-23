@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stats Graphs</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="stylesheet" href="../styles/header-footer.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="with-header-footer">
+    <div id="header-container"></div>
+
+    <button onclick="initializeChart()">Retry</button>
+
+    <div id="chartContainer">
+        <h1>Stats Graph</h1>
+        <canvas id="statsChart" style="border:1px solid #000000;"></canvas>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div id="footer-container"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/authGuard.js"></script>
+    <script src="../js/graphs.js"></script>
+</body>
+
+</html>
