@@ -13,13 +13,14 @@
   }
   
   /* Attempt Card */
-  .attempt-card {
-    background-color: #f0f0f0;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
+.attempt-card {
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: relative; /* Allow absolute positioning for delete button */
+}
   
   /* Result Row */
   .result-row {
@@ -34,13 +35,17 @@
     font-weight: bold;
   }
   
-  .remove-btn {
-    background: none;
-    border: none;
-    font-size: 1.3rem;
-    color: red;
-    cursor: pointer;
-  }
+  /* Delete button  */
+.remove-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: red;
+  cursor: pointer;
+  position: absolute; /* Position the button absolutely */
+  top: 10px; /* Position from the top */
+  right: 10px; /* Position from the right */
+}
   
   /* Dropdown */
   .attempt-card select {
@@ -52,21 +57,14 @@
     font-size: 1rem;
   }
   
-  /* Start/Stop Button */
-  .timer-btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-    background-color: #6a1b9a;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-  }
-  
-  .timer-btn:hover {
-    background-color: #4a148c;
-  }
+  /* Dropdown labels */
+.attempt-card label {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  font-weight: bold;
+  display: block; /* Make labels block elements for better alignment */
+  margin-top: 12px;
+}
   
   /* Add New Attempt Button */
   #add-attempt-btn {
