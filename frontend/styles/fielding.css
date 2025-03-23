@@ -1,0 +1,144 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 20px;
+}
+
+.container {
+    max-width: 400px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Title */
+h1 {
+    font-size: 24px;
+    text-align: center;
+}
+
+/* Back button positioned inside the container on the left */
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    padding: 5px 10px;
+}
+
+/* Player info section */
+.player-info {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.player-info label {
+    display: block;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.player-info input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Catch Type Dropdown inside attempts */
+.catch-type select {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button styling */
+.add-row, .save-btn {
+    background-color: #6c63ff;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.notes-section {
+    margin-top: 10px;
+}
+
+textarea {
+    width: 100%;
+    height: 60px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.save-btn {
+    background-color: #28a745;
+}
+
+.attempt-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f1f1f1;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 5px;
+    gap: 10px;
+}
+
+/* Dropdown should be styled well inside the attempt rows */
+.attempt-row .catch-type select {
+    flex-grow: 1;
+}
+
+.delete-btn {
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
+    background: none;  /* Remove background */
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+/* Extra spacing for label and dropdown container */
+.catch-type-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* space between "Catch Type" label and the dropdown */
+  }
+  
+  /* Optional: style for the "Catch Type:" label */
+  .catch-type-label {
+    font-weight: bold;
+  }
+  
+  /* Spacing between radio buttons */
+  .radio-group label {
+    margin-right: 15px;
+  }
+  
+  /* If you want the attempt-row items to be on separate lines or spaced more vertically */
+  .attempt-row {
+    display: flex;
+    flex-wrap: wrap; /* allows wrapping on smaller screens */
+    align-items: center;
+    gap: 10px; /* space between each element in the row */
+    background: #f1f1f1;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 5px;
+  }
+  
