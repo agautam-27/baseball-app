@@ -1,101 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Pitching Performance</title>
-  <link rel="stylesheet" href="../styles/style.css" />
-  <link rel="stylesheet" href="../styles/header-footer.css" />
-  <link rel="stylesheet" href="../styles/pitching.css" />
-</head>
-<body class="with-header-footer">
-  <div id="header-container"></div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Pitching Performance</title>
+        <link rel="stylesheet" href="../styles/style.css" />
+        <link rel="stylesheet" href="../styles/header-footer.css" />
+        <link rel="stylesheet" href="../styles/pitching.css" />
+    </head>
+    <body class="with-header-footer">
+        <div id="header-container"></div>
 
-  <main id="pitching-content" class="p-4">
-    <h2 class="text-center">Pitching Evaluation</h2>
+        <main id="pitching-content" class="p-4">
+            <h2 class="text-center compact-title">Pitching Evaluation</h2>
 
-    <div id="pitches-container">
-      <!-- Pitches will be injected here by JS -->
-    </div>
-
-    <button id="add-pitch-btn" class="btn">+ Add Pitch</button>
-
-    <label for="notes" class="block mt-4">Notes:</label>
-    <textarea id="notes" rows="4" placeholder="Enter notes..." class="w-full mt-1"></textarea>
-
-    <button id="save-btn" class="btn mt-4">Save All</button>
-  </main>
-
-  <!-- Zone Matrix Modal -->
-  <div id="zone-modal" class="modal">
-    <div class="modal-content">
-      <div class="zone-matrix-container">
-        <h3 class="zone-matrix-title">Pitching Zones</h3>
-        
-        <div class="outer-container">
-          <!-- Top section with zones 11, 12 -->
-          <div class="top-row">
-            <div class="zone-11" onclick="selectZone(11)">11</div>
-            <div class="zone-12" onclick="selectZone(12)">12</div>
-          </div>
-
-          <!-- Middle section -->
-          <div class="middle-section">
-            <!-- Left side area - extended zones 11 and 13 -->
-            <div class="left-column">
-              <div class="left-top" onclick="selectZone(11)"></div>
-              <div class="left-bottom" onclick="selectZone(13)"></div>
+            <div id="pitches-container">
+                <!-- Pitches will be injected here by JS -->
             </div>
 
-            <!-- Central 3x3 matrix -->
-            <div class="matrix-3x3">
-              <!-- Row 1 -->
-              <div class="zone-row">
-                <div class="zone" onclick="selectZone(1)">1</div>
-                <div class="zone" onclick="selectZone(2)">2</div>
-                <div class="zone" onclick="selectZone(3)">3</div>
-              </div>
-              <!-- Row 2 -->
-              <div class="zone-row">
-                <div class="zone" onclick="selectZone(4)">4</div>
-                <div class="zone" onclick="selectZone(5)">5</div>
-                <div class="zone" onclick="selectZone(6)">6</div>
-              </div>
-              <!-- Row 3 -->
-              <div class="zone-row">
-                <div class="zone" onclick="selectZone(7)">7</div>
-                <div class="zone" onclick="selectZone(8)">8</div>
-                <div class="zone" onclick="selectZone(9)">9</div>
-              </div>
-            </div>
+            <button id="add-pitch-btn" class="btn">+ Add Pitch</button>
 
-            <!-- Right side area - extended zones 12 and 14 -->
-            <div class="right-column">
-              <div class="right-top" onclick="selectZone(12)"></div>
-              <div class="right-bottom" onclick="selectZone(14)"></div>
-            </div>
-          </div>
+            <label for="notes" class="block mt-4">Notes:</label>
+            <textarea
+                id="notes"
+                rows="4"
+                placeholder="Enter notes..."
+                class="w-full mt-1"
+            ></textarea>
 
-          <!-- Bottom section with zones 13, 14 -->
-          <div class="bottom-row">
-            <div class="zone-13" onclick="selectZone(13)">13</div>
-            <div class="zone-14" onclick="selectZone(14)">14</div>
-          </div>
+            <button id="save-btn" class="btn mt-4">Save All</button>
+        </main>
+
+        <!-- Zone Matrix Modal -->
+        <div id="zone-modal" class="modal">
+            <div class="modal-content">
+                <div class="zone-matrix-container">
+                    <h3 class="zone-matrix-title">Pitching Zones</h3>
+
+                    <div class="outer-container">
+                        <!-- Top section with zones 11, 12 -->
+                        <div class="top-row">
+                            <div class="zone-11" onclick="selectZone(11)">
+                                11
+                            </div>
+                            <div class="zone-12" onclick="selectZone(12)">
+                                12
+                            </div>
+                        </div>
+
+                        <!-- Middle section -->
+                        <div class="middle-section">
+                            <!-- Left side area - extended zones 11 and 13 -->
+                            <div class="left-column">
+                                <div
+                                    class="left-top"
+                                    onclick="selectZone(11)"
+                                ></div>
+                                <div
+                                    class="left-bottom"
+                                    onclick="selectZone(13)"
+                                ></div>
+                            </div>
+
+                            <!-- Central 3x3 matrix -->
+                            <div class="matrix-3x3">
+                                <!-- Row 1 -->
+                                <div class="zone-row">
+                                    <div class="zone" onclick="selectZone(1)">
+                                        1
+                                    </div>
+                                    <div class="zone" onclick="selectZone(2)">
+                                        2
+                                    </div>
+                                    <div class="zone" onclick="selectZone(3)">
+                                        3
+                                    </div>
+                                </div>
+                                <!-- Row 2 -->
+                                <div class="zone-row">
+                                    <div class="zone" onclick="selectZone(4)">
+                                        4
+                                    </div>
+                                    <div class="zone" onclick="selectZone(5)">
+                                        5
+                                    </div>
+                                    <div class="zone" onclick="selectZone(6)">
+                                        6
+                                    </div>
+                                </div>
+                                <!-- Row 3 -->
+                                <div class="zone-row">
+                                    <div class="zone" onclick="selectZone(7)">
+                                        7
+                                    </div>
+                                    <div class="zone" onclick="selectZone(8)">
+                                        8
+                                    </div>
+                                    <div class="zone" onclick="selectZone(9)">
+                                        9
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right side area - extended zones 12 and 14 -->
+                            <div class="right-column">
+                                <div
+                                    class="right-top"
+                                    onclick="selectZone(12)"
+                                ></div>
+                                <div
+                                    class="right-bottom"
+                                    onclick="selectZone(14)"
+                                ></div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom section with zones 13, 14 -->
+                        <div class="bottom-row">
+                            <div class="zone-13" onclick="selectZone(13)">
+                                13
+                            </div>
+                            <div class="zone-14" onclick="selectZone(14)">
+                                14
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="close-button" onclick="hideZoneMatrix()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <button class="close-button" onclick="hideZoneMatrix()">Cancel</button>
-      </div>
-    </div>
-  </div>
+        <div id="footer-container"></div>
 
-  <div id="footer-container"></div>
-
-  <!-- Firebase & Scripts -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-  <script src="../js/firebase-config.js"></script>
-  <script src="../js/authGuard.js"></script>
-  <script src="../js/pitching.js"></script>
-</body>
+        <!-- Firebase & Scripts -->
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+        <script src="../js/firebase-config.js"></script>
+        <script src="../js/authGuard.js"></script>
+        <script src="../js/pitching.js"></script>
+    </body>
 </html>
