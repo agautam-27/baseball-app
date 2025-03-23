@@ -1,7 +1,7 @@
 const db = firebase.firestore();
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("✅ FieldingFlyBall Page JS Loaded");
+  console.log("✅ FieldingGroundBall Page JS Loaded");
   loadAttempts();  // Load the saved attempts from localStorage
   renderAttempts();
 });
@@ -122,7 +122,7 @@ async function saveAll() {
     const userData = userSnapshot.docs[0].data();
     const playerID = userData.playerID;
 
-    const playerRef = db.collection("FieldingFlyBall").doc(playerTryoutID);
+    const playerRef = db.collection("FieldingGroundBall").doc(playerTryoutID);
 
     const indexedAttempts = attempts.map((attempt) => ({
         CatchOrMiss: attempt.result,
@@ -139,7 +139,7 @@ async function saveAll() {
         { merge: true }
       );
 
-    alert("✅ Fielding Fly Ball data saved!");
+    alert("✅ Fielding Ground Ball data saved!");
   } catch (err) {
     console.error("❌ Error saving data:", err);
     alert("Failed to save. Check console.");
