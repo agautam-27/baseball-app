@@ -19,8 +19,9 @@ const fetchPlayerData = async (user) => {
       const firstName = playerData.firstName || "Player"; 
       const lastName = playerData.lastName || "";
       const currentTryout = playerData.currentTryout || null;
+      const playerTryoutID = playerData.playerTryoutID || "N/A"; // Default to "N/A" if missing
       
-      displayWelcomeMessage(firstName, lastName, currentTryout);
+      displayWelcomeMessage(firstName, lastName, currentTryout, playerTryoutID);
       fetchTryouts(currentTryout);
     } else {
       console.error("Player document does not exist");
@@ -30,7 +31,8 @@ const fetchPlayerData = async (user) => {
   }
 };
 
-const displayWelcomeMessage = (firstName, lastName, currentTryout) => {
+
+const displayWelcomeMessage = async (firstName, lastName, currentTryout, playerTryoutID) => {
   const welcomeMessage = document.getElementById("welcome-message");
   const nextTryoutMessage = document.getElementById("next-tryout-message");
 
@@ -39,11 +41,35 @@ const displayWelcomeMessage = (firstName, lastName, currentTryout) => {
   }
 
   if (nextTryoutMessage) {
-    nextTryoutMessage.textContent = currentTryout
-      ? `Your next tryout: ${currentTryout}`
-      : "You have not joined any tryouts.";
+    if (currentTryout) {
+      try {
+        const tryoutsSnapshot = await firestore.collection("tryouts").where("tryoutID", "==", currentTryout).get();
+
+        if (!tryoutsSnapshot.empty) {
+          const tryoutData = tryoutsSnapshot.docs[0].data();
+          nextTryoutMessage.innerHTML = `
+            Your next tryout: ${currentTryout}<br>
+            Your tryout ID: ${playerTryoutID}<br>
+            Tryout Name: ${tryoutData.name}<br>
+            Tryout Date: ${tryoutData.date}
+          `;
+        } else {
+          nextTryoutMessage.innerHTML = `
+            Your next tryout: ${currentTryout}<br>
+            Your tryout ID: ${playerTryoutID}<br>
+            (Tryout details not found)
+          `;
+        }
+      } catch (error) {
+        console.error("Error fetching tryout details:", error);
+      }
+    } else {
+      nextTryoutMessage.textContent = "You have not joined any tryouts.";
+    }
   }
 };
+
+
 
 const viewTryoutsBtn = document.getElementById("view-tryouts-btn");
 const tryoutList = document.getElementById("tryout-list");
