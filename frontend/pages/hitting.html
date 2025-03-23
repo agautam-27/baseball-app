@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hitting Performance</title>
+  <link rel="stylesheet" href="../styles/style.css" />
+  <link rel="stylesheet" href="../styles/header-footer.css" />
+  <link rel="stylesheet" href="../styles/hitting.css" />
+</head>
+<body class="with-header-footer">
+  <div id="header-container"></div>
+
+  <main id="hitting-content" class="p-4">
+    <h2 class="text-center">Hitting Evaluation</h2>
+
+    <div id="attempts-container">
+      <!-- Attempts will be injected here by JS -->
+    </div>
+
+    <button id="add-attempt-btn" class="btn">➕ Add New Attempt</button>
+
+    <label for="notes" class="block mt-4">Notes:</label>
+    <textarea id="notes" rows="4" placeholder="Enter notes..." class="w-full mt-1"></textarea>
+
+    <button id="save-btn" class="btn mt-4">Save</button>
+  </main>
+
+  <div id="footer-container"></div>
+
+  <!-- Firebase & Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/authGuard.js"></script>
+  <script src="../js/hitting.js"></script>
+</body>
+</html>
