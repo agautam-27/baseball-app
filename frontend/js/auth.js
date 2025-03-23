@@ -91,7 +91,8 @@ document.getElementById('show-login').addEventListener('click', () => {
 signupForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  const name = document.getElementById('signup-name').value;
+  const firstName = document.getElementById('signup-first-name').value.trim();
+  const lastName = document.getElementById('signup-last-name').value.trim();
   const email = document.getElementById('signup-email').value;
   const password = document.getElementById('signup-password').value;
   const coachId = document.getElementById('coach-id').value.trim();
@@ -117,25 +118,60 @@ signupForm.addEventListener('submit', (e) => {
     : Promise.resolve();
 
   validateCoachId
-    .then(() => firebase.auth().createUserWithEmailAndPassword(email, password))
+    .then(() => {
+      return firebase.auth().createUserWithEmailAndPassword(email, password);
+    })
     .then((userCredential) => {
       const user = userCredential.user;
+      const userRef = db.collection("users").doc(user.uid);
 
       const userDoc = {
-        name,
+        firstName,
+        lastName,
         email,
         role: selectedRole
       };
 
-      const batch = db.batch();
-      batch.set(db.collection("users").doc(user.uid), userDoc);
+      if (selectedRole === 'player') {
+        const counterRef = db.collection("playercounter").doc("counter");
 
-      if (selectedRole === 'coach') {
+        return db.runTransaction((transaction) => {
+          return transaction.get(counterRef).then((counterDoc) => {
+            let nextPlayerID = 1;
+            if (counterDoc.exists) {
+              nextPlayerID = counterDoc.data().count + 1;
+            }
+
+            userDoc.playerID = nextPlayerID;
+
+            transaction.set(userRef, userDoc);
+            transaction.set(counterRef, { count: nextPlayerID });
+
+            return;
+          });
+        });
+
+      } else {
+        const counterRef = db.collection("coachcounter").doc("counter");
         const coachRef = db.collection("coach_invites").doc(coachId);
-        batch.update(coachRef, { used: true, assignedTo: email });
-      }
 
-      return batch.commit();
+        return db.runTransaction((transaction) => {
+          return transaction.get(counterRef).then((counterDoc) => {
+            let nextCoachID = 1;
+            if (counterDoc.exists) {
+              nextCoachID = counterDoc.data().count + 1;
+            }
+
+            userDoc.coachID = nextCoachID;
+
+            transaction.set(userRef, userDoc);
+            transaction.set(counterRef, { count: nextCoachID });
+            transaction.update(coachRef, { used: true, assignedTo: email });
+
+            return;
+          });
+        });
+      }
     })
     .then(() => {
       authMessage.textContent = messages.signupSuccess(selectedRole);
@@ -155,6 +191,7 @@ signupForm.addEventListener('submit', (e) => {
       authMessage.textContent = message;
     });
 });
+
 
 
 loginForm.addEventListener('submit', (e) => {
