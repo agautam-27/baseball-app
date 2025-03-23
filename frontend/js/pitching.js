@@ -300,22 +300,37 @@ function selectZone(zone) {
 
 // すべてのデータを保存
 async function saveAll() {
+  console.log("📝 Save button clicked");
+  
+  // ログ出力（デバッグ用）
+  console.log("🔍 Current playerTryoutID:", playerTryoutID);
+  console.log("🔍 Matched playerID:", playerID);
+  
+  if (!playerID) {
+    alert("No player found with this tryout ID. Note: ID is case-sensitive.");
+    console.log("❌ No player found, aborting save.");
+    return;
+  }
+  
+  if (pitches.length === 0) {
+    alert("Please add at least one pitch data.");
+    return;
+  }
+
+  // データを整形する
+  const formattedPitches = pitches.map(pitch => ({
+    speed: pitch.speed,
+    outcome: isStrikeZone(pitch.zone) ? 'Strike' : 'Ball',
+    pitchingZone: pitch.zone,
+  }));
+
+  console.log("📊 Pitches to be saved:", formattedPitches);
+  console.log("🗒️ Notes:", notes);
+
   try {
-    // 認証確認
-    const user = firebase.auth().currentUser;
-    if (!user) throw new Error('User not logged in');
-    if (!playerID) throw new Error('Please enter a valid player Tryout ID');
-    if (pitches.length === 0) throw new Error('Please add pitch data');
-
-    // データを整形する
-    const formattedPitches = pitches.map(pitch => ({
-      speed: pitch.speed,
-      outcome: isStrikeZone(pitch.zone) ? 'Strike' : 'Ball',
-      pitchingZone: pitch.zone,
-    }));
-
-    // pitchings コレクションに新しいドキュメントを追加
-    await db.collection('pitchings').add({
+    console.log("📤 Attempting to save data to Firestore...");
+    // hitting と同じコレクション構造に合わせる
+    const docRef = await db.collection('pitching').add({
       playerTryoutID: playerTryoutID,
       playerID: playerID,
       pitches: formattedPitches,
@@ -323,15 +338,16 @@ async function saveAll() {
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     });
     
-    alert('Data has been saved!');
+    console.log("✅ Data successfully saved to Firestore. Document ID:", docRef.id);
+    alert('Pitching data saved!');
 
     // 保存後にフォームをクリア
     pitches = [];
     notes = '';
     renderPitchingPage();
   } catch (error) {
-    alert(`Error: ${error.message}`);
-    console.error("Save error:", error);
+    console.error("❌ Error saving pitching data:", error);
+    alert(`Failed to save. Error: ${error.message}`);
   }
 }
 
