@@ -13,7 +13,6 @@ document.getElementById('toggle-tryout-form').addEventListener('click', () => {
         statusText.className = '';
     }
 });
-
 function generateTryoutID() {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const letter = letters[Math.floor(Math.random() * 26)];
