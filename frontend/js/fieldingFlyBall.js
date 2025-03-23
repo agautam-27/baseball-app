@@ -1,56 +1,132 @@
-document.addEventListener("DOMContentLoaded", function() {
-    loadAttempts();
+const db = firebase.firestore();
+
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("✅ FieldingFlyBall Page JS Loaded");
+  renderAttempts();
 });
 
-function goBack() {
-    window.history.back();
+let attempts = [];
+let notes = "";
+let playerTryoutID = "";
+
+const attemptsContainer = document.getElementById("attempts");
+const notesInput = document.getElementById("notes");
+const playerInput = document.getElementById("playerTryOutID");
+
+// Function to render attempts dynamically
+function renderAttempts() {
+  attemptsContainer.innerHTML = ""; // Clear previous content
+
+  attempts.forEach((attempt, index) => {
+    const row = document.createElement("div");
+    row.className = "attempt-row";
+
+    const catchTypeContainer = document.createElement("div");
+    catchTypeContainer.className = "catch-type-container";
+
+    const catchTypeLabel = document.createElement("label");
+    catchTypeLabel.textContent = "Catch Type: ";
+    catchTypeLabel.className = "catch-type-label";
+
+    const select = document.createElement("select");
+    ["Drop step catch", "Conventional catch"].forEach((type) => {
+      const option = document.createElement("option");
+      option.value = type;
+      option.textContent = type;
+      if (attempt.catchType === type) option.selected = true;
+      select.appendChild(option);
+    });
+    select.onchange = (e) => (attempt.catchType = e.target.value);
+
+    catchTypeContainer.appendChild(catchTypeLabel);
+    catchTypeContainer.appendChild(select);
+
+    const radioDiv = document.createElement("div");
+    radioDiv.className = "radio-group";
+
+    ["Missed", "Catches"].forEach((result) => {
+      const label = document.createElement("label");
+      label.textContent = result;
+
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = `result-${index}`;
+      radio.value = result;
+      radio.checked = attempt.result === result;
+      radio.onchange = () => (attempt.result = result);
+
+      label.appendChild(radio);
+      radioDiv.appendChild(label);
+    });
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "❌";
+    deleteBtn.className = "delete-btn";
+    deleteBtn.onclick = () => {
+      attempts.splice(index, 1);
+      renderAttempts();
+    };
+
+    row.appendChild(catchTypeContainer);
+    row.appendChild(radioDiv);
+    row.appendChild(deleteBtn);
+    attemptsContainer.appendChild(row);
+  });
 }
 
 function addRow() {
-    const attemptsDiv = document.getElementById("attempts");
-    const attemptIndex = attemptsDiv.children.length;
-
-    const row = document.createElement("div");
-    row.className = "attempt-row";
-    row.innerHTML = `
-        <div class="radio-group">
-            <label><input type="radio" name="attempt${attemptIndex}" value="Missed"> Missed</label>
-            <label><input type="radio" name="attempt${attemptIndex}" value="Catches"> Catches</label>
-        </div>
-        <button class="delete-btn" onclick="removeRow(this)">X</button>
-    `;
-
-    attemptsDiv.appendChild(row);
+  attempts.push({ result: "Missed", catchType: "Drop step catch" });
+  renderAttempts();
 }
 
-function removeRow(button) {
-    button.parentElement.remove();
-}
+async function saveAll() {
+  if (!playerInput.value.trim()) {
+    alert("Please enter a Player TryOut ID!");
+    return;
+  }
 
-function saveAll() {
-    const attempts = [];
-    document.querySelectorAll(".attempt-row").forEach((row, index) => {
-        const selected = row.querySelector("input[type='radio']:checked");
-        if (selected) {
-            attempts.push({
-                index: index,
-                CatchOrMiss: selected.value
-            });
-        }
+  try {
+    const playerTryoutID = playerInput.value.trim();
+    
+    // Fetch playerID from users collection
+    const userRef = db.collection("users").where("playerTryoutID", "==", playerTryoutID);
+    const userSnapshot = await userRef.get();
+    
+    if (userSnapshot.empty) {
+      alert("Player TryOut ID not found in users collection.");
+      return;
+    }
+    
+    const userData = userSnapshot.docs[0].data();
+    const playerID = userData.playerID;
+
+    const playerRef = db.collection("FieldingFlyBall").doc(playerTryoutID);
+
+    const indexedAttempts = {};
+    attempts.forEach((attempt, index) => {
+      indexedAttempts[index] = {
+        CatchOrMiss: attempt.result,
+        catchType: attempt.catchType,
+      };
     });
 
-    const notes = document.getElementById("notes").value;
-    const data = {
-        attempts: attempts,
-        notes: notes
-    };
+    await playerRef.set(
+      {
+        playerID: playerID,
+        playerTryoutID: playerTryoutID,
+        notes: notesInput.value,
+        attempts: indexedAttempts,
+      },
+      { merge: true }
+    );
 
-    saveToFirestore(data);
+    alert("✅ Fielding Fly Ball data saved!");
+  } catch (err) {
+    console.error("❌ Error saving data:", err);
+    alert("Failed to save. Check console.");
+  }
 }
 
-function saveToFirestore(data) {
-    const db = firebase.firestore();
-    db.collection("FieldingFlyBall").doc("attempts").set(data)
-        .then(() => alert("Data saved successfully!"))
-        .catch(error => console.error("Error saving data:", error));
+function goBack() {
+  window.location.href = "coachDashboard.html";
 }
