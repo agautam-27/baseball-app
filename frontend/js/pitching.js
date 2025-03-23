@@ -367,7 +367,7 @@ async function saveAll() {
         const docRef = await db.collection("pitching").add({
             playerTryoutID: playerTryoutID,
             playerID: playerID,
-            pitches: formattedPitches,
+            attempts: formattedPitches,
             notes: notes,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         });

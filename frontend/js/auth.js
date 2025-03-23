@@ -21,6 +21,7 @@ const messages = {
   coachIdRequired: "❌ Coach ID is required to sign up as a coach.",
   invalidCoachId: "❌ Invalid Coach ID.",
   coachIdUsed: "❌ Coach ID already used.",
+  coachIdExpired: "❌ Coach ID has expired.",
   userDataNotFound: "❌ User data not found.",
   roleMismatch: (actualRole) => `❌ Role mismatch. This account is registered as ${actualRole}.`,
   signupSuccess: (role) => `✅ Signed up successfully as ${role}`,
@@ -113,6 +114,15 @@ signupForm.addEventListener('submit', (e) => {
         : db.collection("coach_invites").doc(coachId).get().then(doc => {
             if (!doc.exists) throw new Error(messages.invalidCoachId);
             if (doc.data().used) throw new Error(messages.coachIdUsed);
+            
+            // Check if invitation code has expired
+            if (doc.data().expirationDate) {
+              const expirationDate = doc.data().expirationDate.toDate();
+              const now = new Date();
+              if (expirationDate < now) {
+                throw new Error(messages.coachIdExpired);
+              }
+            }
           })
       )
     : Promise.resolve();
