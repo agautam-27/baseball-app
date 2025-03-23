@@ -42,6 +42,7 @@ function createTryout() {
         date,
         createdAt: new Date(),
         coachId: firebase.auth().currentUser.uid,
+        count: 0
     };
 
     db.collection("tryouts")

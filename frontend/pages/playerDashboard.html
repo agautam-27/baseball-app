@@ -6,23 +6,73 @@
   <title>Player Dashboard</title>
   <link rel="stylesheet" href="../styles/style.css" />
   <link rel="stylesheet" href="../styles/header-footer.css" />
-  
+  <link rel="stylesheet" href="../styles/playerDashboard.css" />
 </head>
 <body class="with-header-footer">
   
-    <div id="header-container"></div>
+  <div id="header-container"></div>
 
-    <main id="player-content">
-      <h2>Welcome, Player!</h2>
-      <p>This is your performance dashboard. You’ll see your tryout stats here.</p>
-    </main>
-  
-    <div id="footer-container"></div>
+  <main id="player-content">
+    <h2 id="welcome-message">Welcome, Player!</h2>
+    <p id="next-tryout-message">Your next tryout: None</p>
+    <p>This is your performance dashboard. You’ll see your tryout stats here.</p>
+
+    <button id="view-tryouts-btn">View Current Tryouts</button>
+
+    <div id="tryout-list" class="hidden">
+        <h3>Current Tryouts</h3>
+        <div id="tryouts-container"></div>
+    </div>
+
+    <!-- Performance Cards -->
+    <section id="performance-cards">
+      <h3>Performance Overview</h3>
+
+      <div class="card" id="pitching-card">
+        <h4>Pitching</h4>
+        <p><strong>Pitches:</strong> <span id="num-pitches">25</span></p>
+        <p><strong>Strikes:</strong> <span id="num-strikes">15</span></p>
+        <p><strong>Balls:</strong> <span id="num-balls">10</span></p>
+        <p><strong>Avg Speed:</strong> <span id="avg-speed">85 mph</span></p>
+        <p><strong>Notes:</strong> <span id="pitching-notes">Good control, needs work on breaking ball.</span></p>
+      </div>
+
+      <div class="card" id="hitting-card">
+        <h4>Hitting</h4>
+        <p><strong>Strikes:</strong> <span id="hitting-strikes">8</span></p>
+        <p><strong>Hits:</strong> <span id="hitting-hits">5</span></p>
+        <p><strong>Notes:</strong> <span id="hitting-notes">Improving contact with inside pitches.</span></p>
+      </div>
+
+      <div class="card" id="base-running-card">
+        <h4>Base Running</h4>
+        <p><strong>Home to 1st:</strong> <span id="home-to-1st">4.2s</span></p>
+        <p><strong>Home to 2nd:</strong> <span id="home-to-2nd">7.8s</span></p>
+        <p><strong>Notes:</strong> <span id="base-running-notes">Quick acceleration off the line.</span></p>
+      </div>
+
+      <div class="card" id="fielding-fly-card">
+        <h4>Fielding (Fly Balls)</h4>
+        <p><strong>Result:</strong> <span id="fly-balls-result">3 catches, 1 miss</span></p>
+        <p><strong>Notes:</strong> <span id="fly-balls-notes">Good reaction time.</span></p>
+      </div>
+
+      <div class="card" id="fielding-ground-card">
+        <h4>Fielding (Ground Balls)</h4>
+        <p><strong>Result:</strong> <span id="ground-balls-result">5 clean plays, 1 error</span></p>
+        <p><strong>Notes:</strong> <span id="ground-balls-notes">Needs quicker footwork.</span></p>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="footer-container"></div>
 
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   <script src="../js/firebase-config.js"></script>
   <script src="../js/authGuard.js"></script>
+  <script src="../js/playerDashboard.js"></script>
 </body>
 </html>
