@@ -6,6 +6,7 @@
   <title>Coach Dashboard</title>
   <link rel="stylesheet" href="../styles/style.css" />
   <link rel="stylesheet" href="../styles/header-footer.css" />
+  <link rel="stylesheet" href="../styles/coachDashboard.css" />
 
 </head>
 <body class="with-header-footer">
@@ -13,10 +14,40 @@
   <h2>Welcome, Coach!</h2>
   <p>This is your dashboard. You’ll be able to manage tryouts here.</p>
 
-  <!-- Placeholder for tryout sessions, stats, etc. -->
-  <div id="coach-content">
-    <!-- Will populate later -->
+  <div id="create-tryout-container" class="tryout-container">
+    <div class="tryout-header">
+      <h3>Create Tryout</h3>
+      <button id="toggle-tryout-form">➕</button>
+    </div>
+  
+    <div id="tryout-form-card" class="tryout-card hidden">
+      <input type="text" id="tryout-name" placeholder="Tryout Name" required />
+      <input type="date" id="tryout-date" required />
+      <button onclick="createTryout()">Save Tryout</button>
+      <p id="tryout-status"></p>
+    </div>
   </div>
+  
+<!-- Show Tryouts Toggle -->
+<div class="show-tryouts-wrapper">
+  <button id="show-tryouts-btn">📋 Show Tryouts</button>
+</div>
+
+<div id="tryout-list" class="tryout-list hidden">
+  <!-- Cards will appear here -->
+</div>
+
+<!-- Station Selection Popup -->
+<div id="station-popup" class="popup hidden">
+  <div class="popup-content">
+    <h3>Select Station</h3>
+    <button class="station-btn" data-station="baseRunning">🏃 Base Running</button>
+    <button class="station-btn" data-station="pitching">⚾ Pitching</button>
+    <button class="station-btn" data-station="fielding">🧤 Fielding</button>
+    <button id="close-popup">Cancel</button>
+  </div>
+</div>
+
   <div id="footer-container"></div>
 
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -24,5 +55,6 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   <script src="../js/firebase-config.js"></script>
   <script src="../js/authGuard.js"></script>  
+  <script src="../js/coachDashboard.js"></script>  
 </body>
 </html>

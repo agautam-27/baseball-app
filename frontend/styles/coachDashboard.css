@@ -1,0 +1,174 @@
+.hidden {
+    display: none !important;
+  }
+  
+.tryout-container {
+    width: 90%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 12px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  
+  .tryout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .tryout-header h3 {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  
+  #toggle-tryout-form {
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    color: #1976d2;
+    cursor: pointer;
+  }
+  
+  .tryout-card {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    background: #f9f9f9;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .tryout-card.hidden {
+    display: none;
+  }
+  
+  .tryout-card input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+  }
+  
+  .tryout-card button {
+    width: 100%;
+    padding: 12px;
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+
+  #tryout-status {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+    color: #d32f2f;
+  }
+  
+  #tryout-status.success {
+    color: #388e3c;
+  }
+  
+  /* 🔹 Tryout Listing Styles */
+  .tryout-list {
+    margin-top: 16px;
+  }
+  
+  .tryout-item {
+    background: #fff;
+    padding: 14px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .tryout-item span {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  
+  .tryout-id {
+    font-size: 0.9rem;
+    color: #777;
+  }
+
+  .show-tryouts-wrapper {
+    width: 90%;
+    max-width: 400px;
+    margin: 10px auto;
+    text-align: center;
+  }
+  
+  #show-tryouts-btn {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  
+  .popup.hidden {
+    display: none;
+  }
+  
+  
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+  
+  .popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    width: 90%;
+    max-width: 320px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  
+  .popup-content h3 {
+    margin-bottom: 16px;
+  }
+  
+  .station-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    background-color: #1f2937;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  #close-popup {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
