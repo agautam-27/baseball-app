@@ -8,65 +8,94 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="apple-touch-icon" href="assets/AppIcons/AppLogo.png" />
   <meta name="theme-color" content="#1f2937" />
-  
-
 </head>
 <body>
   <div class="container">
     <h2>Welcome to Baseball App</h2>
 
-    <!-- Role Selection -->
-    <div id="role-select">
-      <button class="role-btn" data-role="player">Continue as Player</button>
-      <button class="role-btn" data-role="coach">Continue as Coach</button>
-    </div>
+    <!-- Main login/signup box container -->
+    <div class="box-container">
+      <!-- Tab-like role toggle at top -->
+      <div class="tab-row">
+        <button class="tab-button active" data-role="player">Continue as Player</button>
+        <button class="tab-button" data-role="coach">Continue as Coach</button>
+      </div>
 
-    <!-- Auth Forms -->
-    <div class="form-container" id="form-container" style="display: none;">
-    <p id="auth-message"></p>
-      <form id="signup-form">
-        <label>First Name</label>
-        <input type="text" id="signup-first-name" required />
-
-        <label>Last Name</label>
-        <input type="text" id="signup-last-name" required />
-
-        
-        <label>Email</label>
-        <input type="email" id="signup-email" required />
-        
-        <label>Password</label>
-        <input type="password" id="signup-password" required />
-        
-        <!-- Coach ID wrapper (clean version) -->
-        <div id="coach-id-wrapper" style="display: none;">
-          <label for="coach-id">Coach Invitation Code</label>
-          <input type="text" id="coach-id" />
+      <!-- Content area with auth forms -->
+      <div class="content-area">
+        <!-- Radio buttons for login/signup toggle -->
+        <div class="radio-container">
+          <div class="radio-row">
+            <div class="radio-item">
+              <input type="radio" id="login-radio" name="auth-mode" value="login" checked>
+              <label for="login-radio">Login</label>
+            </div>
+            <div class="radio-item">
+              <input type="radio" id="signup-radio" name="auth-mode" value="signup">
+              <label for="signup-radio">Sign Up</label>
+            </div>
+          </div>
         </div>
-        
-        <!-- Birthday wrapper (for Players only) -->
-        <div id="birthday-wrapper" style="display: none;">
-          <label for="signup-birthday">Date of Birth</label>
-          <input type="date" id="signup-birthday" />
-        </div>
-        
-        <button type="submit">Sign Up</button>
-        <p class="form-toggle-link" id="show-login">Already have an account? Log in</p>
-        <p class="form-toggle-link back-to-role">⬅️ Back to role selection</p>
-        
-      </form>
 
-      <form id="login-form" style="display:none;">
-        <label>Email</label>
-        <input type="email" id="login-email" required />
+        <p id="auth-message"></p>
 
-        <label>Password</label>
-        <input type="password" id="login-password" required />
+        <!-- Login Form -->
+        <form id="login-form">
+          <div class="form-group">
+            <input type="text" id="login-email-or-id" placeholder="Player ID or Email" required />
+          </div>
+          <div class="form-group">
+            <input type="password" id="login-password" placeholder="Password" required />
+          </div>
+          <button type="submit" class="submit-button">Submit</button>
+        </form>
 
-        <button type="submit">Login</button>
-        <p class="form-toggle-link" id="show-signup">Don't have an account? Sign up</p>
-        <p class="form-toggle-link back-to-role">⬅️ Back to role selection</p>
-      </form>
+        <!-- Signup Form (Player) -->
+        <form id="player-signup-form" style="display:none;">
+          <div class="form-group">
+            <input type="text" id="player-first-name" placeholder="Player's First Name" required />
+          </div>
+          <div class="form-group">
+            <input type="text" id="player-last-name" placeholder="Player's Last Name" required />
+          </div>
+          <div class="form-group">
+            <input type="email" id="player-email" placeholder="Email" required />
+          </div>
+          <div class="form-group">
+            <input type="password" id="player-password" placeholder="Password" required />
+          </div>
+          <div class="form-group">
+            <input type="password" id="player-reenter-password" placeholder="Re-Enter Password" required />
+          </div>
+          <div class="form-group">
+            <input type="date" id="player-birthday" placeholder="Date of Birth" />
+          </div>
+          <button type="submit" class="submit-button">Submit</button>
+        </form>
+
+        <!-- Signup Form (Coach) -->
+        <form id="coach-signup-form" style="display:none;">
+          <div class="form-group">
+            <input type="text" id="coach-first-name" placeholder="First Name" required />
+          </div>
+          <div class="form-group">
+            <input type="text" id="coach-last-name" placeholder="Last Name" required />
+          </div>
+          <div class="form-group">
+            <input type="email" id="coach-email" placeholder="Email" required />
+          </div>
+          <div class="form-group">
+            <input type="password" id="coach-password" placeholder="Password" required />
+          </div>
+          <div class="form-group">
+            <input type="password" id="coach-reenter-password" placeholder="Re-Enter Password" required />
+          </div>
+          <div class="form-group">
+            <input type="text" id="coach-invitation-code" placeholder="Invitation Code" required />
+          </div>
+          <button type="submit" class="submit-button">Submit</button>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -77,10 +106,8 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
   <!-- Config & Auth Logic -->
-  <!-- <script src="../backend/firebase/firebase-config.js"></script> -->
   <script src="js/firebase-config.js"></script>
-
-  <script src="js/auth.js"></script>
+  <script src="js/index.js"></script>
 
   <script>
     if ('serviceWorker' in navigator) {
@@ -94,6 +121,5 @@
       });
     }
   </script>
-  
 </body>
 </html>
