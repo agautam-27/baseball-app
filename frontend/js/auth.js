@@ -31,6 +31,11 @@ const messages = {
 
 function getErrorMessage(error) {
   if (error && typeof error === 'object') {
+    // Special handling for coach ID expired error
+    if (typeof error.message === 'string' && error.message === messages.coachIdExpired) {
+      return `${messages.coachIdExpired} Please contact an administrator for a new invitation code.`;
+    }
+    
     if (firebaseErrorMessages[error.code]) {
       return firebaseErrorMessages[error.code];
     }
