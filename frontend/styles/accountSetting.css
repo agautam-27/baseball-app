@@ -1,0 +1,121 @@
+/* Account Settings Page Styles */
+
+/* Global font style */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Main container */
+.account-settings-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+    box-sizing: border-box;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    min-height: calc(100vh - 120px);
+}
+
+.scroll-content {
+    padding: 16px;
+}
+
+/* Title styling */
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 24px;
+    text-align: center;
+    color: #333;
+}
+
+/* Field containers */
+.field-container {
+    margin-bottom: 18px;
+    width: 100%;
+}
+
+/* Form labels */
+.label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #555;
+}
+
+/* Form inputs */
+.input {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Read-only input style */
+.read-only-input {
+    background-color: #eee;
+    cursor: not-allowed;
+}
+
+/* Save button */
+.save-button {
+    display: block;
+    width: 100%;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 24px;
+    transition: background-color 0.3s;
+}
+
+.save-button:hover:not(:disabled) {
+    background-color: #3367d6;
+}
+
+.save-button:disabled {
+    background-color: #b0b0b0;
+    cursor: not-allowed;
+}
+
+/* Status message styling */
+.status-message {
+    margin-top: 16px;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Media queries for responsiveness */
+@media (min-width: 768px) {
+    .account-settings-container {
+        padding: 2rem;
+    }
+
+    .input,
+    .save-button {
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
