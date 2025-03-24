@@ -5,6 +5,11 @@ body {
     font-family: Arial, sans-serif;
 }
 
+/* Ensure side menu text alignment */
+.side-menu ul {
+    text-align: center !important;
+}
+
 /* Main container */
 .account-settings-container {
     width: 100%;

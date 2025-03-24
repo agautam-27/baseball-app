@@ -18,10 +18,10 @@ function loadSharedUI() {
       document.getElementById('header-container').innerHTML = data;
     })
     .then(() => {
-      window.toggleMenu = () => {
-        const menu = document.getElementById('side-menu');
-        menu.classList.toggle('hidden');
-      };
+      // Load the header.js script to handle toggling
+      const headerScript = document.createElement('script');
+      headerScript.src = '../js/header.js';
+      document.body.appendChild(headerScript);
     });
 
   fetch(basePath + 'footer.html')

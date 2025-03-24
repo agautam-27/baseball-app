@@ -24,51 +24,14 @@ let playerId = null;
 let coachId = null;
 
 /**
- * Load components (header and footer) into the page
+ * Initialize the page when DOM is loaded
  */
 document.addEventListener("DOMContentLoaded", function () {
-    // Load header
-    const headerPlaceholder = document.getElementById("header-placeholder");
-    fetch("../components/header.html")
-        .then((response) => response.text())
-        .then((html) => {
-            headerPlaceholder.innerHTML = html;
-            // After header is loaded, create the overlay
-            if (!document.getElementById("menu-overlay")) {
-                const overlay = document.createElement("div");
-                overlay.id = "menu-overlay";
-                document.body.appendChild(overlay);
-            }
-
-            // Setup toggleMenu function in global scope
-            window.toggleMenu = function () {
-                const sideMenu = document.getElementById("side-menu");
-                if (sideMenu) {
-                    sideMenu.classList.toggle("hidden");
-                }
-            };
-
-            // Setup logout function
-            window.logout = function () {
-                firebase
-                    .auth()
-                    .signOut()
-                    .then(() => {
-                        window.location.href = "../index.html";
-                    })
-                    .catch((error) => {
-                        console.error("Logout error:", error);
-                    });
-            };
-        });
-
-    // Load footer
-    const footerPlaceholder = document.getElementById("footer-placeholder");
-    fetch("../components/footer.html")
-        .then((response) => response.text())
-        .then((html) => {
-            footerPlaceholder.innerHTML = html;
-        });
+    // Footer container should be loaded by authGuard
+    const footerContainer = document.getElementById("footer-placeholder");
+    if (footerContainer) {
+        footerContainer.id = "footer-container";
+    }
 
     // Initialize the page
     initAccountSettings();

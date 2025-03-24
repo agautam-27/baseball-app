@@ -3,18 +3,25 @@
  * Slides the menu in from the left and shows/hides the overlay
  */
 function toggleMenu() {
-    console.log("header.js toggleMenu called");
+    console.log("toggleMenu called");
     const sideMenu = document.getElementById("side-menu");
     const overlay = document.getElementById("menu-overlay");
 
     if (!sideMenu || !overlay) {
-        console.error("Menu or overlay element not found in header.js");
+        console.error("Menu or overlay element not found");
         return;
     }
 
+    // Toggle active class to show/hide menu and overlay
     sideMenu.classList.toggle("active");
     overlay.classList.toggle("active");
-    console.log("Menu active:", sideMenu.classList.contains("active"));
+    
+    // For accessibility
+    if (sideMenu.classList.contains("active")) {
+        document.body.style.overflow = "hidden"; // Prevent scrolling when menu is open
+    } else {
+        document.body.style.overflow = ""; // Allow scrolling when menu is closed
+    }
 }
 
 /**
@@ -38,36 +45,46 @@ function logout() {
     }
 }
 
-// Add event listeners when DOM is loaded
-document.addEventListener("DOMContentLoaded", function () {
-    console.log("header.js DOMContentLoaded");
-
-    // Check if elements exist
-    const hamburgerBtn = document.querySelector(".hamburger");
-    const sideMenu = document.getElementById("side-menu");
+// Initialize the header UI
+function initHeader() {
+    console.log("Initializing header");
+    const hamburgerBtn = document.getElementById("hamburger-btn");
     const overlay = document.getElementById("menu-overlay");
-
-    console.log("Elements found:", {
-        hamburgerBtn: !!hamburgerBtn,
-        sideMenu: !!sideMenu,
-        overlay: !!overlay,
-    });
-
-    // Add click event to hamburger button
+    
     if (hamburgerBtn) {
-        hamburgerBtn.addEventListener("click", function (e) {
-            console.log("Hamburger clicked in header.js");
+        // Remove any existing event listeners
+        hamburgerBtn.removeEventListener("click", toggleMenu);
+        // Add new click event
+        hamburgerBtn.addEventListener("click", function(e) {
+            console.log("Hamburger button clicked");
             toggleMenu();
-            // Prevent default to be safe
             e.preventDefault();
         });
+    } else {
+        console.error("Hamburger button not found");
     }
-
-    // Add click event to overlay
+    
     if (overlay) {
-        overlay.addEventListener("click", function () {
-            console.log("Overlay clicked in header.js");
+        // Remove any existing event listeners
+        overlay.removeEventListener("click", toggleMenu);
+        // Add new click event to close menu when overlay is clicked
+        overlay.addEventListener("click", function() {
+            console.log("Overlay clicked");
             toggleMenu();
         });
+    } else {
+        console.error("Overlay not found");
     }
-});
+}
+
+// Initialize header when script is loaded
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initHeader);
+} else {
+    // If DOMContentLoaded has already fired
+    initHeader();
+}
+
+// Make sure toggleMenu is available globally
+window.toggleMenu = toggleMenu;
+window.logout = logout;
