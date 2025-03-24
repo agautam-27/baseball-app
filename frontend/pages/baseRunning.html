@@ -1,45 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Base Running</title>
-        <link rel="stylesheet" href="../styles/style.css" />
-        <link rel="stylesheet" href="../styles/header-footer.css" />
-        <link rel="stylesheet" href="../styles/baseRunning.css" />
-    </head>
-    <body class="with-header-footer">
-        <div id="header-container"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Base Running</title>
+  <link rel="stylesheet" href="../styles/style.css" />
+  <link rel="stylesheet" href="../styles/header-footer.css" />
+  <link rel="stylesheet" href="../styles/baseRunning.css" />
+</head>
+<body class="with-header-footer">
+  <div id="header-container"></div>
 
-        <main id="base-running-content" class="p-4">
-            <h2 class="text-center">Base Running Evaluation</h2>
+  <main id="base-running-content" class="p-4">
+    <h2 class="text-center">Base Running Evaluation</h2>
+  
+    <div class="input-group">
+      <input type="text" id="player-id" class="input-field" placeholder=" " />
+      <label for="player-id">Player ID</label>
+    </div>
+  
+    <div id="attempts-container"></div>
+    
+    <div class="input-group">
+      <textarea id="notes-input" placeholder=" "></textarea>
+      <label for="notes-input">Notes</label>
+    </div>
+   
+    <div id="save-confirmation">✔️ Saved!</div>
+  </main>
 
-            <div id="attempts-container">
-                <!-- Attempts will be injected here by JS -->
-            </div>
+  <div id="footer-container"></div>
 
-            <button id="add-attempt-btn" class="btn">➕ Add New Attempt</button>
-
-            <label for="notes" class="block mt-4">Notes:</label>
-            <textarea
-                id="notes"
-                rows="4"
-                placeholder="Enter notes..."
-                class="w-full mt-1"
-            ></textarea>
-
-            <button id="save-btn" class="btn mt-4">Save</button>
-        </main>
-
-        <div id="footer-container"></div>
-
-        <!-- Firebase & Scripts -->
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-        <script src="../js/firebase-config.js"></script>
-        <script src="../js/authGuard.js"></script>
-        <script src="../js/baseRunning.js"></script>
-        <script src="../js/header.js"></script>
-    </body>
+  <!-- Firebase & Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/authGuard.js"></script>
+  <script src="../js/baseRunning.js"></script>
+</body>
 </html>
