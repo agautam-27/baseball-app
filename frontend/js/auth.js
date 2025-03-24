@@ -64,6 +64,7 @@ document.querySelectorAll('.role-btn').forEach(btn => {
     signupForm.style.display = "none";
     loginForm.style.display = "block";
     document.getElementById('coach-id-wrapper').style.display = "none";
+    document.getElementById('birthday-wrapper').style.display = "none";
   });
 });
 
@@ -76,6 +77,7 @@ document.getElementById('show-signup').addEventListener('click', () => {
   signupForm.style.display = 'block';
 
   document.getElementById('coach-id-wrapper').style.display = (selectedRole === 'coach') ? 'block' : 'none';
+  document.getElementById('birthday-wrapper').style.display = (selectedRole === 'player') ? 'block' : 'none';
 });
 
 // 🔄 Switch to login
@@ -97,6 +99,7 @@ signupForm.addEventListener('submit', (e) => {
   const email = document.getElementById('signup-email').value;
   const password = document.getElementById('signup-password').value;
   const coachId = document.getElementById('coach-id').value.trim();
+  const birthday = document.getElementById('signup-birthday').value;
 
   if (!selectedRole) {
     authMessage.textContent = messages.selectRole;
@@ -144,6 +147,11 @@ signupForm.addEventListener('submit', (e) => {
 
       if (selectedRole === 'player') {
         const counterRef = db.collection("playercounter").doc("counter");
+
+        // Add birthday for player
+        if (birthday) {
+          userDoc.birthday = birthday;
+        }
 
         return db.runTransaction((transaction) => {
           return transaction.get(counterRef).then((counterDoc) => {

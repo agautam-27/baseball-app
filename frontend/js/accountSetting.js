@@ -2,6 +2,8 @@
 const firstNameInput = document.getElementById("firstName");
 const lastNameInput = document.getElementById("lastName");
 const emailInput = document.getElementById("email");
+const birthdayInput = document.getElementById("birthday");
+const birthdayContainer = document.getElementById("birthday-container");
 const currentPasswordInput = document.getElementById("currentPassword");
 const newPasswordInput = document.getElementById("newPassword");
 const saveButton = document.getElementById("saveButton");
@@ -16,6 +18,7 @@ const auth = firebase.auth();
 let originalFirstName = "";
 let originalLastName = "";
 let originalEmail = "";
+let originalBirthday = "";
 let userRole = null;
 let playerId = null;
 let coachId = null;
@@ -79,6 +82,7 @@ function initAccountSettings() {
     firstNameInput.addEventListener("input", checkForChanges);
     lastNameInput.addEventListener("input", checkForChanges);
     emailInput.addEventListener("input", checkForChanges);
+    birthdayInput.addEventListener("change", checkForChanges);
     currentPasswordInput.addEventListener("input", checkForChanges);
     newPasswordInput.addEventListener("input", checkForChanges);
 
@@ -124,6 +128,12 @@ async function fetchUserData() {
               playerId || ""
           }" readonly />
         `;
+                
+                // Show birthday field for players
+                birthdayContainer.style.display = "block";
+                birthdayInput.value = data.birthday || "";
+                originalBirthday = data.birthday || "";
+                
             } else if (userRole === "coach") {
                 coachId = data.coachID || null;
                 idContainer.innerHTML = `
@@ -132,6 +142,9 @@ async function fetchUserData() {
               coachId || ""
           }" readonly />
         `;
+                
+                // Hide birthday field for coaches
+                birthdayContainer.style.display = "none";
             }
 
             // Populate form fields
@@ -157,6 +170,7 @@ function checkForChanges() {
     const emailChanged = emailInput.value !== originalEmail;
     const firstNameChanged = firstNameInput.value !== originalFirstName;
     const lastNameChanged = lastNameInput.value !== originalLastName;
+    const birthdayChanged = birthdayInput.value !== originalBirthday;
     const passwordFieldsFilled =
         currentPasswordInput.value.length > 0 &&
         newPasswordInput.value.length > 0;
@@ -165,6 +179,7 @@ function checkForChanges() {
         emailChanged ||
         firstNameChanged ||
         lastNameChanged ||
+        birthdayChanged ||
         passwordFieldsFilled;
 
     // Enable/disable save button based on changes
@@ -191,6 +206,7 @@ async function handleSaveChanges() {
     const newFirstName = firstNameInput.value.trim();
     const newLastName = lastNameInput.value.trim();
     const newEmail = emailInput.value.trim();
+    const newBirthday = birthdayInput.value;
     const currentPassword = currentPasswordInput.value;
     const newPassword = newPasswordInput.value;
 
@@ -212,11 +228,19 @@ async function handleSaveChanges() {
 
         // 4) Update Firestore user document
         const docRef = db.collection("users").doc(user.uid);
-        await docRef.update({
+        const updateData = {
             firstName: newFirstName,
             lastName: newLastName,
             email: newEmail,
-        });
+        };
+        
+        // Update birthday only for players
+        if (userRole === "player" && newBirthday !== originalBirthday) {
+            updateData.birthday = newBirthday;
+            originalBirthday = newBirthday;
+        }
+        
+        await docRef.update(updateData);
 
         // Show success message
         showSuccessMessage("Your account information has been updated!");
