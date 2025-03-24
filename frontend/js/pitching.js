@@ -40,6 +40,17 @@ let playerVerificationStatus = null; // To track player verification status
 const container = document.getElementById("pitching-content");
 const zoneModal = document.getElementById("zone-modal");
 
+// Function to update Save All button state
+function updateSaveButtonState() {
+    const saveBtn = document.getElementById("save-btn");
+    if (saveBtn) {
+        const hasEmptySpeed = pitches.some(
+            (pitch) => !pitch.speed || pitch.speed.trim() === ""
+        );
+        saveBtn.disabled = !playerID || hasEmptySpeed;
+    }
+}
+
 // Function to check if player exists
 async function checkPlayerExists(tryoutID) {
     const saveBtn = document.getElementById("save-btn");
@@ -184,6 +195,8 @@ function renderPitchingPage() {
         speedInput.value = pitch.speed || "";
         speedInput.oninput = (e) => {
             pitch.speed = e.target.value;
+            // Update Save All button state whenever speed is changed
+            updateSaveButtonState();
         };
         pitchRow.appendChild(speedInput);
 
