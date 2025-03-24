@@ -15,7 +15,7 @@ function toggleMenu() {
     // Toggle active class to show/hide menu and overlay
     sideMenu.classList.toggle("active");
     overlay.classList.toggle("active");
-    
+
     // For accessibility
     if (sideMenu.classList.contains("active")) {
         document.body.style.overflow = "hidden"; // Prevent scrolling when menu is open
@@ -50,12 +50,15 @@ function initHeader() {
     console.log("Initializing header");
     const hamburgerBtn = document.getElementById("hamburger-btn");
     const overlay = document.getElementById("menu-overlay");
-    
+    const closeMenuBtn = document.getElementById("close-menu-btn");
+
+    console.log("Close menu button found:", closeMenuBtn !== null);
+
     if (hamburgerBtn) {
         // Remove any existing event listeners
         hamburgerBtn.removeEventListener("click", toggleMenu);
         // Add new click event
-        hamburgerBtn.addEventListener("click", function(e) {
+        hamburgerBtn.addEventListener("click", function (e) {
             console.log("Hamburger button clicked");
             toggleMenu();
             e.preventDefault();
@@ -63,17 +66,28 @@ function initHeader() {
     } else {
         console.error("Hamburger button not found");
     }
-    
+
     if (overlay) {
         // Remove any existing event listeners
         overlay.removeEventListener("click", toggleMenu);
         // Add new click event to close menu when overlay is clicked
-        overlay.addEventListener("click", function() {
+        overlay.addEventListener("click", function () {
             console.log("Overlay clicked");
             toggleMenu();
         });
     } else {
         console.error("Overlay not found");
+    }
+
+    // Add event listener for close button
+    if (closeMenuBtn) {
+        // Remove any existing event listeners
+        closeMenuBtn.removeEventListener("click", toggleMenu);
+        // Add new click event with direct function reference
+        closeMenuBtn.addEventListener("click", toggleMenu);
+        console.log("Close button event listener added successfully");
+    } else {
+        console.error("Close menu button not found");
     }
 }
 
@@ -84,6 +98,23 @@ if (document.readyState === "loading") {
     // If DOMContentLoaded has already fired
     initHeader();
 }
+
+// Add a window load event to make sure all elements are fully loaded
+window.addEventListener("load", function () {
+    console.log("Window fully loaded, checking close button again");
+    const closeMenuBtn = document.getElementById("close-menu-btn");
+    if (closeMenuBtn) {
+        console.log("Close button found in window.load event");
+        // Make sure it has a click event
+        closeMenuBtn.addEventListener("click", function (e) {
+            console.log("Close button clicked from window.load handler");
+            toggleMenu();
+            e.stopPropagation(); // Prevent event bubbling
+        });
+    } else {
+        console.error("Close button not found even after window load");
+    }
+});
 
 // Make sure toggleMenu is available globally
 window.toggleMenu = toggleMenu;

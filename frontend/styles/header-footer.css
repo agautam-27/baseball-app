@@ -66,6 +66,34 @@
     z-index: 999;
 }
 
+/* Close button styling */
+.close-menu-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #333;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    z-index: 1001;
+    transition: background-color 0.2s;
+}
+
+.close-menu-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.close-menu-btn:active {
+    background-color: #e0e0e0;
+}
+
 .side-menu.active {
     transform: translateX(0);
 }
