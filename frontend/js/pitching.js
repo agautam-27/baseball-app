@@ -391,13 +391,18 @@ async function saveAll() {
 
     try {
         console.log("📤 Attempting to save data to Firestore...");
-        // Match the same collection structure as hitting
+
+        // Using add() method to ensure a new document is created each time
+        // This will create a new record for each pitching evaluation session,
+        // even for the same player (identified by playerTryoutID)
         const docRef = await db.collection("pitching").add({
             playerTryoutID: playerTryoutID,
             playerID: playerID,
             attempts: formattedPitches,
             notes: notes,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            // Adding a session ID to clearly identify this as a separate evaluation
+            sessionID: Date.now().toString(),
         });
 
         console.log(
