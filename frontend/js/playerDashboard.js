@@ -19,10 +19,16 @@ const fetchPlayerData = async (user) => {
       const firstName = playerData.firstName || "Player";
       const lastName = playerData.lastName || "";
       const currentTryout = playerData.currentTryout || null;
-      const playerTryoutID = playerData.playerTryoutID || "N/A"; // Default to "N/A" if missing
+      const playerTryoutID = playerData.playerTryoutID || "N/A";
+      const playerID = playerData.playerID; // Retrieve playerID from user's document
 
       displayWelcomeMessage(firstName, lastName, currentTryout, playerTryoutID);
       fetchTryouts(currentTryout);
+      fetchHittingStats(playerID);
+      fetchPitchingStats(playerID);
+      fetchFieldingFlyStats(playerID); 
+      fetchFieldingGroundStats(playerID); 
+      fetchBaseRunningStats(playerID);
     } else {
       console.error("Player document does not exist");
     }
@@ -30,6 +36,8 @@ const fetchPlayerData = async (user) => {
     console.error("Error fetching player data:", error);
   }
 };
+
+
 
 
 const displayWelcomeMessage = async (firstName, lastName, currentTryout, playerTryoutID) => {
@@ -228,31 +236,219 @@ const cancelTryout = async (tryoutID, tryoutDocID) => {
 };
 
 
-document.addEventListener("DOMContentLoaded", () => {
-  populateDummyData();
-});
+const fetchHittingStats = async (playerID) => {
+  if (!playerID) {
+    console.error("No playerID found for the user.");
+    return;
+  }
 
-function populateDummyData() {
-  document.getElementById("num-pitches").textContent = "25";
-  document.getElementById("num-strikes").textContent = "15";
-  document.getElementById("num-balls").textContent = "10";
-  document.getElementById("avg-speed").textContent = "85 mph";
-  document.getElementById("pitching-notes").textContent = "Good control, needs work on breaking ball.";
+  try {
+    const hittingCollection = await firestore.collection("hitting").where("playerID", "==", playerID).get();
 
-  document.getElementById("hitting-strikes").textContent = "8";
-  document.getElementById("hitting-hits").textContent = "5";
-  document.getElementById("hitting-notes").textContent = "Improving contact with inside pitches.";
+    let totalHits = 0;
+    let totalStrikes = 0;
 
-  document.getElementById("home-to-1st").textContent = "4.2s";
-  document.getElementById("home-to-2nd").textContent = "7.8s";
-  document.getElementById("base-running-notes").textContent = "Quick acceleration off the line.";
+    hittingCollection.forEach((doc) => {
+      const hittingData = doc.data();
+      const attempts = hittingData.attempts || [];
 
-  document.getElementById("fly-balls-result").textContent = "3 catches, 1 miss";
-  document.getElementById("fly-balls-notes").textContent = "Good reaction time.";
+      attempts.forEach((attempt) => {
+        if (attempt.result === "Hit") {
+          totalHits++;
+        } else if (attempt.result === "Strike") {
+          totalStrikes++;
+        }
+      });
+    });
 
-  document.getElementById("ground-balls-result").textContent = "5 clean plays, 1 error";
-  document.getElementById("ground-balls-notes").textContent = "Needs quicker footwork.";
-}
+    updateHittingCard(totalHits, totalStrikes);
+  } catch (error) {
+    console.error("Error fetching hitting stats:", error);
+  }
+};
+
+const updateHittingCard = (hits, strikes) => {
+  document.getElementById("hitting-hits").textContent = hits;
+  document.getElementById("hitting-strikes").textContent = strikes;
+};
+
+const fetchPitchingStats = async (playerID) => {
+  if (!playerID) {
+    console.error("No playerID found for the user.");
+    return;
+  }
+
+  try {
+    const pitchingCollection = await firestore.collection("pitching").where("playerID", "==", playerID).get();
+
+    let totalPitches = 0;
+    let totalStrikes = 0;
+    let totalBalls = 0;
+    let totalSpeed = 0;
+    let speedCount = 0;
+
+    pitchingCollection.forEach((doc) => {
+      const pitchingData = doc.data();
+      const attempts = pitchingData.attempts || [];
+
+      attempts.forEach((attempt) => {
+        totalPitches++;
+
+        if (attempt.outcome === "Strike") {
+          totalStrikes++;
+        } else if (attempt.outcome === "Ball") {
+          totalBalls++;
+        }
+
+        if (attempt.speed) {
+          totalSpeed += attempt.speed;
+          speedCount++;
+        }
+      });
+    });
+
+    const avgSpeed = speedCount > 0 ? (totalSpeed / speedCount).toFixed(1) : "N/A";
+
+    updatePitchingCard(totalPitches, totalStrikes, totalBalls, avgSpeed);
+  } catch (error) {
+    console.error("Error fetching pitching stats:", error);
+  }
+};
+
+const updatePitchingCard = (pitches, strikes, balls, avgSpeed) => {
+  document.getElementById("num-pitches").textContent = pitches;
+  document.getElementById("num-strikes").textContent = strikes;
+  document.getElementById("num-balls").textContent = balls;
+  document.getElementById("avg-speed").textContent = avgSpeed !== "N/A" ? `${avgSpeed} km/h` : "N/A";
+};
+
+
+const fetchFieldingFlyStats = async (playerID) => {
+  if (!playerID) {
+    console.error("No playerID found for the user.");
+    return;
+  }
+
+  try {
+    // Query FieldingFlyBall collection for documents where playerID matches
+    const fieldingFlyCollection = await firestore
+      .collection("FieldingFlyBall")
+      .where("playerID", "==", playerID)
+      .get();
+
+    let totalCatches = 0;
+    let totalMisses = 0;
+
+    // Loop through the documents
+    fieldingFlyCollection.forEach((doc) => {
+      const fieldingData = doc.data();
+      const attempts = fieldingData.attempts || [];
+
+      // Count catches and misses
+      attempts.forEach((attempt) => {
+        if (attempt.CatchOrMiss === "Catches") {
+          totalCatches++;
+        } else if (attempt.CatchOrMiss === "Missed") {
+          totalMisses++;
+        }
+      });
+    });
+
+    updateFieldingFlyCard(totalCatches, totalMisses);
+  } catch (error) {
+    console.error("Error fetching Fielding (Fly Balls) stats:", error);
+  }
+};
+
+// Function to update the Fielding (Fly Balls) card
+const updateFieldingFlyCard = (catches, misses) => {
+  document.getElementById("fly-balls-catches").textContent = ` ${catches}`;
+  document.getElementById("fly-balls-misses").textContent = ` ${misses}`;
+
+};
+
+const fetchFieldingGroundStats = async (playerID) => {
+  if (!playerID) {
+    console.error("No playerID found for the user.");
+    return;
+  }
+
+  try {
+    const groundBallCollection = await firestore.collection("FieldingGroundBall").where("playerID", "==", playerID).get();
+
+    let totalCatches = 0;
+    let totalMisses = 0;
+
+    groundBallCollection.forEach((doc) => {
+      const fieldingData = doc.data();
+      const attempts = fieldingData.attempts || [];
+
+      attempts.forEach((attempt) => {
+        if (attempt.CatchOrMiss === "Catches") {
+          totalCatches++;
+        } else if (attempt.CatchOrMiss === "Missed") {
+          totalMisses++;
+        }
+      });
+    });
+
+    updateFieldingGroundCard(totalCatches, totalMisses);
+  } catch (error) {
+    console.error("Error fetching Fielding (Ground Balls) stats:", error);
+  }
+};
+
+const updateFieldingGroundCard = (catches, misses) => {
+  document.getElementById("ground-balls-catches").textContent = catches;
+  document.getElementById("ground-balls-misses").textContent = misses;
+};
+
+const fetchBaseRunningStats = async (playerID) => {
+  if (!playerID) {
+    console.error("No playerID found for the user.");
+    return;
+  }
+
+  try {
+    const baseRunningSnapshot = await firestore.collection("baseRunning")
+      .where("playerID", "==", playerID)
+      .get();
+
+    let homeToFirstTimes = [];
+    let homeToSecondTimes = [];
+
+    baseRunningSnapshot.forEach((doc) => {
+      const baseRunningData = doc.data();
+      const attempts = baseRunningData.attempts || [];
+
+      attempts.forEach((attempt) => {
+        if (attempt.basePath === "Home to 1st") {
+          homeToFirstTimes.push(attempt.time);
+        } else if (attempt.basePath === "Home to 2nd") {
+          homeToSecondTimes.push(attempt.time);
+        }
+      });
+    });
+
+    const avgHomeToFirst = homeToFirstTimes.length > 0
+      ? (homeToFirstTimes.reduce((sum, time) => sum + time, 0) / homeToFirstTimes.length).toFixed(2)
+      : "N/A";
+
+    const avgHomeToSecond = homeToSecondTimes.length > 0
+      ? (homeToSecondTimes.reduce((sum, time) => sum + time, 0) / homeToSecondTimes.length).toFixed(2)
+      : "N/A";
+
+    updateBaseRunningCard(avgHomeToFirst, avgHomeToSecond);
+  } catch (error) {
+    console.error("Error fetching base running stats:", error);
+  }
+};
+
+const updateBaseRunningCard = (homeToFirst, homeToSecond) => {
+  document.getElementById("home-to-1st").textContent = homeToFirst !== "N/A" ? `${homeToFirst} sec` : "N/A";
+  document.getElementById("home-to-2nd").textContent = homeToSecond !== "N/A" ? `${homeToSecond} sec` : "N/A";
+};
+
 
 
 
@@ -277,11 +473,5 @@ document.querySelectorAll('.card').forEach(card => {
     window.location.href = `graphs.html?cardId=${cardId}`;  // Navigate with query parameter
   });
 });
-
-
-
-
-
-
 
 
