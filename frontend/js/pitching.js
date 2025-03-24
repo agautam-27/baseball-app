@@ -265,7 +265,13 @@ function renderPitchingPage() {
     saveBtn.id = "save-btn";
     saveBtn.className = "btn mt-4";
     saveBtn.textContent = "Save All";
-    saveBtn.disabled = !playerID;
+
+    // Disable the button if there is a pitch with an empty speed
+    const hasEmptySpeed = pitches.some(
+        (pitch) => !pitch.speed || pitch.speed.trim() === ""
+    );
+    saveBtn.disabled = !playerID || hasEmptySpeed;
+
     saveBtn.onclick = saveAll;
     container.appendChild(saveBtn);
 }
@@ -346,6 +352,15 @@ async function saveAll() {
         return;
     }
 
+    // speedが空のpitchがある場合は保存しない
+    const hasEmptySpeed = pitches.some(
+        (pitch) => !pitch.speed || pitch.speed.trim() === ""
+    );
+    if (hasEmptySpeed) {
+        alert("すべてのピッチにスピードを入力してください。");
+        return;
+    }
+
     if (pitches.length === 0) {
         alert("Please add at least one pitch data.");
         return;
@@ -353,7 +368,7 @@ async function saveAll() {
 
     // Format the data
     const formattedPitches = pitches.map((pitch) => ({
-        speed: pitch.speed,
+        speed: pitch.speed ? Number(pitch.speed) : null, // 文字列から数値型に変換
         outcome: isStrikeZone(pitch.zone) ? "Strike" : "Ball",
         pitchingZone: pitch.zone,
     }));
