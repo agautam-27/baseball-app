@@ -1,163 +1,355 @@
 /* Container */
 #hitting-content {
-    padding: 20px;
-    max-width: 500px;
-    margin: auto;
-  }
-  
-  /* Title */
-  #hitting-content h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 1.4rem;
-  }
-  
-  /* Attempt Card */
+  padding: 20px;
+  max-width: 500px;
+  margin: auto;
+}
+
+/* Title */
+#hitting-content h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+}
+
+/* Attempt Card */
 .attempt-card {
   background-color: #f0f0f0;
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 20px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  position: relative; /* Allow absolute positioning for delete button */
+  position: relative;
 }
-  
-  /* Result Row */
-  .result-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-  
-  .result-text {
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-  
-  /* Delete button  */
+
+/* Result Row */
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.result-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Delete button */
 .remove-btn {
   background: none;
   border: none;
   font-size: 1.3rem;
   color: red;
   cursor: pointer;
-  position: absolute; /* Position the button absolutely */
-  top: 10px; /* Position from the top */
-  right: 10px; /* Position from the right */
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
-  
-  /* Dropdown */
-  .attempt-card select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 1rem;
-  }
-  
-  /* Dropdown labels */
+
+/* Dropdown */
+.attempt-card select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+/* Dropdown labels */
 .attempt-card label {
   font-size: 1rem;
   margin-bottom: 6px;
   font-weight: bold;
-  display: block; /* Make labels block elements for better alignment */
+  display: block;
   margin-top: 12px;
 }
-  
-  /* Add New Attempt Button */
-  #add-attempt-btn {
-    width: 100%;
-    padding: 14px;
-    font-size: 1rem;
-    background-color: #6200ee;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    cursor: pointer;
-  }
-  
-  #add-attempt-btn:hover {
-    background-color: #4500c3;
-  }
-  
-  /* Notes */
-  .notes-label {
-    font-size: 1rem;
-    margin-bottom: 6px;
-    font-weight: bold;
-  }
-  
-  #notes-input {
-    width: 95%;
-    height: 80px;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    resize: vertical;
-    margin-bottom: 20px;
-  }
-  
-  /* Save Button */
-  #save-btn {
-    width: 100%;
-    padding: 14px;
-    font-size: 1rem;
-    background-color: green;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  
-  #save-btn:hover {
-    background-color: darkgreen;
-  }
-  
+
+/* Add New Attempt Button */
+#add-attempt-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  background-color: #6200ee;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#add-attempt-btn:hover {
+  background-color: #4500c3;
+}
+
+/* Notes */
+.notes-label {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+#notes-input {
+  width: 95%;
+  height: 80px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  resize: vertical;
+  margin-bottom: 20px;
+}
+
+/* Save Button */
+#save-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#save-btn:hover {
+  background-color: darkgreen;
+}
+
 /* Result Radio Buttons */
 .result-radio {
-    display: flex;
-    gap: 10px; /* Adds spacing between the radio buttons */
-    align-items: center;
-  }
-  
-  .result-radio label {
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-  }
-  
-  .result-radio input[type="radio"] {
-    margin-left: 8px; /* Adds space between the label and radio button */
-  }
-  
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.result-radio label {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.result-radio input[type="radio"] {
+  margin-left: 8px;
+}
+
 /* Player ID Input */
 .player-input-div {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+#player-id-input {
+  width: 50%;
+  padding: 8px;
+  height: 36px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-top: 6px;
+}
+
+#player-id-input:focus {
+  outline: none;
+  border-color: #6200ee;
+  box-shadow: 0 0 5px rgba(98, 0, 238, 0.3);
+}
+
+#player-id-input::placeholder {
+  color: #888;
+}
+
+/* ---------------- Enhanced Modal & Field Image Styles ---------------- */
+
+/* Modal container */
+.modal {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: 
+    opacity 0.3s ease-in-out, 
+    visibility 0.3s ease-in-out;
+}
+
+.modal.show {
+  display: flex;
+  opacity: 1;
+  visibility: visible;
+  align-items: flex-end;
+}
+
+/* Modal content with smooth slide-up animation */
+.modal-content {
+  background-color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: 
+    transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    opacity 0.4s ease-in-out;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Hit Zone Matrix Title */
+.hit-zone-matrix-title {
+  text-align: center;
+  padding: 15px;
+  background-color: #f0f0f0;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin: 0;
+}
+
+.hit-zone-image-container {
+  position: relative;
+  width: 110%; /* Increased width */
+  left: -5%; /* Shift slightly left */
+  max-height: 290vh; /* Increased height */
+  overflow: hidden;
+}
+
+.field-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.hit-zone-overlay {
+  position: absolute;
+  border: 2px solid rgba(98, 0, 238, 0.5);
+  background-color: rgba(98, 0, 238, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hit-zone-overlay::before {
+  content: '•';
+  color: #6200ee;
+  font-size: 20px;
+  font-weight: bold;
+  opacity: 0.7;
+}
+
+.hit-zone-overlay[data-zone="Infield Left"] {
+  left: 32%;
+  bottom: 45%;
+  width: 8%;
+  height: 12%;
+}
+
+.hit-zone-overlay[data-zone="Infield Center"] {
+  left: 44%;
+  bottom: 28%;
+  width: 10%;
+  height: 20%;
+}
+
+.hit-zone-overlay[data-zone="Infield Right"] {
+  left: 60%;
+  bottom: 45%;
+  width: 8%;
+  height: 12%;
+}
+
+.hit-zone-overlay[data-zone="Outfield Left"] {
+  left: 22%;
+  top: 15%;
+  width: 12%;
+  height: 15%;
+}
+
+.hit-zone-overlay[data-zone="Outfield Center"] {
+  left: 40%;
+  top: 8%;
+  width: 20%;
+  height: 20%;
+}
+
+.hit-zone-overlay[data-zone="Outfield Right"] {
+  left: 65%;
+  top: 15%;
+  width: 12%;
+  height: 15%;
+}
+
+/* Close button */
+.close-button {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background-color: #f0f0f0;
+  border: none;
+  border-top: 1px solid #ddd;
+  color: #6200ee;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.close-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  #hitting-content {
+    padding: 10px;
   }
-  
-  #player-id-input {
-    width: 50%; 
-    padding: 8px;
-    height: 36px; 
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    margin-top: 6px;
+
+  .modal-content {
+    max-width: 100%;
   }
-  
-  #player-id-input:focus {
-    outline: none;
-    border-color: #6200ee;
-    box-shadow: 0 0 5px rgba(98, 0, 238, 0.3);
-  }
-  
-  #player-id-input::placeholder {
-    color: #888;
-  }
-  
-  
+}
+
+/* Tooltip that always shows the zone label */
+.hit-zone-overlay[data-zone]::after {
+  content: attr(data-zone);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
+  background-color: rgba(98, 0, 238, 0.8);
+  color: #fff;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* Modal Interaction Hint (optional extra element) */
+.hit-zone-hint {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(98, 0, 238, 0.1);
+  color: #6200ee;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}

@@ -1,45 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Hitting Performance</title>
-        <link rel="stylesheet" href="../styles/style.css" />
-        <link rel="stylesheet" href="../styles/header-footer.css" />
-        <link rel="stylesheet" href="../styles/hitting.css" />
-    </head>
-    <body class="with-header-footer">
-        <div id="header-container"></div>
 
-        <main id="hitting-content" class="p-4">
-            <h2 class="text-center">Hitting Evaluation</h2>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hitting Performance</title>
+  <link rel="stylesheet" href="../styles/style.css" />
+  <link rel="stylesheet" href="../styles/header-footer.css" />
+  <link rel="stylesheet" href="../styles/hitting.css" />
+</head>
 
-            <div id="attempts-container">
-                <!-- Attempts will be injected here by JS -->
-            </div>
+<body class="with-header-footer">
+  <div id="header-container"></div>
 
-            <button id="add-attempt-btn" class="btn">➕ Add New Attempt</button>
+  <main id="hitting-content" class="p-4">
+    <h2 class="text-center">Hitting Evaluation</h2>
 
-            <label for="notes" class="block mt-4">Notes:</label>
-            <textarea
-                id="notes"
-                rows="4"
-                placeholder="Enter notes..."
-                class="w-full mt-1"
-            ></textarea>
+    <div id="attempts-container">
+      <!-- Attempts will be injected here by hitting.js -->
+    </div>
 
-            <button id="save-btn" class="btn mt-4">Save</button>
-        </main>
+    <button id="add-attempt-btn" class="btn">➕ Add New Attempt</button>
 
-        <div id="footer-container"></div>
+    <label for="notes" class="block mt-4">Notes:</label>
+    <textarea id="notes" rows="4" placeholder="Enter notes..." class="w-full mt-1"></textarea>
 
-        <!-- Firebase & Scripts -->
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-        <script src="../js/firebase-config.js"></script>
-        <script src="../js/authGuard.js"></script>
-        <script src="../js/hitting.js"></script>
-        <script src="../js/header.js"></script>
-    </body>
+    <button id="save-btn" class="btn mt-4">Save</button>
+  </main>
+
+  <div id="footer-container"></div>
+
+  <!-- Hit Zone Matrix Modal Using Field Image -->
+  <div id="hit-zone-modal" class="modal">
+    <div class="modal-content">
+      <h3 class="hit-zone-matrix-title">Select Hit Zone</h3>
+      <div class="hit-zone-image-container">
+        <!-- Adjust the src path to where your field.png is stored -->
+        <img src="/assets/HittingPageImages/baseballField.png" alt="Field" class="field-image">
+        <!-- Overlay clickable areas for each hit zone -->
+        <div class="hit-zone-overlay" data-zone="Infield Left" onclick="selectHitZone('Infield Left')"></div>
+        <div class="hit-zone-overlay" data-zone="Infield Center" onclick="selectHitZone('Infield Center')"></div>
+        <div class="hit-zone-overlay" data-zone="Infield Right" onclick="selectHitZone('Infield Right')"></div>
+        <div class="hit-zone-overlay" data-zone="Outfield Left" onclick="selectHitZone('Outfield Left')"></div>
+        <div class="hit-zone-overlay" data-zone="Outfield Center" onclick="selectHitZone('Outfield Center')"></div>
+        <div class="hit-zone-overlay" data-zone="Outfield Right" onclick="selectHitZone('Outfield Right')"></div>
+      </div>
+      <button class="close-button" onclick="hideHitZoneMatrix()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Firebase & Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/authGuard.js"></script>
+  <script src="../js/hitting.js"></script>
+  <script src="../js/header.js"></script>
+</body>
+
 </html>
