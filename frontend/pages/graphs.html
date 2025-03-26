@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Stats Graphs</title>
         <link rel="stylesheet" href="../styles/style.css" />
+        <link rel="stylesheet" href="../styles/graph.css" />
         <link rel="stylesheet" href="../styles/header-footer.css" />
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
@@ -14,9 +15,14 @@
 
         <div id="error-msg"></div>
 
-        <div id="chartContainer">
-            <p id="graph-title"></p>
-            <canvas id="statsChart" style="border: 1px solid #000000"></canvas>
+        <p id="graph-title"></p>
+        <div class="chartContainer">
+            <canvas id="statsChart"></canvas>
+        </div>
+
+        <p id="graph-title2">s</p> <!-- chart container has to only contain the canvas-->
+        <div class="chartContainer">
+            <canvas id="statsChart2"></canvas>
         </div>
 
         <div id="footer-container"></div>

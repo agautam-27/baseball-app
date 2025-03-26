@@ -1,13 +1,18 @@
-#chartContainer {
-    width: 70%;  /* Make it narrower */
-    height: 400px;
-    max-height: 400px;
+.chartContainer
+/* #chartContainer2 */
+{
+    display: flex;
+    justify-content: center;
+    width: 100%;  /* Make it narrower */
+    height: 45%;
+    /* max-height: 400px; */
     position: relative;
     margin: auto; /* Center it */
 }
 
 
 canvas {
-    width: 90%;
-    height: 100%;
+    align-self: center;
+    width: 100%;
+    height: 50%;
 }
