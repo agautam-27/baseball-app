@@ -101,51 +101,57 @@ function addRow() {
   saveAttempts();  // Save attempts to localStorage after adding a new row
 }
 
+function showMessage(message, isSuccess = true) {
+  const messageBox = document.getElementById("message-box");
+  messageBox.textContent = message;
+  messageBox.className = `message-box ${isSuccess ? "success" : "error"}`;
+  messageBox.style.display = "block";
+
+  setTimeout(() => {
+    messageBox.style.display = "none";
+  }, 3000);
+}
+
 async function saveAll() {
   if (!playerInput.value.trim()) {
-    alert("Please enter a Player TryOut ID!");
+    showMessage("Please enter a Player TryOut ID!", false);
     return;
   }
 
   try {
     const playerTryoutID = playerInput.value.trim();
-    
-    // Fetch playerID from users collection
     const userRef = db.collection("users").where("playerTryoutID", "==", playerTryoutID);
     const userSnapshot = await userRef.get();
-    
+
     if (userSnapshot.empty) {
-      alert("Player TryOut ID not found in users collection.");
+      showMessage("Player TryOut ID not found in users collection.", false);
       return;
     }
-    
+
     const userData = userSnapshot.docs[0].data();
     const playerID = userData.playerID;
 
-    // Query for existing documents for this player to increment the document ID
     const fieldingRef = db.collection("FieldingFlyBall");
     const existingDocs = await fieldingRef.where("playerTryoutID", "==", playerTryoutID).get();
     const newDocId = playerTryoutID + "-" + (existingDocs.size + 1);
-    
+
     const indexedAttempts = attempts.map((attempt) => ({
       CatchOrMiss: attempt.result,
       catchType: attempt.catchType,
     }));
 
-    // Save as a new document with the new document ID
-    await fieldingRef.doc(newDocId).set(
-      {
-        playerID: playerID,
-        playerTryoutID: playerTryoutID,
-        notes: notesInput.value,
-        attempts: indexedAttempts, 
-      }
-    );
+    await fieldingRef.doc(newDocId).set({
+      playerID: playerID,
+      playerTryoutID: playerTryoutID,
+      notes: notesInput.value,
+      attempts: indexedAttempts, 
+    });
 
-    alert("✅ Fielding Fly Ball data saved as " + newDocId + "!");
+    showMessage("✅ Fielding Fly Ball data saved as " + newDocId + "!", true);
   } catch (err) {
     console.error("❌ Error saving data:", err);
-    alert("Failed to save. Check console.");
+    showMessage("Failed to save. Check console.", false);
   }
 }
+
 
