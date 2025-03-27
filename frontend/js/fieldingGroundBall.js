@@ -18,9 +18,13 @@ const playerInput = document.getElementById("playerTryOutID");
 function loadAttempts() {
   const savedAttempts = localStorage.getItem("attempts");
   if (savedAttempts) {
-    attempts = JSON.parse(savedAttempts);  // Parse and load saved attempts
+    attempts = JSON.parse(savedAttempts);
+  }
+  if (attempts.length === 0) {
+    attempts.push({ result: "Missed", catchType: "Drop step catch" }); 
   }
 }
+
 
 // Function to save attempts to localStorage
 function saveAttempts() {
@@ -95,6 +99,14 @@ function renderAttempts() {
   });
 }
 
+function clearPage() {
+  attempts = [{ result: "Missed", catchType: "Drop step catch" }]; // Reset to one row
+  notesInput.value = "";
+  playerInput.value = "";
+  saveAttempts();
+  renderAttempts();
+}
+
 function addRow() {
   attempts.push({ result: "Missed", catchType: "Drop step catch" });
   renderAttempts();
@@ -148,11 +160,11 @@ async function saveAll() {
     });
 
     showMessage("✅ Fielding Ground Ball data saved as " + newDocId + "!", true);
+    clearPage(); // Clear the page after saving
   } catch (err) {
     console.error("❌ Error saving data:", err);
     showMessage("Failed to save. Check console.", false);
   }
 }
-
 
 
