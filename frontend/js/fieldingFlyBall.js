@@ -122,30 +122,30 @@ async function saveAll() {
     const userData = userSnapshot.docs[0].data();
     const playerID = userData.playerID;
 
-    const playerRef = db.collection("FieldingFlyBall").doc(playerTryoutID);
-
+    // Query for existing documents for this player to increment the document ID
+    const fieldingRef = db.collection("FieldingFlyBall");
+    const existingDocs = await fieldingRef.where("playerTryoutID", "==", playerTryoutID).get();
+    const newDocId = playerTryoutID + "-" + (existingDocs.size + 1);
+    
     const indexedAttempts = attempts.map((attempt) => ({
-        CatchOrMiss: attempt.result,
-        catchType: attempt.catchType,
-      }));
+      CatchOrMiss: attempt.result,
+      catchType: attempt.catchType,
+    }));
 
-      await playerRef.set(
-        {
-          playerID: playerID,
-          playerTryoutID: playerTryoutID,
-          notes: notesInput.value,
-          attempts: indexedAttempts, 
-        },
-        { merge: true }
-      );
+    // Save as a new document with the new document ID
+    await fieldingRef.doc(newDocId).set(
+      {
+        playerID: playerID,
+        playerTryoutID: playerTryoutID,
+        notes: notesInput.value,
+        attempts: indexedAttempts, 
+      }
+    );
 
-    alert("✅ Fielding Fly Ball data saved!");
+    alert("✅ Fielding Fly Ball data saved as " + newDocId + "!");
   } catch (err) {
     console.error("❌ Error saving data:", err);
     alert("Failed to save. Check console.");
   }
 }
 
-function goBack() {
-  window.location.href = "coachDashboard.html";
-}

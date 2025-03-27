@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fielding FlyBall</title>
     <link rel="stylesheet" href="../styles/fielding.css">
+    <link rel="stylesheet" href="../styles/header-footer.css" />
 </head>
 <body>
-    <div class="container">
-        <button class="back-btn" onclick="goBack()">←</button>
+    <body class="with-header-footer">
+        <div id="header-container"></div>
+        <div class="container">
         <h1>Fielding - Ground Balls</h1>
 
         <!-- Player Information Section -->
@@ -30,6 +32,7 @@
 
         <button onclick="saveAll()" class="save-btn">Save All</button>
     </div>
+    <div id="footer-container"></div>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
