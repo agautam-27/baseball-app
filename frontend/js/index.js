@@ -285,31 +285,28 @@ async function handleCoachSignup(e) {
     }
 
     try {
-        // Special hardcoded invitation code for development/testing
-        if (invitationCode !== "COACH2025") {
-            // Verify invitation code in database
-            const inviteDoc = await db
-                .collection("coach_invites")
-                .doc(invitationCode)
-                .get();
+        // Verify invitation code in database
+        const inviteDoc = await db
+            .collection("coach_invites")
+            .doc(invitationCode)
+            .get();
 
-            if (!inviteDoc.exists) {
-                displayAuthMessage(messages.invalidCoachId, true);
+        if (!inviteDoc.exists) {
+            displayAuthMessage(messages.invalidCoachId, true);
+            return;
+        }
+
+        if (inviteDoc.data().used) {
+            displayAuthMessage(messages.coachIdUsed, true);
+            return;
+        }
+
+        // Check expiration if present
+        if (inviteDoc.data().expirationDate) {
+            const expirationDate = inviteDoc.data().expirationDate.toDate();
+            if (expirationDate < new Date()) {
+                displayAuthMessage(messages.coachIdExpired, true);
                 return;
-            }
-
-            if (inviteDoc.data().used) {
-                displayAuthMessage(messages.coachIdUsed, true);
-                return;
-            }
-
-            // Check expiration if present
-            if (inviteDoc.data().expirationDate) {
-                const expirationDate = inviteDoc.data().expirationDate.toDate();
-                if (expirationDate < new Date()) {
-                    displayAuthMessage(messages.coachIdExpired, true);
-                    return;
-                }
             }
         }
 
@@ -333,13 +330,11 @@ async function handleCoachSignup(e) {
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         });
 
-        // Mark invitation code as used (except for hardcoded one)
-        if (invitationCode !== "COACH2025") {
-            await db.collection("coach_invites").doc(invitationCode).update({
-                used: true,
-                assignedTo: email,
-            });
-        }
+        // Mark invitation code as used
+        await db.collection("coach_invites").doc(invitationCode).update({
+            used: true,
+            assignedTo: email,
+        });
 
         // Show success message
         displayAuthMessage(

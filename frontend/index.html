@@ -1,125 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Baseball App - Login</title>
-  <link rel="stylesheet" href="styles/style.css">
-  <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="assets/AppIcons/AppLogo.png" />
-  <meta name="theme-color" content="#1f2937" />
-</head>
-<body>
-  <div class="container">
-    <h2>Welcome to Baseball App</h2>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Baseball App - Login</title>
+        <link rel="stylesheet" href="styles/style.css" />
+        <link rel="manifest" href="manifest.json" />
+        <link rel="apple-touch-icon" href="assets/AppIcons/AppLogo.png" />
+        <meta name="theme-color" content="#1f2937" />
+    </head>
+    <body>
+        <div class="container">
+            <h2>Welcome to Baseball App</h2>
 
-    <!-- Main login/signup box container -->
-    <div class="box-container">
-      <!-- Tab-like role toggle at top -->
-      <div class="tab-row">
-        <button class="tab-button active" data-role="player">Continue as Player</button>
-        <button class="tab-button" data-role="coach">Continue as Coach</button>
-      </div>
+            <!-- Main login/signup box container -->
+            <div class="box-container">
+                <!-- Tab-like role toggle at top -->
+                <div class="tab-row">
+                    <button class="tab-button active" data-role="player">
+                        Continue as Player
+                    </button>
+                    <button class="tab-button" data-role="coach">
+                        Continue as Coach
+                    </button>
+                </div>
 
-      <!-- Content area with auth forms -->
-      <div class="content-area">
-        <!-- Radio buttons for login/signup toggle -->
-        <div class="radio-container">
-          <div class="radio-row">
-            <div class="radio-item">
-              <input type="radio" id="login-radio" name="auth-mode" value="login" checked>
-              <label for="login-radio">Login</label>
+                <!-- Content area with auth forms -->
+                <div class="content-area">
+                    <!-- Radio buttons for login/signup toggle -->
+                    <div class="radio-container">
+                        <div class="radio-row">
+                            <div class="radio-item">
+                                <input
+                                    type="radio"
+                                    id="login-radio"
+                                    name="auth-mode"
+                                    value="login"
+                                    checked
+                                />
+                                <label for="login-radio">Login</label>
+                            </div>
+                            <div class="radio-item">
+                                <input
+                                    type="radio"
+                                    id="signup-radio"
+                                    name="auth-mode"
+                                    value="signup"
+                                />
+                                <label for="signup-radio">Sign Up</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p id="auth-message"></p>
+
+                    <!-- Login Form -->
+                    <form id="login-form">
+                        <div class="form-group">
+                            <input
+                                type="text"
+                                id="login-email-or-id"
+                                placeholder="Player ID or Email"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <input
+                                type="password"
+                                id="login-password"
+                                placeholder="Password"
+                                required
+                            />
+                        </div>
+                        <button type="submit" class="submit-button">
+                            Submit
+                        </button>
+                    </form>
+
+                    <!-- Signup Form (Player) -->
+                    <form id="player-signup-form" style="display: none">
+                        <div class="form-group">
+                            <input
+                                type="text"
+                                id="player-first-name"
+                                placeholder="Player's First Name"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <input
+                                type="text"
+                                id="player-last-name"
+                                placeholder="Player's Last Name"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <input
+                                type="email"
+                                id="player-email"
+                                placeholder="Email"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <input
+                                type="password"
+                                id="player-password"
+                                placeholder="Password"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <input
+                                type="password"
+                                id="player-reenter-password"
+                                placeholder="Re-Enter Password"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="player-birthday"> Birthdate</label>
+                            <input
+                                type="date"
+                                id="player-birthday"
+                                placeholder="Date of Birth"
+                            />
+                        </div>
+                        <button type="submit" class="submit-button">
+                            Submit
+                        </button>
+                    </form>
+
+                    <!-- Signup Form (Coach) -->
+                    <form id="coach-signup-form" style="display: none">
+                        <div class="form-group">
+                            <input
+                                type="text"
+                                id="coach-first-name"
+                                placeholder="First Name"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <input
+                                type="text"
+                                id="coach-last-name"
+                                placeholder="Last Name"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <input
+                                type="email"
+                                id="coach-email"
+                                placeholder="Email"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <input
+                                type="password"
+                                id="coach-password"
+                                placeholder="Password"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <input
+                                type="password"
+                                id="coach-reenter-password"
+                                placeholder="Re-Enter Password"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <input
+                                type="text"
+                                id="coach-invitation-code"
+                                placeholder="Invitation Code"
+                                required
+                            />
+                        </div>
+                        <button type="submit" class="submit-button">
+                            Submit
+                        </button>
+                    </form>
+                </div>
             </div>
-            <div class="radio-item">
-              <input type="radio" id="signup-radio" name="auth-mode" value="signup">
-              <label for="signup-radio">Sign Up</label>
-            </div>
-          </div>
         </div>
 
-        <p id="auth-message"></p>
+        <!-- Firebase SDKs -->
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
-        <!-- Login Form -->
-        <form id="login-form">
-          <div class="form-group">
-            <input type="text" id="login-email-or-id" placeholder="Player ID or Email" required />
-          </div>
-          <div class="form-group">
-            <input type="password" id="login-password" placeholder="Password" required />
-          </div>
-          <button type="submit" class="submit-button">Submit</button>
-        </form>
+        <!-- Config & Auth Logic -->
+        <script src="js/firebase-config.js"></script>
+        <script src="js/index.js"></script>
 
-        <!-- Signup Form (Player) -->
-        <form id="player-signup-form" style="display:none;">
-          <div class="form-group">
-            <input type="text" id="player-first-name" placeholder="Player's First Name" required />
-          </div>
-          <div class="form-group">
-            <input type="text" id="player-last-name" placeholder="Player's Last Name" required />
-          </div>
-          <div class="form-group">
-            <input type="email" id="player-email" placeholder="Email" required />
-          </div>
-          <div class="form-group">
-            <input type="password" id="player-password" placeholder="Password" required />
-          </div>
-          <div class="form-group">
-            <input type="password" id="player-reenter-password" placeholder="Re-Enter Password" required />
-          </div>
-          <div class="form-group">
-            <input type="date" id="player-birthday" placeholder="Date of Birth" />
-          </div>
-          <button type="submit" class="submit-button">Submit</button>
-        </form>
-
-        <!-- Signup Form (Coach) -->
-        <form id="coach-signup-form" style="display:none;">
-          <div class="form-group">
-            <input type="text" id="coach-first-name" placeholder="First Name" required />
-          </div>
-          <div class="form-group">
-            <input type="text" id="coach-last-name" placeholder="Last Name" required />
-          </div>
-          <div class="form-group">
-            <input type="email" id="coach-email" placeholder="Email" required />
-          </div>
-          <div class="form-group">
-            <input type="password" id="coach-password" placeholder="Password" required />
-          </div>
-          <div class="form-group">
-            <input type="password" id="coach-reenter-password" placeholder="Re-Enter Password" required />
-          </div>
-          <div class="form-group">
-            <input type="text" id="coach-invitation-code" placeholder="Invitation Code" required />
-          </div>
-          <button type="submit" class="submit-button">Submit</button>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
-  <!-- Config & Auth Logic -->
-  <script src="js/firebase-config.js"></script>
-  <script src="js/index.js"></script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(function (registration) {
-            console.log('✅ Service Worker registered with scope:', registration.scope);
-          }, function (err) {
-            console.log('❌ Service Worker registration failed:', err);
-          });
-      });
-    }
-  </script>
-</body>
+        <script>
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", function () {
+                    navigator.serviceWorker.register("service-worker.js").then(
+                        function (registration) {
+                            console.log(
+                                "✅ Service Worker registered with scope:",
+                                registration.scope
+                            );
+                        },
+                        function (err) {
+                            console.log(
+                                "❌ Service Worker registration failed:",
+                                err
+                            );
+                        }
+                    );
+                });
+            }
+        </script>
+    </body>
 </html>

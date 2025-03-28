@@ -117,22 +117,19 @@ signupForm.addEventListener('submit', (e) => {
   }
 
   const validateCoachId = selectedRole === 'coach'
-    ? (coachId === "COACH2025"
-        ? Promise.resolve()
-        : db.collection("coach_invites").doc(coachId).get().then(doc => {
-            if (!doc.exists) throw new Error(messages.invalidCoachId);
-            if (doc.data().used) throw new Error(messages.coachIdUsed);
-            
-            // Check if invitation code has expired
-            if (doc.data().expirationDate) {
-              const expirationDate = doc.data().expirationDate.toDate();
-              const now = new Date();
-              if (expirationDate < now) {
-                throw new Error(messages.coachIdExpired);
-              }
-            }
-          })
-      )
+    ? db.collection("coach_invites").doc(coachId).get().then(doc => {
+        if (!doc.exists) throw new Error(messages.invalidCoachId);
+        if (doc.data().used) throw new Error(messages.coachIdUsed);
+        
+        // Check if invitation code has expired
+        if (doc.data().expirationDate) {
+          const expirationDate = doc.data().expirationDate.toDate();
+          const now = new Date();
+          if (expirationDate < now) {
+            throw new Error(messages.coachIdExpired);
+          }
+        }
+      })
     : Promise.resolve();
 
   validateCoachId
