@@ -1,52 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Base Running</title>
-  <link rel="stylesheet" href="../styles/style.css" />
-  <link rel="stylesheet" href="../styles/header-footer.css" />
-  <link rel="stylesheet" href="../styles/baseRunning.css" />
-</head>
-<body class="with-header-footer">
-  <div id="header-container"></div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Base Running</title>
+        <link rel="stylesheet" href="../styles/style.css" />
+        <link rel="stylesheet" href="../styles/header-footer.css" />
+        <link rel="stylesheet" href="../styles/baseRunning.css" />
+    </head>
+    <body class="with-header-footer">
+        <div id="header-container"></div>
 
-  <main id="base-running-content" class="p-4">
-    <h2 class="text-center">Base Running Evaluation</h2>
-  
-    <div class="input-group">
-      <input type="text" id="player-id" class="input-field" placeholder=" " />
-      <label for="player-id">Player Tryout ID</label>
-    </div>
-    <div id="error-message"></div>
-  
-    <div id="attempts-container"></div>
+        <main id="base-running-content" class="p-4">
+            <h2 class="text-center">Base Running Evaluation</h2>
 
-    <div id="add-first-attempt-btn" style="display: none; text-align: center; margin-bottom: 20px;">
-      <button id="add-attempt-btn" class="primary-btn" style="width: auto; padding: 10px 20px;">Add Attempt</button>
-    </div>
-    
-    <div class="input-group">
-      <textarea id="notes-input" placeholder=" "></textarea>
-      <label for="notes-input">Notes</label>
-    </div>
-   
-    <div id="save-confirmation">✔️ Saved!</div>
+            <div class="input-group">
+                <input
+                    type="text"
+                    id="player-id"
+                    class="input-field"
+                    placeholder=" "
+                />
+                <label for="player-id">Player Tryout ID</label>
+            </div>
+            <div id="error-message"></div>
 
-    
-  </main>
+            <div id="attempts-container"></div>
 
-  <div class="save-footer">
-    <button id="save-btn" class="primary-btn">Save</button>
-  </div>
-  <div id="footer-container"></div>
+            <div
+                id="add-first-attempt-btn"
+                style="display: none; text-align: center; margin-bottom: 20px"
+            >
+                <button
+                    id="add-attempt-btn"
+                    class="primary-btn"
+                    style="width: auto; padding: 10px 20px"
+                >
+                    Add Attempt
+                </button>
+            </div>
 
-  <!-- Firebase & Scripts -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-  <script src="../js/firebase-config.js"></script>
-  <script src="../js/authGuard.js"></script>
-  <script src="../js/baseRunning.js"></script>
-</body>
+            <div class="input-group">
+                <textarea id="notes-input" placeholder=" "></textarea>
+                <label for="notes-input">Notes</label>
+            </div>
+
+            <div id="save-confirmation">✔️ Saved!</div>
+        </main>
+
+        <div class="save-footer">
+            <button id="save-btn" class="primary-btn">Save</button>
+        </div>
+        <div id="footer-container"></div>
+
+        <!-- Firebase & Scripts -->
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+        <script src="../js/firebase-config.js"></script>
+        <script src="../js/authGuard.js"></script>
+        <script src="../js/header.js"></script>
+        <script src="../js/baseRunning.js"></script>
+    </body>
 </html>

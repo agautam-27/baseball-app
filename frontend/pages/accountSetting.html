@@ -1,81 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Account Settings - Baseball App</title>
-  <link rel="stylesheet" href="../styles/header-footer.css">
-  <link rel="stylesheet" href="../styles/accountSetting.css">
-  
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-  <script src="../js/firebase-config.js"></script>
-  <script src="../js/authGuard.js"></script>
-</head>
-<body>
-  <!-- Header Component -->
-  <div id="header-container"></div>
-  
-  <main class="account-settings-container">
-    <div class="scroll-content">
-      <h2 class="title">Your account information</h2>
-      
-      <!-- ID Field (Player or Coach) -->
-      <div id="id-container" class="field-container">
-        <!-- This will be populated via JavaScript -->
-      </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Account Settings - Baseball App</title>
+        <link rel="stylesheet" href="../styles/header-footer.css" />
+        <link rel="stylesheet" href="../styles/accountSetting.css" />
 
-      <!-- First Name -->
-      <div class="field-container">
-        <label for="firstName" class="label">First Name</label>
-        <input type="text" id="firstName" class="input" />
-      </div>
+        <!-- Firebase SDKs -->
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+        <script src="../js/firebase-config.js"></script>
+        <script src="../js/authGuard.js"></script>
+    </head>
+    <body>
+        <!-- Header Component -->
+        <div id="header-container"></div>
 
-      <!-- Last Name -->
-      <div class="field-container">
-        <label for="lastName" class="label">Last Name</label>
-        <input type="text" id="lastName" class="input" />
-      </div>
+        <main class="account-settings-container">
+            <div class="scroll-content">
+                <h2 class="title">Your account information</h2>
 
-      <!-- Email -->
-      <div class="field-container">
-        <label for="email" class="label">Email</label>
-        <input type="email" id="email" class="input" autocapitalize="none" />
-      </div>
+                <!-- ID Field (Player or Coach) -->
+                <div id="id-container" class="field-container">
+                    <!-- This will be populated via JavaScript -->
+                </div>
 
-      <!-- Birthday (Player only) -->
-      <div id="birthday-container" class="field-container" style="display: none;">
-        <label for="birthday" class="label">Date of Birth</label>
-        <input type="date" id="birthday" class="input" />
-      </div>
+                <!-- First Name -->
+                <div class="field-container">
+                    <label for="firstName" class="label">First Name</label>
+                    <input type="text" id="firstName" class="input" />
+                </div>
 
-      <!-- Current Password -->
-      <div class="field-container">
-        <label for="currentPassword" class="label">Current Password</label>
-        <input type="password" id="currentPassword" class="input" />
-      </div>
+                <!-- Last Name -->
+                <div class="field-container">
+                    <label for="lastName" class="label">Last Name</label>
+                    <input type="text" id="lastName" class="input" />
+                </div>
 
-      <!-- New Password -->
-      <div class="field-container">
-        <label for="newPassword" class="label">New Password</label>
-        <input type="password" id="newPassword" class="input" />
-      </div>
+                <!-- Email -->
+                <div class="field-container">
+                    <label for="email" class="label">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        class="input"
+                        autocapitalize="none"
+                    />
+                </div>
 
-      <!-- Save Change button -->
-      <button id="saveButton" class="save-button" disabled>Save Changes</button>
-      
-      <!-- Status Message -->
-      <div id="statusMessage" class="status-message"></div>
-    </div>
-  </main>
+                <!-- Birthday (Player only) -->
+                <div
+                    id="birthday-container"
+                    class="field-container"
+                    style="display: none"
+                >
+                    <label for="birthday" class="label">Date of Birth</label>
+                    <input type="date" id="birthday" class="input" />
+                </div>
 
-  <!-- Footer Component -->
-  <div id="footer-container"></div>
+                <!-- Current Password -->
+                <div class="field-container">
+                    <label for="currentPassword" class="label"
+                        >Current Password</label
+                    >
+                    <input type="password" id="currentPassword" class="input" />
+                </div>
 
-  <!-- Scripts -->
-  <script src="../js/header.js"></script>
-  <script src="../js/accountSetting.js"></script>
-</body>
+                <!-- New Password -->
+                <div class="field-container">
+                    <label for="newPassword" class="label">New Password</label>
+                    <input type="password" id="newPassword" class="input" />
+                </div>
+
+                <!-- Save Change button -->
+                <button id="saveButton" class="save-button" disabled>
+                    Save Changes
+                </button>
+
+                <!-- Status Message -->
+                <div id="statusMessage" class="status-message"></div>
+            </div>
+        </main>
+
+        <!-- Footer Component -->
+        <div id="footer-container"></div>
+
+        <!-- Scripts -->
+        <script src="../js/header.js"></script>
+        <script src="../js/accountSetting.js"></script>
+    </body>
 </html>

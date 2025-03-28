@@ -1,75 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Player Dashboard</title>
-  <link rel="stylesheet" href="../styles/style.css" />
-  <link rel="stylesheet" href="../styles/header-footer.css" />
-  <link rel="stylesheet" href="../styles/playerDashboard.css" />
-</head>
-<body class="with-header-footer">
-  
-  <div id="header-container"></div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Player Dashboard</title>
+        <link rel="stylesheet" href="../styles/style.css" />
+        <link rel="stylesheet" href="../styles/header-footer.css" />
+        <link rel="stylesheet" href="../styles/playerDashboard.css" />
+    </head>
+    <body class="with-header-footer">
+        <div id="header-container"></div>
 
-  <main id="player-content">
-    <h2 id="welcome-message">Welcome, Player!</h2>
-    <p id="next-tryout-message">Your next tryout: None</p>
-    <p>This is your performance dashboard. You’ll see your tryout stats here.</p>
+        <main id="player-content">
+            <h2 id="welcome-message">Welcome, Player!</h2>
+            <p id="next-tryout-message">Your next tryout: None</p>
+            <p>
+                This is your performance dashboard. You’ll see your tryout stats
+                here.
+            </p>
 
-    <button id="view-tryouts-btn">View Current Tryouts</button>
+            <button id="view-tryouts-btn">View Current Tryouts</button>
 
-    <div id="tryout-list" class="hidden">
-        <h3>Current Tryouts</h3>
-        <div id="tryouts-container"></div>
-    </div>
+            <div id="tryout-list" class="hidden">
+                <h3>Current Tryouts</h3>
+                <div id="tryouts-container"></div>
+            </div>
 
-    <!-- Performance Cards -->
-    <section id="performance-cards">
-      <h3>Performance Overview</h3>
+            <!-- Performance Cards -->
+            <section id="performance-cards">
+                <h3>Performance Overview</h3>
 
-      <div class="card" id="pitching-card" data-card-id="1">
-        <h4>Pitching</h4>
-        <p><strong>Pitches:</strong> <span id="num-pitches">None</span></p>
-        <p><strong>Strikes:</strong> <span id="num-strikes">None</span></p>
-        <p><strong>Balls:</strong> <span id="num-balls">None</span></p>
-        <p><strong>Avg Speed:</strong> <span id="avg-speed">None</span></p>
-      </div>
+                <div class="card" id="pitching-card" data-card-id="1">
+                    <h4>Pitching</h4>
+                    <p>
+                        <strong>Pitches:</strong>
+                        <span id="num-pitches">None</span>
+                    </p>
+                    <p>
+                        <strong>Strikes:</strong>
+                        <span id="num-strikes">None</span>
+                    </p>
+                    <p>
+                        <strong>Balls:</strong> <span id="num-balls">None</span>
+                    </p>
+                    <p>
+                        <strong>Avg Speed:</strong>
+                        <span id="avg-speed">None</span>
+                    </p>
+                </div>
 
-      <div class="card" id="hitting-card" data-card-id="2">
-        <h4>Hitting</h4>
-        <p><strong>Strikes:</strong> <span id="hitting-strikes">None</span></p>
-        <p><strong>Hits:</strong> <span id="hitting-hits">None</span></p>
-      </div>
+                <div class="card" id="hitting-card" data-card-id="2">
+                    <h4>Hitting</h4>
+                    <p>
+                        <strong>Strikes:</strong>
+                        <span id="hitting-strikes">None</span>
+                    </p>
+                    <p>
+                        <strong>Hits:</strong>
+                        <span id="hitting-hits">None</span>
+                    </p>
+                </div>
 
-      <div class="card" id="base-running-card" data-card-id="3">
-        <h4>Base Running</h4>
-        <p><strong>Home to 1st Avg. Speed:</strong> <span id="home-to-1st">None</span></p>
-        <p><strong>Home to 2nd Avg. Speed:</strong> <span id="home-to-2nd">None</span></p>
-      </div>
+                <div class="card" id="base-running-card" data-card-id="3">
+                    <h4>Base Running</h4>
+                    <p>
+                        <strong>Home to 1st Avg. Speed:</strong>
+                        <span id="home-to-1st">None</span>
+                    </p>
+                    <p>
+                        <strong>Home to 2nd Avg. Speed:</strong>
+                        <span id="home-to-2nd">None</span>
+                    </p>
+                </div>
 
-      <div class="card" id="fielding-fly-card" data-card-id="4">
-        <h4>Fielding (Fly Balls)</h4>
-        <p><strong>Catches:</strong> <span id="fly-balls-catches">None</span></p>
-        <p><strong>Misses:</strong> <span id="fly-balls-misses">None</span></p>
-      </div>
+                <div class="card" id="fielding-fly-card" data-card-id="4">
+                    <h4>Fielding (Fly Balls)</h4>
+                    <p>
+                        <strong>Catches:</strong>
+                        <span id="fly-balls-catches">None</span>
+                    </p>
+                    <p>
+                        <strong>Misses:</strong>
+                        <span id="fly-balls-misses">None</span>
+                    </p>
+                </div>
 
-      <div class="card" id="fielding-ground-card" data-card-id="5">
-        <h4>Fielding (Ground Balls)</h4>
-        <p><strong>Catches:</strong> <span id="ground-balls-catches">None</span></p>
-        <p><strong>Misses:</strong> <span id="ground-balls-misses">None</span></p>
-      </div>
-    </section>
+                <div class="card" id="fielding-ground-card" data-card-id="5">
+                    <h4>Fielding (Ground Balls)</h4>
+                    <p>
+                        <strong>Catches:</strong>
+                        <span id="ground-balls-catches">None</span>
+                    </p>
+                    <p>
+                        <strong>Misses:</strong>
+                        <span id="ground-balls-misses">None</span>
+                    </p>
+                </div>
+            </section>
+        </main>
 
-  </main>
+        <div id="footer-container"></div>
 
-  <div id="footer-container"></div>
-
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-  <script src="../js/firebase-config.js"></script>
-  <script src="../js/authGuard.js"></script>
-  <script src="../js/playerDashboard.js"></script>
-</body>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+        <script src="../js/firebase-config.js"></script>
+        <script src="../js/authGuard.js"></script>
+        <script src="../js/header.js"></script>
+        <script src="../js/playerDashboard.js"></script>
+    </body>
 </html>
