@@ -1,15 +1,17 @@
-/* Define a root color palette for consistency */
 :root {
-  --primary-color: #3f51b5;  /* Indigo (Material-like) */
-  --primary-hover: #2c3ea4;  /* Darker indigo for hover */
-  --danger-color: #e53935;   /* Red for remove button/icon */
-  --border-radius: 8px;
-  --font-color: #333;
-  --background-color: #f9f9f9;
-  --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  --primary-color: #1B5E20;         
+  --glass-white: rgba(255, 255, 255, 0.7);
+  --background-color: #F4F6F8;
+  --font-color: #212121;
+  --danger-color: #D84315;
+  --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --border-radius: 12px;
+
+  --accent-color: #1B5E20;
 }
 
-/* Base layout */
+
+/* Layout */
 body.with-header-footer {
   font-family: 'Segoe UI', sans-serif;
   background-color: var(--background-color);
@@ -20,13 +22,9 @@ body.with-header-footer {
 #base-running-content {
   max-width: 500px;
   margin: auto;
-  padding-top: 70px; /* Enough space from the header */
-  padding-right: 20px;
-  padding-left: 20px;
-  padding-bottom: 20px;
+  padding: 70px 20px 20px;
   box-sizing: border-box;
 }
-
 
 /* Typography */
 #base-running-content h2 {
@@ -36,9 +34,11 @@ body.with-header-footer {
   color: var(--font-color);
 }
 
-/* Input styling (floating labels) */
+/* Input Fields */
 .input-group {
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
   margin-bottom: 20px;
 }
 
@@ -54,24 +54,9 @@ body.with-header-footer {
   transition: border-color 0.2s;
 }
 
-/* Make the input groups 100% of the container's width */
-.input-group {
-  width: 100%;
-  box-sizing: border-box;
-  margin-bottom: 20px;
-}
-
-/* Make input/textarea fill their parent width */
-.input-group input,
 .input-group textarea {
   width: 100%;
   box-sizing: border-box;
-  padding: 12px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 10px; /* consistent with card corners */
-  background-color: #fff;
-  outline: none;
 }
 
 .input-group label {
@@ -96,14 +81,14 @@ body.with-header-footer {
   color: var(--primary-color);
 }
 
+/* Attempt Card */
 .attempt-card {
   width: 100%;
-  background-color: #fff;
-  border-radius: 10px;
+  background-color: white;
+  border-radius: var(--border-radius);
   padding: 14px;
   margin-bottom: 16px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s ease;
+  box-shadow: var(--box-shadow);
   animation: fadeIn 0.25s ease-in-out;
   box-sizing: border-box;
 }
@@ -121,6 +106,43 @@ body.with-header-footer {
   color: #444;
 }
 
+/* Buttons */
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: background-color 0.2s;
+  display: inline-block;
+  text-align: center;
+}
+
+/* Primary Button (used for Start by default) */
+.primary-btn {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.primary-btn:hover,
+.primary-btn:active {
+  background-color: var(--primary-color);
+}
+
+/* Small Buttons */
+.small-btn {
+  width: auto;
+  min-width: 100px;
+  padding: 10px 16px;
+  margin: 5px 5px 40px;
+}
+
+/* Delete Button */
 .remove-btn {
   background: none;
   border: none;
@@ -129,12 +151,11 @@ body.with-header-footer {
   cursor: pointer;
   transition: transform 0.2s;
 }
-
-.remove-btn:hover {
+.remove-btn:active {
   transform: scale(1.1);
 }
 
-/* Base path select */
+/* Dropdown */
 .base-path-select {
   width: 100%;
   padding: 10px;
@@ -146,47 +167,152 @@ body.with-header-footer {
   outline: none;
 }
 
-/* Buttons (generic) */
-button {
-  cursor: pointer;
-  border: none;
-  border-radius: var(--border-radius);
-  font-size: 1rem;
-  transition: background-color 0.2s;
-  display: inline-block;
-  text-align: center;
-}
+/* **************************************************** */
+/* **************************************************** */
+/* **************************************************** */
+/* **************************************************** */
 
-/* Primary button (Start, Add Attempt, Save) */
-.primary-btn {
+
+
+.custom-dropdown {
+  position: relative;
   width: 100%;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  background: #fff;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  z-index: 2;
+}
+
+.dropdown-selected {
   padding: 10px;
-  margin-bottom: 10px;
-  background-color: var(--primary-color);
-  color: #fff;
-}
-.primary-btn:hover {
-  background-color: var(--primary-hover);
+  cursor: pointer;
+  font-size: 1rem;
 }
 
-/* Danger or secondary variations if needed */
-.danger-btn {
-  background-color: var(--danger-color);
-  color: #fff;
-}
-.danger-btn:hover {
-  opacity: 0.9;
+.dropdown-selected::after {
+  content: "▼";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  color: #555;
+  pointer-events: none;
 }
 
-/* Save confirmation */
+
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  display: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: var(--box-shadow);
+}
+.dropdown-options li.selected {
+  background-color: #e0f2f1; /* light green tint */
+  font-weight: bold;
+}
+
+.dropdown-options li {
+  padding: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.dropdown-options li:hover {
+  background-color: #f0f0f0;
+}
+
+.custom-dropdown.open .dropdown-options {
+  display: block;
+}
+
+
+
+/* **************************************************** */
+/* **************************************************** */
+/* **************************************************** */
+/* **************************************************** */
+
+/* Save Confirmation */
 #save-confirmation {
   display: none;
   text-align: center;
-  color: #4caf50;
+  color: var(--accent-color);
   font-size: 1rem;
   margin-top: 8px;
   animation: fadeInOut 2s ease-in-out;
 }
+
+/* Error Message */
+#error-message {
+  display: none;
+  color: var(--danger-color);
+  font-size: 0.95rem;
+  text-align: center;
+  margin-top: 8px;
+  animation: fadeInOut 2.5s ease-in-out;
+}
+
+/* Inline Add Button (➕) */
+.inline-add-btn {
+  display: flex;
+  justify-content: center;
+  margin-top: -30px;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.inline-add-btn button {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--glass-white);
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--box-shadow);
+  transition: background-color 0.2s, transform 0.1s;
+}
+.inline-add-btn button:active {
+  transform: scale(0.95);
+}
+
+/* Save Footer */
+.save-footer button {
+  width: 50%;
+  font-size: 1rem;
+  padding: 12px 0;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+}
+
+.running {
+  background-color: var(--danger-color) !important;
+  color: #fff;
+}
+
+.inline-add-btn button {
+  color: #000;
+  /* ... */
+}
+
 
 /* Animations */
 @keyframes fadeIn {
@@ -201,41 +327,9 @@ button {
   100% { opacity: 0; }
 }
 
-
-/* Override the Add/Save buttons to a new color and auto width */
-#add-attempt-btn,
-#save-btn {
-  width: auto;           /* Remove 100% width */
-  min-width: 100px;      /* So they don’t become too small */
-  padding: 5px 5px;
-  font-size: 1rem;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  color: #fff;
-  background-color: #389bec; /* Choose your new color here */
-}
-
-
-
-/* Timer (Start/Stop) button also changed to the same color scheme */
-.timer-btn {
-  background-color: #2196f3;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
-  cursor: pointer;
-}
-.timer-btn:hover {
-  background-color: #0c7cd5;
-}
-
-/* Remove (X) button can remain simple or match your new color theme */
-.remove-btn {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  color: #e53935; /* red */
-  cursor: pointer;
+@media (max-width: 480px) {
+  .base-path-select {
+    font-size: 0.95rem;
+    padding: 12px 40px 12px 12px;
+  }
 }
