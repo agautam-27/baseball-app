@@ -1,0 +1,610 @@
+/* Reset for login page to avoid conflicts */
+.login-page button, 
+.login-page input, 
+.login-page label, 
+.login-page form,
+.login-page .tab-button,
+.login-page .submit-button {
+  all: initial;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Mobile-first login/signup page styles with enhanced animations */
+:root {
+  --primary-color: #1B5E20;
+  --primary-light: #4c8c4a;
+  --primary-dark: #0D3C10;
+  --secondary-color: #800000; /* Maroon color from your existing styles */
+  --secondary-dark: #590000;
+  --light-gray: #f5f5f5;
+  --medium-gray: #e0e0e0;
+  --dark-gray: #888;
+  --white: #fff;
+  --error: #d32f2f;
+  --success: #388e3c;
+  --input-padding: 16px;
+  --border-radius: 12px;
+  --transition-speed: 0.3s;
+}
+
+.login-page {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  color: #333;
+  -webkit-font-smoothing: antialiased;
+}
+
+.login-page .container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.login-page h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+  text-align: center;
+}
+
+/* Enhanced box container with depth */
+.login-page .box-container {
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: all var(--transition-speed);
+  transform: translateY(0);
+  border: none;
+  margin-bottom: 32px;
+}
+
+/* Animated tab row with slider effect */
+.login-page .tab-row {
+  display: flex;
+  position: relative;
+  background: var(--light-gray);
+  border-bottom: none;
+}
+
+/* Active tab sliding indicator */
+.login-page .tab-slider {
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  background-color: var(--white);
+  top: 0;
+  left: 0;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.login-page .tab-slider.coach {
+  transform: translateX(100%);
+}
+
+.login-page .tab-button {
+  flex: 1;
+  padding: 18px 0;
+  background: transparent;
+  color: var(--dark-gray);
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  display: block;
+  text-align: center;
+}
+
+.login-page .tab-button.active {
+  color: var(--primary-color);
+}
+
+/* Content area with enhanced padding */
+.login-page .content-area {
+  padding: 28px 24px;
+}
+
+/* Radio button styling */
+.login-page .radio-container {
+  margin: 0 0 28px;
+  background-color: var(--light-gray);
+  border-radius: 30px;
+  padding: 5px;
+  position: relative;
+  display: inline-block;
+  min-width: 220px;
+}
+
+.login-page .radio-slider {
+  position: absolute;
+  height: calc(100% - 10px);
+  width: 50%;
+  background-color: var(--white);
+  top: 5px;
+  left: 5px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 30px;
+  z-index: 1;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.login-page .radio-slider.signup {
+  transform: translateX(100%);
+}
+
+.login-page .radio-row {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  align-items: center;
+}
+
+.login-page .radio-item {
+  flex: 1;
+  margin: 0;
+  position: relative;
+  text-align: center;
+  padding: 10px 15px;
+  display: block;
+}
+
+.login-page .radio-item input[type="radio"] {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+  z-index: 3;
+  left: 0;
+  top: 0;
+}
+
+.login-page .radio-item label {
+  position: relative;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--dark-gray);
+  transition: color 0.3s;
+  z-index: 2;
+  display: block;
+}
+
+.login-page .radio-item input[type="radio"]:checked + label {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Auth message styling */
+.login-page #auth-message {
+  padding: 12px;
+  margin: 0 0 20px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.login-page #auth-message.error-message {
+  background-color: rgba(211, 47, 47, 0.1);
+  color: var(--error);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.login-page #auth-message.success-message {
+  background-color: rgba(56, 142, 60, 0.1);
+  color: var(--success);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.login-page #auth-message:empty {
+  display: none;
+}
+
+/* Form styling with floating labels and improved animations */
+.login-page .form-group {
+  position: relative;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.login-page .form-group input {
+  width: 100%;
+  padding: var(--input-padding);
+  background-color: var(--light-gray);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  outline: none;
+  box-sizing: border-box;
+  display: block;
+}
+
+.login-page .form-group input:focus {
+  border-color: var(--primary-color);
+  background-color: rgba(27, 94, 32, 0.05);
+  box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.1);
+}
+
+/* Floating label effect */
+.login-page .form-group input::placeholder {
+  color: transparent;
+}
+
+.login-page .form-group label {
+  position: absolute;
+  top: var(--input-padding);
+  left: var(--input-padding);
+  font-size: 1rem;
+  color: var(--dark-gray);
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+}
+
+.login-page .form-group input:focus ~ label,
+.login-page .form-group input:not(:placeholder-shown) ~ label {
+  top: -12px;
+  left: 12px;
+  font-size: 0.75rem;
+  color: var(--primary-color);
+  background-color: var(--white);
+  padding: 0 6px;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+/* Date input specific styling */
+.login-page .form-group input[type="date"] {
+  color: var(--dark-gray);
+}
+
+.login-page .form-group input[type="date"]:focus,
+.login-page .form-group input[type="date"]:valid {
+  color: #000;
+}
+
+/* Submit button styling */
+.login-page .submit-button {
+  width: 100%;
+  padding: 16px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 10px rgba(27, 94, 32, 0.3);
+  position: relative;
+  overflow: hidden;
+  display: block;
+  text-align: center;
+}
+
+.login-page .submit-button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+  transform: translateX(-100%);
+}
+
+.login-page .submit-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 5px rgba(27, 94, 32, 0.2);
+}
+
+.login-page .submit-button:hover:before {
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Form animations */
+.login-page form {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.login-page form.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Replace the current page transition with this more subtle one */
+.page-transition {
+    display: none !important;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9); /* Subtle white fade instead of color */
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .page-transition.active {
+    opacity: 1;
+    pointer-events: all;
+    display: none !important;
+
+  }
+
+/* Mobile-specific adjustments */
+@media (max-width: 480px) {
+  .login-page .container {
+    padding: 16px;
+  }
+  
+  .login-page .content-area {
+    padding: 24px 20px;
+  }
+  
+  .login-page .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .login-page .submit-button {
+    padding: 16px;
+  }
+}
+
+/* Prevent zoom on input focus for iOS */
+@media screen and (-webkit-min-device-pixel-ratio: 0) { 
+  .login-page select,
+  .login-page textarea,
+  .login-page input {
+    font-size: 16px;
+  }
+}
+
+/* Form switch animation */
+@keyframes formOut {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(20px); }
+}
+
+@keyframes formIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.login-page .form-exit {
+  animation: formOut 0.3s forwards;
+}
+
+.login-page .form-enter {
+  animation: formIn 0.3s forwards;
+}
+
+/* Add these new styles to your index.css file */
+
+/* Color variables for roles */
+:root {
+    --player-color: #1B5E20; /* Green */
+    --player-dark: #0D3C10;
+    --player-light: rgba(27, 94, 32, 0.1);
+    --coach-color: #800000; /* Maroon */
+    --coach-dark: #590000;
+    --coach-light: rgba(128, 0, 0, 0.1);
+  }
+  
+  /* Role-specific styling for the container */
+  .login-page .box-container[data-role="player"] {
+    border-top: 4px solid var(--player-color);
+  }
+  
+  .login-page .box-container[data-role="coach"] {
+    border-top: 4px solid var(--coach-color);
+  }
+  
+  /* Role-specific styling for the tab buttons */
+  .login-page .tab-slider {
+    background-color: var(--player-color);
+  }
+  
+  .login-page .tab-slider.coach {
+    background-color: var(--coach-color);
+  }
+  
+  .login-page .tab-button.active[data-role="player"] {
+    color: var(--player-color);
+  }
+  
+  .login-page .tab-button.active[data-role="coach"] {
+    color: var(--coach-color);
+  }
+  
+  /* Role-specific styling for radio buttons */
+  .login-page .radio-container[data-role="player"] .radio-slider {
+    background-color: var(--player-color);
+  }
+  
+  .login-page .radio-container[data-role="coach"] .radio-slider {
+    background-color: var(--coach-color);
+  }
+  
+  .login-page .radio-container[data-role="player"] .radio-item input[type="radio"]:checked + label {
+    color: white;
+  }
+  
+  .login-page .radio-container[data-role="coach"] .radio-item input[type="radio"]:checked + label {
+    color: white;
+  }
+  
+  /* Role-specific form field focus styling */
+  .login-page .box-container[data-role="player"] .form-group input:focus {
+    border-color: var(--player-color);
+    background-color: var(--player-light);
+    box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.1);
+  }
+  
+  .login-page .box-container[data-role="coach"] .form-group input:focus {
+    border-color: var(--coach-color);
+    background-color: var(--coach-light);
+    box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.1);
+  }
+  
+  .login-page .box-container[data-role="player"] .form-group input:focus ~ label,
+  .login-page .box-container[data-role="player"] .form-group input:not(:placeholder-shown) ~ label {
+    color: var(--player-color);
+  }
+  
+  .login-page .box-container[data-role="coach"] .form-group input:focus ~ label,
+  .login-page .box-container[data-role="coach"] .form-group input:not(:placeholder-shown) ~ label {
+    color: var(--coach-color);
+  }
+  
+  /* Role-specific submit button styling */
+  .login-page .box-container[data-role="player"] .submit-button {
+    background-color: var(--player-color);
+    box-shadow: 0 4px 10px rgba(27, 94, 32, 0.3);
+  }
+  
+  .login-page .box-container[data-role="coach"] .submit-button {
+    background-color: var(--coach-color);
+    box-shadow: 0 4px 10px rgba(128, 0, 0, 0.3);
+  }
+  
+  .login-page .box-container[data-role="player"] .submit-button:hover {
+    background-color: var(--player-dark);
+  }
+  
+  .login-page .box-container[data-role="coach"] .submit-button:hover {
+    background-color: var(--coach-dark);
+  }
+  
+  /* Role Indicator */
+  .role-indicator {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  
+  .role-indicator.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  
+  .role-indicator.player {
+    background-color: var(--player-color);
+  }
+  
+  .role-indicator.coach {
+    background-color: var(--coach-color);
+  }
+  
+  /* Enhanced Role-Specific Background Accents */
+  .login-page .box-container::before {
+    content: '';
+    position: absolute;
+    top: 50px;
+    right: -30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    opacity: 0.1;
+    transition: all 0.5s ease;
+  }
+  
+  .login-page .box-container::after {
+    content: '';
+    position: absolute;
+    bottom: 50px;
+    left: -20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    opacity: 0.1;
+    transition: all 0.5s ease;
+  }
+  
+  .login-page .box-container[data-role="player"]::before,
+  .login-page .box-container[data-role="player"]::after {
+    background-color: var(--player-color);
+  }
+  
+  .login-page .box-container[data-role="coach"]::before,
+  .login-page .box-container[data-role="coach"]::after {
+    background-color: var(--coach-color);
+  }
+  
+/* Remove role-specific transition colors */
+.page-transition.player,
+.page-transition.coach {
+  background-color: rgba(255, 255, 255, 0.9); /* Keep it white regardless of role */
+}
+
+
+  /* Fix for tab button text contrast */
+.login-page .tab-slider {
+    background-color: var(--player-color);
+  }
+  
+  .login-page .tab-slider.coach {
+    background-color: var(--coach-color);
+  }
+  
+  .login-page .tab-button {
+    color: var(--dark-gray);
+    transition: all var(--transition-speed);
+  }
+  
+  .login-page .tab-button.active {
+    color: white !important;  /* Force white text for better contrast */
+    font-weight: 700;
+  }
+  
+  /* Override any other color settings for active tab */
+  .login-page .tab-button.active[data-role="player"],
+  .login-page .tab-button.active[data-role="coach"] {
+    color: white !important;
+  }

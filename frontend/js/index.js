@@ -6,6 +6,12 @@
  * - Handling form submissions for all auth flows
  */
 
+// Silence console logs and alerts for mobile experience
+if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile/i.test(navigator.userAgent)) {
+    console.log = console.error = console.warn = function() {};
+    window.alert = function() {};
+}
+  
 // Firebase instance
 const db = firebase.firestore();
 
@@ -17,6 +23,7 @@ const loginForm = document.getElementById("login-form");
 const playerSignupForm = document.getElementById("player-signup-form");
 const coachSignupForm = document.getElementById("coach-signup-form");
 const authMessage = document.getElementById("auth-message");
+const allForms = [loginForm, playerSignupForm, coachSignupForm];
 
 // State tracking
 let selectedRole = "player"; // Default role
@@ -29,6 +36,7 @@ const firebaseErrorMessages = {
     "auth/wrong-password": "Incorrect password.",
     "auth/email-already-in-use": "This email address is already registered.",
     "auth/weak-password": "Password must be at least 6 characters long.",
+    "auth/invalid-login-credentials": "Incorrect email/ID or password."
 };
 
 // Custom message templates
@@ -68,8 +76,12 @@ function displayAuthMessage(message, isError = false) {
         authMessage.classList.add("success-message");
     }
 
-    // Set the message text
-    authMessage.textContent = message;
+    // Set the message text with animation
+    authMessage.style.opacity = '0';
+    setTimeout(() => {
+        authMessage.textContent = message;
+        authMessage.style.opacity = '1';
+    }, 150);
 }
 
 /**
@@ -81,11 +93,6 @@ function getErrorMessage(error) {
         // Handle Firebase error codes using our predefined messages
         if (error.code && firebaseErrorMessages[error.code]) {
             return firebaseErrorMessages[error.code];
-        }
-
-        // Handle Firebase's auth/invalid-login-credentials error
-        if (error.code === "auth/invalid-login-credentials") {
-            return "Incorrect email/ID or password.";
         }
 
         // Handle case where error is in JSON format
@@ -141,33 +148,31 @@ function getErrorMessage(error) {
 }
 
 /**
- * Toggle between auth modes and show relevant forms
+ * Toggle between auth modes and show relevant forms with animation
  */
 function updateFormVisibility() {
     const isLogin = loginRadio.checked;
 
-    // Hide all forms first
-    loginForm.style.display = "none";
-    playerSignupForm.style.display = "none";
-    coachSignupForm.style.display = "none";
+    // Remove active class from all forms
+    allForms.forEach(form => {
+        form.classList.remove('active');
+    });
 
+    // Update login form placeholder based on role
+    const emailOrIdField = document.getElementById("login-email-or-id");
+    const emailOrIdLabel = emailOrIdField.nextElementSibling;
+    
+    const placeholderText = selectedRole === "player" ? "Player Email" : "Coach Email";
+    emailOrIdField.placeholder = placeholderText;
+    emailOrIdLabel.textContent = placeholderText;
+
+    // Show appropriate form with animation
     if (isLogin) {
-        // Update login form placeholder based on role
-        const emailOrIdField = document.getElementById("login-email-or-id");
-        emailOrIdField.placeholder =
-            selectedRole === "player"
-                ? "Player ID or Email"
-                : "Coach ID or Email";
-
-        // Show login form
-        loginForm.style.display = "block";
+        loginForm.classList.add('active');
+    } else if (selectedRole === "player") {
+        playerSignupForm.classList.add('active');
     } else {
-        // Show the appropriate signup form based on role
-        if (selectedRole === "player") {
-            playerSignupForm.style.display = "block";
-        } else {
-            coachSignupForm.style.display = "block";
-        }
+        coachSignupForm.classList.add('active');
     }
 }
 
@@ -195,11 +200,134 @@ async function getNextIdForUserType(type) {
 }
 
 /**
+ * Navigate to another page with smooth transition
+ */
+function navigateWithTransition(url) {
+    window.location.href = url;
+
+    const pageTransition = document.querySelector(".page-transition");
+    if (pageTransition) {
+        // Just add active class, no role-specific classes
+        pageTransition.classList.add("active");
+        
+        // Reduce the delay before navigation
+        setTimeout(() => {
+            window.location.href = url;
+        }, 300); // Faster transition (300ms instead of 400ms)
+    } else {
+        // Fallback if transition element doesn't exist
+        window.location.href = url;
+    }
+}
+
+/**
+ * Handle login form submission
+ */
+/**
+ * Handle login form submission
+ */
+async function handleLogin(e) {
+    e.preventDefault();
+    
+    // Don't show "Processing..." anymore
+    const submitButton = loginForm.querySelector('.submit-button');
+    
+    const emailOrId = document.getElementById("login-email-or-id").value.trim();
+    const password = document.getElementById("login-password").value;
+
+    try {
+        let loginEmail = emailOrId;
+
+        // Check if input is numeric (ID) or email
+        const isNumeric = /^\d+$/.test(emailOrId);
+
+        if (isNumeric) {
+            // User is logging in with ID - need to find email
+            const fieldName = selectedRole === "player" ? "playerID" : "coachID";
+            const idValue = parseInt(emailOrId, 10);
+
+            // Query for user with this ID
+            const querySnapshot = await db
+                .collection("users")
+                .where(fieldName, "==", idValue)
+                .where("role", "==", selectedRole)
+                .get();
+
+            if (querySnapshot.empty) {
+                displayAuthMessage(
+                    `No ${selectedRole} found with ID: ${emailOrId}`,
+                    true
+                );
+                return;
+            }
+
+            // Get email from found user
+            loginEmail = querySnapshot.docs[0].data().email;
+
+            if (!loginEmail) {
+                displayAuthMessage(
+                    "No email registered for this account.",
+                    true
+                );
+                return;
+            }
+        }
+
+        // Start page transition right away
+        const pageTransition = document.querySelector(".page-transition");
+        if (pageTransition) {
+            pageTransition.classList.add("active");
+        }
+
+        // Log in with Firebase Auth
+        const userCredential = await firebase
+            .auth()
+            .signInWithEmailAndPassword(loginEmail, password);
+        const user = userCredential.user;
+
+        // Check user role in Firestore
+        const userDoc = await db.collection("users").doc(user.uid).get();
+
+        if (!userDoc.exists) {
+            displayAuthMessage(messages.userDataNotFound, true);
+            await firebase.auth().signOut();
+            // Hide transition if there was an error
+            if (pageTransition) pageTransition.classList.remove("active");
+            return;
+        }
+
+        const userData = userDoc.data();
+
+        // Verify role matches selected role
+        if (userData.role !== selectedRole) {
+            displayAuthMessage(messages.roleMismatch(userData.role), true);
+            await firebase.auth().signOut();
+            // Hide transition if there was an error
+            if (pageTransition) pageTransition.classList.remove("active");
+            return;
+        }
+
+        // Navigate immediately
+        window.location.href = selectedRole === "player" 
+            ? "pages/playerDashboard.html" 
+            : "pages/coachDashboard.html";
+            
+    } catch (error) {
+        // Hide transition if there was an error
+        const pageTransition = document.querySelector(".page-transition");
+        if (pageTransition) pageTransition.classList.remove("active");
+        
+        displayAuthMessage(getErrorMessage(error), true);
+    }
+}
+
+/**
  * Handle player signup form submission
  */
 async function handlePlayerSignup(e) {
     e.preventDefault();
-
+    
+    // No more "Processing..." text changes
     const firstName = document.getElementById("player-first-name").value.trim();
     const lastName = document.getElementById("player-last-name").value.trim();
     const email = document.getElementById("player-email").value.trim();
@@ -216,6 +344,12 @@ async function handlePlayerSignup(e) {
     }
 
     try {
+        // Start page transition right away
+        const pageTransition = document.querySelector(".page-transition");
+        if (pageTransition) {
+            pageTransition.classList.add("active");
+        }
+        
         // Create Firebase Auth user
         const userCredential = await firebase
             .auth()
@@ -234,23 +368,18 @@ async function handlePlayerSignup(e) {
                 lastName,
                 email,
                 role: "player",
-                playerId,
+                playerID: playerId, // Use consistent naming convention (playerID, not playerId)
                 birthday: birthday || null,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             });
 
-        // Show success message
-        displayAuthMessage(
-            messages.signupSuccess("player") + ` (ID: ${playerId})`,
-            false
-        );
-        playerSignupForm.reset();
-
-        // Redirect after short delay
-        setTimeout(() => {
-            window.location.href = "pages/playerDashboard.html";
-        }, 1500);
+        // Navigate immediately
+        window.location.href = "pages/playerDashboard.html";
     } catch (error) {
+        // Hide transition if there was an error
+        const pageTransition = document.querySelector(".page-transition");
+        if (pageTransition) pageTransition.classList.remove("active");
+        
         displayAuthMessage(getErrorMessage(error), true);
     }
 }
@@ -260,7 +389,8 @@ async function handlePlayerSignup(e) {
  */
 async function handleCoachSignup(e) {
     e.preventDefault();
-
+    
+    // No more "Processing..." text changes
     const firstName = document.getElementById("coach-first-name").value.trim();
     const lastName = document.getElementById("coach-last-name").value.trim();
     const email = document.getElementById("coach-email").value.trim();
@@ -310,6 +440,12 @@ async function handleCoachSignup(e) {
             }
         }
 
+        // Start page transition right away
+        const pageTransition = document.querySelector(".page-transition");
+        if (pageTransition) {
+            pageTransition.classList.add("active");
+        }
+
         // Create Firebase Auth user
         const userCredential = await firebase
             .auth()
@@ -325,7 +461,7 @@ async function handleCoachSignup(e) {
             lastName,
             email,
             role: "coach",
-            coachId,
+            coachID: coachId, // Use consistent naming convention
             invitationCode,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         });
@@ -336,123 +472,66 @@ async function handleCoachSignup(e) {
             assignedTo: email,
         });
 
-        // Show success message
-        displayAuthMessage(
-            messages.signupSuccess("coach") + ` (ID: ${coachId})`,
-            false
-        );
-        coachSignupForm.reset();
-
-        // Redirect after short delay
-        setTimeout(() => {
-            window.location.href = "pages/coachDashboard.html";
-        }, 1500);
+        // Navigate immediately 
+        window.location.href = "pages/coachDashboard.html";
     } catch (error) {
-        displayAuthMessage(getErrorMessage(error), true);
-    }
-}
-
-/**
- * Handle login form submission
- */
-async function handleLogin(e) {
-    e.preventDefault();
-
-    const emailOrId = document.getElementById("login-email-or-id").value.trim();
-    const password = document.getElementById("login-password").value;
-
-    try {
-        let loginEmail = emailOrId;
-
-        // Check if input is numeric (ID) or email
-        const isNumeric = /^\d+$/.test(emailOrId);
-
-        if (isNumeric) {
-            // User is logging in with ID - need to find email
-            const fieldName =
-                selectedRole === "player" ? "playerId" : "coachId";
-            const idValue = parseInt(emailOrId, 10);
-
-            // Query for user with this ID
-            const querySnapshot = await db
-                .collection("users")
-                .where(fieldName, "==", idValue)
-                .where("role", "==", selectedRole)
-                .get();
-
-            if (querySnapshot.empty) {
-                displayAuthMessage(
-                    `No ${selectedRole} found with ID: ${emailOrId}`,
-                    true
-                );
-                return;
-            }
-
-            // Get email from found user
-            loginEmail = querySnapshot.docs[0].data().email;
-
-            if (!loginEmail) {
-                displayAuthMessage(
-                    "No email registered for this account.",
-                    true
-                );
-                return;
-            }
-        }
-
-        // Log in with Firebase Auth
-        const userCredential = await firebase
-            .auth()
-            .signInWithEmailAndPassword(loginEmail, password);
-        const user = userCredential.user;
-
-        // Check user role in Firestore
-        const userDoc = await db.collection("users").doc(user.uid).get();
-
-        if (!userDoc.exists) {
-            displayAuthMessage(messages.userDataNotFound, true);
-            await firebase.auth().signOut();
-            return;
-        }
-
-        const userData = userDoc.data();
-
-        // Verify role matches selected role
-        if (userData.role !== selectedRole) {
-            displayAuthMessage(messages.roleMismatch(userData.role), true);
-            await firebase.auth().signOut();
-            return;
-        }
-
-        // Success - redirect to appropriate dashboard
-        displayAuthMessage(messages.loginSuccess(selectedRole), false);
-        loginForm.reset();
-
-        setTimeout(() => {
-            window.location.href =
-                selectedRole === "player"
-                    ? "pages/playerDashboard.html"
-                    : "pages/coachDashboard.html";
-        }, 800);
-    } catch (error) {
+        // Hide transition if there was an error
+        const pageTransition = document.querySelector(".page-transition");
+        if (pageTransition) pageTransition.classList.remove("active");
+        
         displayAuthMessage(getErrorMessage(error), true);
     }
 }
 
 // === Event Listeners ===
 
-// Tab button clicks (Player/Coach toggle)
+// Add this to your tab button click handlers
 tabButtons.forEach((button) => {
     button.addEventListener("click", () => {
+        const isCoach = button.dataset.role === 'coach';
+        const boxContainer = document.querySelector('.box-container');
+        const radioContainer = document.querySelector('.radio-container');
+        const roleIndicator = document.querySelector('.role-indicator');
+        const pageTransition = document.querySelector('.page-transition');
+        
         // Update active tab styling
         tabButtons.forEach((btn) => btn.classList.remove("active"));
         button.classList.add("active");
-
+        
         // Update selected role
         selectedRole = button.dataset.role;
-
-        // Update form visibility based on new role and current auth mode
-        updateFormVisibility();
+        
+        // Animate the slider
+        if (isCoach) {
+            tabSlider.classList.add('coach');
+        } else {
+            tabSlider.classList.remove('coach');
+        }
+        
+        // Hide role indicator first
+        roleIndicator.classList.remove('visible');
+        
+        // Apply visual changes after short delay
+        setTimeout(() => {
+            // Update container attributes
+            boxContainer.setAttribute('data-role', selectedRole);
+            radioContainer.setAttribute('data-role', selectedRole);
+            
+            // Update role indicator
+            roleIndicator.className = `role-indicator ${selectedRole}`;
+            roleIndicator.textContent = selectedRole === 'player' ? 'Player Mode' : 'Coach Mode';
+            
+            // Update page transition color
+            pageTransition.className = `page-transition ${selectedRole}`;
+            
+            // Show role indicator with animation
+            setTimeout(() => {
+                roleIndicator.classList.add('visible');
+            }, 100);
+            
+            // Update forms
+            updateFormVisibilityWithAnimation();
+        }, 150);
     });
 });
 
@@ -469,4 +548,13 @@ coachSignupForm.addEventListener("submit", handleCoachSignup);
 document.addEventListener("DOMContentLoaded", () => {
     // Show the default form (login as player)
     updateFormVisibility();
+    
+    // Ensure the body has the right display property
+    document.body.style.display = "block";
+    
+    // Prevent back button issues
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function() {
+      window.history.go(1);
+    };
 });

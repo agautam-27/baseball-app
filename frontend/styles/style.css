@@ -1,10 +1,9 @@
-/* Default body style (for login/signup) */
+/* Global styles and dashboard styles */
 body {
     font-family: Arial, sans-serif;
-    background: #f4f4f4;
     margin: 0;
-    padding: 20px;
-    text-align: center;
+    padding: 0;
+    background: #f4f4f4;
 }
 
 /* Pages that have fixed header and footer (dashboard pages) */
@@ -27,134 +26,28 @@ h2 {
     text-align: center;
 }
 
-/* Main box container, similar to boxContainer in React Native version */
-.box-container {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #fff;
-    margin-bottom: 32px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Tab row at the top of the box */
-.tab-row {
-    display: flex;
-    border-bottom: 1px solid #ccc;
-}
-
-.tab-button {
-    flex: 1;
-    padding: 12px 0;
-    background: #f5f5f5;
-    border: none;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.tab-button.active {
-    background: #007bff;
-    color: white;
-}
-
-/* Content area inside the box */
-.content-area {
-    padding: 16px;
-}
-
-/* Radio button group for Login/Sign Up */
-.radio-container {
-    margin: 8px 0 16px 0;
-}
-
-.radio-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.radio-item {
-    display: flex;
-    align-items: center;
-    margin: 0 16px;
-}
-
-.radio-item input[type="radio"] {
-    margin-right: 8px;
-    width: auto;
-}
-
-.radio-item label {
-    margin: 0;
-    font-weight: normal;
-}
-
-/* Form styling */
-form {
-    text-align: left;
-}
-
-.form-group {
-    margin-bottom: 12px;
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
+/* Global form elements that might be used in dashboard */
+input, select, textarea {
+    font-family: Arial, sans-serif;
     box-sizing: border-box;
 }
 
-input:focus {
-    outline: none;
-    border-color: #007bff;
-}
-
-input::placeholder {
-    color: #aaa;
-}
-
-/* Submit button */
-.submit-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: bold;
+/* Global button styles */
+button {
     cursor: pointer;
-    margin-top: 16px;
-    transition: background-color 0.2s;
 }
 
-.submit-button:hover {
-    background-color: #0069d9;
+/* Utility classes */
+.hidden {
+    display: none !important;
 }
 
-/* Error/success messages */
-#auth-message {
-    margin: 8px 0;
-    padding: 6px;
-    font-size: 14px;
-    text-align: center;
-    border-radius: 4px;
+/* Animation utility for page transitions */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-#auth-message.error-message {
-    color: #ff0000;
-    font-weight: bold;
-}
-
-#auth-message.success-message {
-    color: #28a745;
-}
-
-#auth-message:empty {
-    display: none;
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out;
 }
