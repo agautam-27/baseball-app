@@ -1,174 +1,341 @@
+:root {
+  --primary-color: #1B5E20;
+}
+
 .hidden {
-    display: none !important;
-  }
+  display: none !important;
+}
   
 .tryout-container {
-    width: 90%;
-    max-width: 400px;
-    margin: 20px auto;
-    padding: 12px;
-    background-color: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  }
+  width: 90%;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 12px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
   
-  .tryout-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+.tryout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
   
-  .tryout-header h3 {
-    font-size: 1.1rem;
-    margin: 0;
-  }
+.tryout-header h3 {
+  font-size: 1.1rem;
+  margin: 0;
+}
   
-  #toggle-tryout-form {
-    background: none;
-    border: none;
-    font-size: 1.6rem;
-    color: #1976d2;
-    cursor: pointer;
-  }
+/* Update the toggle button color */
+#toggle-tryout-form {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  color: var(--primary-color);
+  cursor: pointer;
+}
   
-  .tryout-card {
-    margin-top: 12px;
-    padding: 12px;
-    border-radius: 10px;
-    background: #f9f9f9;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-  }
+.tryout-card {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: opacity 0.2s ease, transform 0.2s ease, all 0.3s ease;
+  width: calc(100% - 12px);
+  box-sizing: border-box;
+}
   
-  .tryout-card.hidden {
-    display: none;
-  }
+.tryout-card.hidden {
+  display: none;
+}
   
-  .tryout-card input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-  }
+.tryout-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
   
-  .tryout-card button {
-    width: 100%;
-    padding: 12px;
-    background-color: #1976d2;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-  }
-  
+.tryout-card button {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
 
-  #tryout-status {
-    margin-top: 8px;
-    font-size: 0.9rem;
-    text-align: center;
-    color: #d32f2f;
-  }
+.tryout-card input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(27, 94, 32, 0.2); 
+  outline: none;
+}
   
-  #tryout-status.success {
-    color: #388e3c;
-  }
+#tryout-status {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+  color: #d32f2f;
+}
   
-  /* 🔹 Tryout Listing Styles */
-  .tryout-list {
-    margin-top: 16px;
-  }
+#tryout-status.success {
+  color: #388e3c;
+}
   
-  .tryout-item {
-    background: #fff;
-    padding: 14px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .tryout-item span {
-    font-size: 1rem;
-    font-weight: 500;
-  }
-  
-  .tryout-id {
-    font-size: 0.9rem;
-    color: #777;
-  }
+/* Tryout List Styles */
+.tryout-list {
+  margin-top: 16px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+}
 
-  .show-tryouts-wrapper {
-    width: 90%;
-    max-width: 400px;
-    margin: 10px auto;
-    text-align: center;
-  }
+.tryout-list.expanded {
+  max-height: 400px;
+  opacity: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-bottom: 20px;
+  padding-right: 5px;
+}
+
+/* Style the scrollbar for better appearance */
+.tryout-list.expanded::-webkit-scrollbar,
+#player-list.expanded::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tryout-list.expanded::-webkit-scrollbar-thumb,
+#player-list.expanded::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 6px;
+}
+
+/* Styling for the Select button in tryout cards */
+.tryout-card .select-btn {
+  background-color: #800000 !important;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 8px;
+  width: auto;
+  display: inline-block;
+}
+
+.tryout-card .select-btn:hover {
+  background-color: #B71C1C !important;
+}
+
+/* Enhanced Popup Styles */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.popup.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup.hidden {
+  display: none;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 24px;
+  border-radius: 16px;
+  text-align: center;
+  width: 90%;
+  max-width: 320px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.popup.visible .popup-content {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.popup-content h3 {
+  margin-bottom: 20px;
+  color: var(--primary-color);
+  font-size: 1.3rem;
+}
+
+.station-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.station-btn:hover {
+  background-color: #143c16; /* Darker shade of your primary color */
+  transform: translateY(-2px);
+}
+
+.station-btn:active {
+  transform: translateY(0);
+}
+
+#close-popup {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 10px 16px;
+  margin-top: 10px;
+  transition: color 0.2s ease;
+}
+
+#close-popup:hover {
+  color: #333;
+}
   
-  #show-tryouts-btn {
-    padding: 12px 20px;
-    font-size: 1rem;
-    border: none;
-    background-color: #4caf50;
-    color: white;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  
-  
-  .popup.hidden {
-    display: none;
-  }
-  
-  
-  .popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-  }
-  
-  .popup-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 12px;
-    text-align: center;
-    width: 90%;
-    max-width: 320px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  }
-  
-  .popup-content h3 {
-    margin-bottom: 16px;
-  }
-  
-  .station-btn {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 10px;
-    font-size: 16px;
-    background-color: #1f2937;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  #close-popup {
-    background: none;
-    border: none;
-    color: #999;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  
+/* Player Section Styling */
+.player-section {
+  width: 90%;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 12px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.player-section h3 {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+#fetch-players-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#player-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+#player-list.expanded {
+  max-height: 400px;
+  opacity: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-bottom: 20px;
+  padding-right: 5px;
+}
+
+/* Make player items match the tryout card styling */
+.player-item {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #f9f9f9;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  width: calc(100% - 12px);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+}
+
+/* View Stats Button Styling */
+.view-stats-btn {
+  background-color: #800000 !important;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  width: auto;
+  display: inline-block;
+}
+
+.view-stats-btn:hover {
+  background-color: #B71C1C !important;
+}
+
+/* Tryout Section Container Styling */
+.tryout-section {
+  width: 90%;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 12px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.tryout-section h3 {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+/* Shared Toggle Button Styling */
+.toggle-btn, #show-tryouts-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  background-color: var(--primary-color) !important;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}

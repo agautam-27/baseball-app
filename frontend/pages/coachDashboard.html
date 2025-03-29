@@ -7,12 +7,11 @@
   <link rel="stylesheet" href="../styles/style.css" />
   <link rel="stylesheet" href="../styles/header-footer.css" />
   <link rel="stylesheet" href="../styles/coachDashboard.css" />
-
 </head>
 <body class="with-header-footer">
-    <div id="header-container"></div>
-  <h2>Welcome, Coach!</h2>
-  <p>This is your dashboard. You’ll be able to manage tryouts here.</p>
+  <div id="header-container"></div>
+  <h2 id="welcome-text">Welcome, Coach!</h2>
+  <p>This is your dashboard. You'll be able to manage tryouts here.</p>
 
   <div id="create-tryout-container" class="tryout-container">
     <div class="tryout-header">
@@ -28,26 +27,34 @@
     </div>
   </div>
   
-<!-- Show Tryouts Toggle -->
-<div class="show-tryouts-wrapper">
-  <button id="show-tryouts-btn">📋 Show Tryouts</button>
-</div>
-
-<div id="tryout-list" class="tryout-list hidden">
-  <!-- Cards will appear here -->
-</div>
-
-<!-- Station Selection Popup -->
-<div id="station-popup" class="popup hidden">
-  <div class="popup-content">
-    <h3>Select Station</h3>
-    <button class="station-btn" data-station="baseRunning">🏃 Base Running</button>
-    <button class="station-btn" data-station="pitching">⚾ Pitching</button>
-    <button class="station-btn" data-station="fieldingFlyBall">🧤 FieldingFlyBall</button>
-    <button class="station-btn" data-station="fieldingGroundBall">🧤 FieldingGroundBall</button>
-    <button id="close-popup">Cancel</button>
+  <!-- Unified Tryouts Section -->
+  <div id="tryout-section" class="tryout-section">
+    <h3>Tryouts</h3>
+    <button id="show-tryouts-btn" class="toggle-btn">Show Tryouts</button>
+    <div id="tryout-list" class="tryout-list">
+      <!-- Tryout cards will appear here -->
+    </div>
   </div>
-</div>
+
+  <!-- Player Section -->
+  <div id="player-section" class="player-section">
+    <h3>Players</h3>
+    <button id="fetch-players-btn" class="toggle-btn">View Player Stats</button>
+    <div id="player-list"></div>
+  </div>
+
+  <!-- Station Selection Popup -->
+  <div id="station-popup" class="popup hidden">
+    <div class="popup-content">
+      <h3>Select Station</h3>
+      <button class="station-btn" data-station="baseRunning">Base Running</button>
+      <button class="station-btn" data-station="pitching">Pitching</button>
+      <button class="station-btn" data-station="fieldingFlyBall">FieldingFlyBall</button>
+      <button class="station-btn" data-station="fieldingGroundBall">FieldingGroundBall</button>
+      <button class="station-btn" data-station="hitting">Hitting</button>
+      <button id="close-popup">Cancel</button>
+    </div>
+  </div>
 
   <div id="footer-container"></div>
 
