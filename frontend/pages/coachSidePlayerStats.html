@@ -1,11 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coach Dashboard</title>
+  <link rel="stylesheet" href="../styles/style.css" />
+  <link rel="stylesheet" href="../styles/header-footer.css" />
+  <link rel="stylesheet" href="../styles/coachSidePlayerStats.css" />
 </head>
-<body>
-    Tyson will finish this 
+<body class="with-header-footer">
+  <div id="header-container"></div>
+
+  <h2 id="welcome-text"></h2>
+
+  <!-- Pitching Stats Section -->
+  <div id="pitching-section" class="tryout-section">
+    <h3>Pitching Stats</h3>
+    <div id="pitching-list" class="tryout-list">
+      <!-- Table will be inserted here -->
+    </div>
+  </div>
+
+  <!-- Hitting Stats Section -->
+  <div id="hitting-section" class="tryout-section">
+    <h3>Hitting Stats</h3>
+    <div id="hitting-list" class="tryout-list">
+      <!-- Table will be inserted here -->
+    </div>
+  </div>
+
+  <!-- Base Running Stats Section -->
+  <div id="base-running-section" class="tryout-section">
+    <h3>Base Running Stats</h3>
+    <div id="base-running-list" class="tryout-list">
+      <!-- Table will be inserted here -->
+    </div>
+  </div>
+
+  <!-- Fielding (Ground Ball) Stats Section -->
+  <div id="groundball-section" class="tryout-section">
+    <h3>Fielding Stats (Ground Ball)</h3>
+    <div id="groundball-list" class="tryout-list">
+      <!-- Table will be inserted here -->
+    </div>
+  </div>
+
+  <!-- Fielding (Fly Ball) Stats Section -->
+  <div id="flyball-section" class="tryout-section">
+    <h3>Fielding Stats (Fly Ball)</h3>
+    <div id="flyball-list" class="tryout-list">
+      <!-- Table will be inserted here -->
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="../js/firebase-config.js"></script>
+  <script src="../js/header.js"></script>
+  <script src="../js/authGuard.js"></script>  
+  <script src="../js/coachSidePlayerStats.js"></script>  
 </body>
 </html>

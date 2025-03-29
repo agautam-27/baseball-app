@@ -1,0 +1,42 @@
+/* Card Styling for each section */
+.tryout-card {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .tryout-card h3 {
+    font-size: 1.2rem;
+    color: #2c3e50;
+  }
+  
+  .toggle-btn {
+    background-color: #3498db;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .toggle-btn:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Sections Styling */
+  .tryout-section {
+    margin: 20px 0;
+  }
+  
+  .tryout-list {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Add any additional styling for the player stats here */
+  

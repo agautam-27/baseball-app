@@ -281,7 +281,7 @@ function processData(data, type) {
                     return play.basePath === 'Home to 2nd' ? sum + play.time : sum;
                 }, 0);
                 const Hometo1st = session.filter(play => play.basePath === 'Home to 1st').length;
-                const Hometo2nd = session.filter(play => play.basePath === 'Home to 1st').length;
+                const Hometo2nd = session.filter(play => play.basePath === 'Home to 2nd').length;
 
                 return { count: sumTime, total: Hometo1st, count2: sumTime2, total2: Hometo2nd };
             });

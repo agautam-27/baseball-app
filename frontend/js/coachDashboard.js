@@ -276,7 +276,7 @@ function fetchPlayers() {
                     <div>
                         <p><strong>Player ID:</strong> ${displayId}</p>
                     </div>
-                    <button class="view-stats-btn" data-player-id="${docId}">
+                    <button class="view-stats-btn" data-player-id="${displayId}" data-doc-id="${docId}">
                         View Stats
                     </button>
                 `;
@@ -289,7 +289,7 @@ function fetchPlayers() {
                 button.addEventListener("click", (event) => {
                     const selectedPlayerId = event.target.dataset.playerId;
                     localStorage.setItem("selectedPlayerId", selectedPlayerId);
-                    window.location.href = "coachSidePlayerStats.html";
+                    window.location.href = `coachSidePlayerStats.html`;
                 });
             });
         })
