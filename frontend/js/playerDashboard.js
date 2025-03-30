@@ -16,36 +16,18 @@ const fetchPlayerData = async (user) => {
 
     if (playerDocSnap.exists) {
       const playerData = playerDocSnap.data();
-      let currentTryout = playerData.currentTryout || null;
-      let playerTryoutID = playerData.playerTryoutID || null;
-      const playerID = playerData.playerID; 
       const firstName = playerData.firstName || "Player";
       const lastName = playerData.lastName || "";
-
-      if (currentTryout) {
-        // Check if the tryout still exists
-        const tryoutSnapshot = await firestore.collection("tryouts").where("tryoutID", "==", currentTryout).get();
-        
-        if (tryoutSnapshot.empty) {
-          console.log(`Tryout ${currentTryout} no longer exists. Resetting player's tryout info.`);
-          
-          // Update user document to reset tryout info
-          await playerDocRef.update({
-            currentTryout: null,
-            playerTryoutID: null
-          });
-
-          currentTryout = null;
-          playerTryoutID = null;
-        }
-      }
+      const currentTryout = playerData.currentTryout || null;
+      const playerTryoutID = playerData.playerTryoutID || "N/A";
+      const playerID = playerData.playerID; // Retrieve playerID from user's document
 
       displayWelcomeMessage(firstName, lastName, currentTryout, playerTryoutID);
       fetchTryouts(currentTryout);
       fetchHittingStats(playerID);
       fetchPitchingStats(playerID);
-      fetchFieldingFlyStats(playerID);
-      fetchFieldingGroundStats(playerID);
+      fetchFieldingFlyStats(playerID); 
+      fetchFieldingGroundStats(playerID); 
       fetchBaseRunningStats(playerID);
     } else {
       console.error("Player document does not exist");
@@ -54,6 +36,9 @@ const fetchPlayerData = async (user) => {
     console.error("Error fetching player data:", error);
   }
 };
+
+
+
 
 const displayWelcomeMessage = async (firstName, lastName, currentTryout, playerTryoutID) => {
   const welcomeMessage = document.getElementById("welcome-message");
@@ -71,10 +56,9 @@ const displayWelcomeMessage = async (firstName, lastName, currentTryout, playerT
         if (!tryoutsSnapshot.empty) {
           const tryoutData = tryoutsSnapshot.docs[0].data();
           nextTryoutMessage.innerHTML = `
-            Your next tryout: ${currentTryout}<br>
-            Your tryout ID: ${playerTryoutID}<br>
-            Tryout Name: ${tryoutData.name}<br>
-            Tryout Date: ${tryoutData.date}
+            <b>Next Tryout:</b> ${tryoutData.name}<br>
+            <b>Tryout Date:</b> ${tryoutData.date}<br>
+            <b>Your Tryout ID:</b> ${playerTryoutID}<br>
           `;
         } else {
           nextTryoutMessage.innerHTML = `
