@@ -1,6 +1,16 @@
+:root {
+    --primary-color: #1B5E20;         
+    --glass-white: rgba(255, 255, 255, 0.7);
+    --background-color: #F4F6F8;
+    --font-color: #212121;
+    --danger-color: #D84315;
+    --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    --border-radius: 12px;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--background-color);
     margin: 20px;
 }
 
@@ -20,60 +30,96 @@ h1 {
     text-align: center;
 }
 
-/* Back button positioned inside the container on the left */
-.back-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    padding: 5px 10px;
-}
-
-/* Player info section */
-.player-info {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.player-info label {
-    display: block;
-    font-weight: bold;
-    margin-top: 5px;
-}
-
-.player-info input {
+.input-group {
+    position: relative;
     width: 100%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    margin-bottom: 20px;
 }
 
-/* Catch Type Dropdown inside attempts */
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-group textarea {
+    height: 100px; 
+}
+.input-group label {
+    position: absolute;
+    top: 12px;
+    left: 16px;
+    font-size: 1rem;
+    color: #999;
+    pointer-events: none;
+    transition: 0.2s ease all;
+    background: #fff;
+    padding: 0 5px;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group textarea:focus + label,
+.input-group textarea:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 12px;
+    font-size: 0.8rem;
+    color: var(--primary-color);
+}
+
+
+.save-btn {
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 10px 16px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: background-color 0.2s;
+    width: 100%;
+    cursor: pointer;
+  }
+  
+  .save-btn:hover,
+  .save-btn:active {
+    background-color: var(--primary-color);
+  }
+  
+.attempt-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff; 
+    padding: 16px;  
+    margin: 30px 0;
+    border-radius: var(--border-radius);
+    gap: 6px;
+    box-shadow: var(--box-shadow);
+}
+
+
 .catch-type select {
     width: 100%;
-    padding: 5px;
+    padding: 12px;
+    font-size: 1rem;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
+    background-color: #fff;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23212121'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
 }
 
-/* Button styling */
-.add-row, .save-btn {
-    background-color: #6c63ff;
-    color: white;
-    border: none;
-    padding: 10px;
-    margin: 10px 0;
-    cursor: pointer;
-    border-radius: 5px;
-    width: 100%;
-}
-
-.notes-section {
-    margin-top: 10px;
-}
 
 textarea {
     width: 100%;
@@ -83,35 +129,23 @@ textarea {
     border-radius: 5px;
 }
 
-.save-btn {
-    background-color: #28a745;
-}
-
-.attempt-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #f1f1f1;
-    padding: 8px;
-    margin: 5px 0;
-    border-radius: 5px;
-    gap: 10px;
-}
-
 /* Dropdown should be styled well inside the attempt rows */
 .attempt-row .catch-type select {
     flex-grow: 1;
 }
 
 .delete-btn {
-    color: red;
-    font-size: 18px;
-    font-weight: bold;
-    background: none;  /* Remove background */
-    border: none;
-    cursor: pointer;
-    padding: 5px 10px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--danger-color);
+  cursor: pointer;
+  transition: transform 0.2s;
 }
+.remove-btn:active {
+    transform: scale(1.1);
+  }
+  
 
 /* Extra spacing for label and dropdown container */
 .catch-type-container {
@@ -124,33 +158,24 @@ textarea {
   .catch-type-label {
     font-weight: bold;
   }
-  
+  .radio-group {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Optional: spacing between items */
+}
   /* Spacing between radio buttons */
   .radio-group label {
     margin-right: 15px;
   }
   
-  /* If you want the attempt-row items to be on separate lines or spaced more vertically */
-  .attempt-row {
-    display: flex;
-    flex-wrap: wrap; /* allows wrapping on smaller screens */
-    align-items: center;
-    gap: 10px; /* space between each element in the row */
-    background: #f1f1f1;
-    padding: 8px;
-    margin: 5px 0;
-    border-radius: 5px;
-  }
-  
   .message-box {
     margin-top: 10px;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     text-align: center;
     font-weight: bold;
     display: none;
-  }
-  
+}
   .success {
     background-color: #d4edda;
     color: #155724;
@@ -161,4 +186,48 @@ textarea {
     color: #721c24;
   }
   
+  .inline-add-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+    margin: 20px 0;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .inline-add-btn button {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: var(--glass-white);
+    font-size: 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    box-shadow: var(--box-shadow);
+    transition: background-color 0.2s, transform 0.1s;
+    cursor: pointer;
+  }
+  
+  .inline-add-btn button:active {
+    transform: scale(0.95);
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeInOut {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  
+  @media (max-width: 480px) {
+    .base-path-select {
+      font-size: 0.95rem;
+      padding: 12px 40px 12px 12px;
+    }
+  }
   

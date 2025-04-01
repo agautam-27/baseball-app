@@ -13,24 +13,24 @@
         <div class="container">
         <h1>Fielding - Ground Balls</h1>
 
-        <!-- Player Information Section -->
-        <div class="player-info">
+        <div class="input-group">
+            <input type="text" id="playerTryOutID" placeholder=" ">
             <label for="playerTryOutID">Player TryOut ID:</label>
-            <input type="text" id="playerTryOutID" placeholder="Enter Player ID">
-
-
         </div>
 
         <!-- Attempts Section -->
         <div id="attempts"></div>
-        <button onclick="addRow()" class="add-row">+ Add Row</button>
+        <div class="inline-add-btn">
+            <button onclick="addRow()">+</button>
+          </div>
+          
+        
+        <div class="input-group">
+            <textarea id="notes" placeholder=" "></textarea>
+            <label for="notes">Notes</label>
+          </div>
 
-        <div class="notes-section">
-            <label for="notes">Notes:</label>
-            <textarea id="notes" placeholder="Enter notes..."></textarea>
-        </div>
-
-        <button onclick="saveAll()" class="save-btn">Save All</button>
+        <button onclick="saveAll()" class="save-btn">Save</button>
         <div id="message-box" class="message-box"></div>
     </div>
     <div id="footer-container"></div>
