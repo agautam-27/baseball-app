@@ -81,7 +81,6 @@ body.with-header-footer {
   color: var(--primary-color);
 }
 
-/* Attempt Card */
 .attempt-card {
   width: 100%;
   background-color: white;
@@ -91,6 +90,12 @@ body.with-header-footer {
   box-shadow: var(--box-shadow);
   animation: fadeIn 0.25s ease-in-out;
   box-sizing: border-box;
+}
+
+.attempt-card .small-btn {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .timer-row {
@@ -280,13 +285,12 @@ button {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: var(--glass-white);
-  color: var(--primary-color);
+  background: var(--primary-color);
+  color: white;
   font-size: 1.5rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(8px);
+  border: none;
   box-shadow: var(--box-shadow);
-  transition: background-color 0.2s, transform 0.1s;
+  transition: transform 0.1s;
 }
 .inline-add-btn button:active {
   transform: scale(0.95);
@@ -303,6 +307,11 @@ button {
   border: none;
 }
 
+.save-footer {
+  display: flex;
+  justify-content: center;
+}
+
 .running {
   background-color: var(--danger-color) !important;
   color: #fff;
@@ -310,7 +319,6 @@ button {
 
 .inline-add-btn button {
   color: #000;
-  /* ... */
 }
 
 

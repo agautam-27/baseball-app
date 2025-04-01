@@ -15,24 +15,40 @@
         <main id="hitting-content" class="p-4">
             <h2 class="text-center">Hitting Evaluation</h2>
 
-            <div id="attempts-container">
-                <!-- Attempts will be injected here by hitting.js -->
+            <div class="input-group">
+                <input
+                    type="text"
+                    id="player-id"
+                    class="input-field"
+                    placeholder=" "
+                />
+                <label for="player-id">Player Tryout ID</label>
+            </div>
+            <div id="error-message"></div>
+
+            <div id="attempts-container"></div>
+
+            <div
+                id="add-first-attempt-btn"
+                style="display: none; text-align: center; margin-bottom: 20px"
+            >
+                <button
+                    id="add-attempt-btn"
+                    class="primary-btn"
+                    style="width: auto; padding: 10px 20px"
+                >
+                    Add Attempt
+                </button>
             </div>
 
-            <button id="add-attempt-btn" class="btn">➕ Add New Attempt</button>
+            <div class="input-group">
+                <textarea id="notes-input" placeholder=" "></textarea>
+                <label for="notes-input">Notes</label>
+            </div>
 
-            <label for="notes" class="block mt-4">Notes:</label>
-            <textarea
-                id="notes"
-                rows="4"
-                placeholder="Enter notes..."
-                class="w-full mt-1"
-            ></textarea>
-
-            <button id="save-btn" class="btn mt-4">Save</button>
+            <div id="save-confirmation">✔️ Saved!</div>
         </main>
 
-        <div id="footer-container"></div>
 
         <!-- Hit Zone Matrix Modal Using Field Image -->
         <div id="hit-zone-modal" class="modal">
@@ -82,6 +98,12 @@
                 </button>
             </div>
         </div>
+
+        <div class="save-footer">
+            <button id="save-btn" class="primary-btn">Save</button>
+        </div>
+
+        <div id="footer-container"></div>
 
         <!-- Firebase & Scripts -->
         <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
