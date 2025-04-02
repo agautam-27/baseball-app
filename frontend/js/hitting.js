@@ -137,7 +137,7 @@ function renderAttempts() {
         const options = document.createElement("ul");
         options.className = "dropdown-options";
 
-        ["N/A", "Line Drive", "Ground Ball", "Fly Ball"].forEach((hitType) => {
+        ["N/A", "Line Drive", "Ground Ball", "Fly Ball", "Foul Ball"].forEach((hitType) => {
             const li = document.createElement("li");
             li.textContent = hitType;
             li.dataset.value = hitType;

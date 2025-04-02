@@ -515,6 +515,24 @@ body.with-header-footer {
   height: 15%;
 }
 
+.hit-zone-overlay[data-zone="Foul Ball Left"] {
+  left: 15%;
+  top: 50%;
+  width: 25%;
+  height: 8%;
+  transform: rotate(45deg);
+  transform-origin: left center;
+}
+
+.hit-zone-overlay[data-zone="Foul Ball Right"] {
+  right: 15%;
+  top: 50%;
+  width: 25%;
+  height: 8%;
+  transform: rotate(-45deg);
+  transform-origin: right center;
+}
+
 .save-footer {
   width: 100%;
   padding: 10px 0;
