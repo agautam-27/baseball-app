@@ -160,11 +160,15 @@ function updateFormVisibility() {
 
     // Update login form placeholder based on role
     const emailOrIdField = document.getElementById("login-email-or-id");
-    const emailOrIdLabel = emailOrIdField.nextElementSibling;
+    // Find the actual label element by using the for attribute
+    const emailOrIdLabel = document.querySelector(`label[for="login-email-or-id"]`);
     
+    // Set placeholder to just "Player Email" or "Coach Email" without "or ID"
     const placeholderText = selectedRole === "player" ? "Player Email" : "Coach Email";
     emailOrIdField.placeholder = placeholderText;
-    emailOrIdLabel.textContent = placeholderText;
+    if (emailOrIdLabel) {
+        emailOrIdLabel.textContent = placeholderText;
+    }
 
     // Show appropriate form with animation
     if (isLogin) {
@@ -220,9 +224,6 @@ function navigateWithTransition(url) {
     }
 }
 
-/**
- * Handle login form submission
- */
 /**
  * Handle login form submission
  */
@@ -483,55 +484,84 @@ async function handleCoachSignup(e) {
     }
 }
 
+// Function for animated form visibility updates
+function updateFormVisibilityWithAnimation() {
+    const isLogin = document.getElementById("login-radio").checked;
+    const selectedRole = document.querySelector(".tab-button.active").dataset.role;
+
+    // Get current active form
+    const currentForm = document.querySelector("form.active");
+
+    // Determine which form should be shown
+    let nextForm;
+    if (isLogin) {
+        nextForm = document.getElementById("login-form");
+    } else if (selectedRole === "player") {
+        nextForm = document.getElementById("player-signup-form");
+    } else {
+        nextForm = document.getElementById("coach-signup-form");
+    }
+
+    // Don't animate if the same form is already active
+    if (currentForm === nextForm) return;
+
+    // Apply exit animation to current form
+    if (currentForm) {
+        currentForm.classList.add("form-exit");
+
+        // After exit animation, hide current and show next
+        setTimeout(() => {
+            currentForm.classList.remove("active", "form-exit");
+
+            // Update login form placeholder based on role
+            if (nextForm === document.getElementById("login-form")) {
+                const emailOrIdField = document.getElementById("login-email-or-id");
+                const emailOrIdLabel = document.querySelector('label[for="login-email-or-id"]');
+                // Set placeholder to just "Player Email" or "Coach Email" without "or ID"
+                const placeholderText = selectedRole === "player" ? "Player Email" : "Coach Email";
+
+                emailOrIdField.placeholder = placeholderText;
+                if (emailOrIdLabel) {
+                    emailOrIdLabel.textContent = placeholderText;
+                }
+            }
+
+            // Show and animate in the next form
+            nextForm.classList.add("active", "form-enter");
+
+            // Remove the animation class after it completes
+            setTimeout(() => {
+                nextForm.classList.remove("form-enter");
+            }, 300);
+        }, 300);
+    }
+}
+
 // === Event Listeners ===
 
-// Add this to your tab button click handlers
+// Tab button click handlers
 tabButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        const isCoach = button.dataset.role === 'coach';
-        const boxContainer = document.querySelector('.box-container');
-        const radioContainer = document.querySelector('.radio-container');
-        const roleIndicator = document.querySelector('.role-indicator');
-        const pageTransition = document.querySelector('.page-transition');
-        
         // Update active tab styling
         tabButtons.forEach((btn) => btn.classList.remove("active"));
         button.classList.add("active");
         
         // Update selected role
         selectedRole = button.dataset.role;
+
+        // Update login form placeholder immediately when role changes
+        const emailOrIdField = document.getElementById("login-email-or-id");
+        const emailOrIdLabel = document.querySelector('label[for="login-email-or-id"]');
         
-        // Animate the slider
-        if (isCoach) {
-            tabSlider.classList.add('coach');
-        } else {
-            tabSlider.classList.remove('coach');
+        // Set placeholder to just "Player Email" or "Coach Email" without "or ID"
+        const placeholderText = selectedRole === "player" ? "Player Email" : "Coach Email";
+        emailOrIdField.placeholder = placeholderText;
+        if (emailOrIdLabel) {
+            emailOrIdLabel.textContent = placeholderText;
         }
-        
-        // Hide role indicator first
-        roleIndicator.classList.remove('visible');
-        
-        // Apply visual changes after short delay
-        setTimeout(() => {
-            // Update container attributes
-            boxContainer.setAttribute('data-role', selectedRole);
-            radioContainer.setAttribute('data-role', selectedRole);
-            
-            // Update role indicator
-            roleIndicator.className = `role-indicator ${selectedRole}`;
-            roleIndicator.textContent = selectedRole === 'player' ? 'Player Mode' : 'Coach Mode';
-            
-            // Update page transition color
-            pageTransition.className = `page-transition ${selectedRole}`;
-            
-            // Show role indicator with animation
-            setTimeout(() => {
-                roleIndicator.classList.add('visible');
-            }, 100);
-            
-            // Update forms
-            updateFormVisibilityWithAnimation();
-        }, 150);
+
+        // Then update forms
+        updateFormVisibilityWithAnimation();
     });
 });
 

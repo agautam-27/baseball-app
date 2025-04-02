@@ -263,12 +263,13 @@ function setupSaveButton() {
       const userDoc = await db.collection("users").doc(user.uid).get();
       const userData = userDoc.data();
 
-      if (!userData || !userData.coachId) {
+      if (!userData || !userData.coachID) {
         showError("Your coach profile is missing a Coach ID.");
         return;
       }
       
-      const coachID = userData.coachId; 
+      const coachID = userData.coachID;
+    
 
       const cleanedAttempts = attempts.map((a) => ({
         basePath: a.basePath,
@@ -279,7 +280,7 @@ function setupSaveButton() {
         tryoutID,
         playerTryoutID,
         playerID,
-        coachId: coachID, 
+        coachID: coachID,
         attempts: cleanedAttempts,
         notes: notesValue,
         timestamp: new Date()
