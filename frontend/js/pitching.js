@@ -116,63 +116,48 @@ async function getPlayerByTryoutID(tryoutID) {
 
 // UI function: Render pitching evaluation page
 function renderPitchingPage() {
-    container.innerHTML =
-        '<h2 class="text-center compact-title">Pitching Evaluation</h2>';
+    // Don't remove the main html elements as they are in the HTML template
+    const pitchesContainer = document.getElementById("pitches-container");
+    if (!pitchesContainer) return;
+    
+    pitchesContainer.innerHTML = '';
+    
+    // Player Tryout ID input - handle the existing input field
+    const playerInput = document.getElementById("player-id-input");
+    if (playerInput) {
+        playerInput.value = playerTryoutID;
+        playerInput.oninput = async (e) => {
+            playerTryoutID = e.target.value.trim();
+            console.log("🔍 Checking playerTryoutID:", playerTryoutID);
 
-    // Player Tryout ID input section
-    const playerInputDiv = document.createElement("div");
-    playerInputDiv.className = "player-input-div";
+            // Set 500ms delay when input changes (debounce)
+            if (playerInput.debounceTimer) {
+                clearTimeout(playerInput.debounceTimer);
+            }
 
-    const playerInputContainer = document.createElement("div");
-    playerInputContainer.className = "player-input-container";
-
-    const playerInput = document.createElement("input");
-    playerInput.type = "text";
-    playerInput.id = "player-id-input";
-    playerInput.placeholder = "Enter Player Tryout ID";
-    playerInput.value = playerTryoutID;
-    playerInput.oninput = async (e) => {
-        playerTryoutID = e.target.value.trim();
-        console.log("🔍 Checking playerTryoutID:", playerTryoutID);
-
-        // Set 500ms delay when input changes (debounce)
-        if (playerInput.debounceTimer) {
-            clearTimeout(playerInput.debounceTimer);
+            playerInput.debounceTimer = setTimeout(async () => {
+                await checkPlayerExists(playerTryoutID);
+            }, 500);
+        };
+    }
+    
+    // Status message - use the existing element
+    const statusMessage = document.getElementById("player-status-message");
+    if (statusMessage) {
+        if (playerVerificationStatus === "found") {
+            statusMessage.textContent = "Player found";
+            statusMessage.className = "player-status-message found";
+            statusMessage.style.display = "block";
+        } else if (playerVerificationStatus === "not-found") {
+            statusMessage.textContent = "No player found";
+            statusMessage.className = "player-status-message not-found";
+            statusMessage.style.display = "block";
+        } else {
+            statusMessage.style.display = "none";
         }
-
-        playerInput.debounceTimer = setTimeout(async () => {
-            await checkPlayerExists(playerTryoutID);
-        }, 500);
-    };
-
-    playerInputContainer.appendChild(playerInput);
-
-    // Status message for player verification
-    const statusMessage = document.createElement("div");
-    statusMessage.id = "player-status-message";
-    statusMessage.className = "player-status-message";
-
-    // Show status message based on previous verification result
-    if (playerVerificationStatus === "found") {
-        statusMessage.textContent = "Player found";
-        statusMessage.className = "player-status-message found";
-        statusMessage.style.display = "block";
-    } else if (playerVerificationStatus === "not-found") {
-        statusMessage.textContent = "No player found";
-        statusMessage.className = "player-status-message not-found";
-        statusMessage.style.display = "block";
-    } else {
-        statusMessage.style.display = "none";
     }
 
-    playerInputContainer.appendChild(statusMessage);
-    playerInputDiv.appendChild(playerInputContainer);
-    container.appendChild(playerInputDiv);
-
     // Pitches rendering
-    const pitchesContainer = document.createElement("div");
-    pitchesContainer.id = "pitches-container";
-
     pitches.forEach((pitch) => {
         const pitchRow = document.createElement("div");
         pitchRow.className = "pitch-row";
@@ -245,48 +230,32 @@ function renderPitchingPage() {
         pitchesContainer.appendChild(pitchRow);
     });
 
-    container.appendChild(pitchesContainer);
+    // Connect event handlers to buttons defined in HTML
+    const addPitchBtn = document.getElementById("add-pitch-btn");
+    if (addPitchBtn) {
+        addPitchBtn.onclick = addPitch;
+    }
 
-    // "Add Pitch" button
-    const addPitchBtn = document.createElement("button");
-    addPitchBtn.id = "add-pitch-btn";
-    addPitchBtn.className = "btn";
-    addPitchBtn.textContent = "+ Add Pitch";
-    addPitchBtn.onclick = addPitch;
-    container.appendChild(addPitchBtn);
+    // Notes field handling
+    const notesInput = document.getElementById("notes");
+    if (notesInput) {
+        notesInput.value = notes;
+        notesInput.oninput = (e) => {
+            notes = e.target.value;
+        };
+    }
 
-    // Notes field
-    const notesLabel = document.createElement("label");
-    notesLabel.htmlFor = "notes";
-    notesLabel.className = "block mt-4";
-    notesLabel.textContent = "Notes:";
-    container.appendChild(notesLabel);
-
-    const notesInput = document.createElement("textarea");
-    notesInput.id = "notes";
-    notesInput.rows = 4;
-    notesInput.placeholder = "Enter notes...";
-    notesInput.className = "w-full mt-1";
-    notesInput.value = notes;
-    notesInput.oninput = (e) => {
-        notes = e.target.value;
-    };
-    container.appendChild(notesInput);
-
-    // "Save All" button
-    const saveBtn = document.createElement("button");
-    saveBtn.id = "save-btn";
-    saveBtn.className = "btn mt-4";
-    saveBtn.textContent = "Save All";
-
-    // Disable the button if there is a pitch with an empty speed
-    const hasEmptySpeed = pitches.some(
-        (pitch) => !pitch.speed || pitch.speed.trim() === ""
-    );
-    saveBtn.disabled = !playerID || hasEmptySpeed;
-
-    saveBtn.onclick = saveAll;
-    container.appendChild(saveBtn);
+    // Update the save button's disabled state
+    const saveBtn = document.getElementById("save-btn");
+    if (saveBtn) {
+        const hasEmptySpeed = pitches.some(
+            (pitch) => !pitch.speed || pitch.speed.trim() === ""
+        );
+        saveBtn.disabled = !playerID || hasEmptySpeed;
+        
+        // Add the event listener to the button in the footer
+        saveBtn.onclick = saveAll;
+    }
 }
 
 // Add a new pitch
@@ -409,7 +378,16 @@ async function saveAll() {
             "✅ Data successfully saved to Firestore. Document ID:",
             docRef.id
         );
-        alert("Pitching data saved!");
+        
+        // Show save confirmation
+        const saveConfirmation = document.getElementById("save-confirmation");
+        if (saveConfirmation) {
+            saveConfirmation.style.display = "block";
+            // Hide the confirmation after 3 seconds
+            setTimeout(() => {
+                saveConfirmation.style.display = "none";
+            }, 3000);
+        }
 
         // Clear the form after saving
         pitches = [];

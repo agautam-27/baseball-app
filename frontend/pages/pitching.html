@@ -12,24 +12,40 @@
         <div id="header-container"></div>
 
         <main id="pitching-content" class="p-4">
-            <h2 class="text-center compact-title">Pitching Evaluation</h2>
+            <h2 class="text-center">Pitching Evaluation</h2>
+
+            <div class="input-group">
+                <input
+                    type="text"
+                    id="player-id-input"
+                    class="input-field"
+                    placeholder=" "
+                />
+                <label for="player-id-input">Player Tryout ID</label>
+            </div>
+            <div id="player-status-message"></div>
 
             <div id="pitches-container">
                 <!-- Pitches will be injected here by JS -->
             </div>
 
-            <button id="add-pitch-btn" class="btn">+ Add Pitch</button>
+            <div id="add-pitch-btn-container" style="text-align: center; margin-bottom: 20px">
+                <button id="add-pitch-btn" class="primary-btn">
+                    Add Pitch
+                </button>
+            </div>
 
-            <label for="notes" class="block mt-4">Notes:</label>
-            <textarea
-                id="notes"
-                rows="4"
-                placeholder="Enter notes..."
-                class="w-full mt-1"
-            ></textarea>
+            <div class="input-group">
+                <textarea id="notes" placeholder=" "></textarea>
+                <label for="notes">Notes</label>
+            </div>
 
-            <button id="save-btn" class="btn mt-4">Save All</button>
+            <div id="save-confirmation">✔️ Saved!</div>
         </main>
+
+        <div class="save-footer">
+            <button id="save-btn" class="primary-btn">Save</button>
+        </div>
 
         <!-- Zone Matrix Modal -->
         <div id="zone-modal" class="modal">
