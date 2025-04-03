@@ -79,6 +79,7 @@ body.with-header-footer {
     font-weight: bold;
     display: none;
     white-space: nowrap;
+    margin-bottom: 20px;
 }
 
 .player-status-message.found {
@@ -87,6 +88,11 @@ body.with-header-footer {
 
 .player-status-message.not-found {
     color: var(--danger-color);
+}
+
+/* Add margin to the pitches container */
+#pitches-container {
+    margin-top: 10px;
 }
 
 /* Pitch row */
@@ -294,6 +300,23 @@ body.with-header-footer {
     height: 28px;
 }
 
+/* Unified badge styling */
+.unified-badge {
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    margin: 0 5px;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 120px;
+    max-width: 250px;
+    height: auto;
+    color: white;
+    font-weight: bold;
+    font-size: 0.85rem;
+    box-shadow: var(--box-shadow);
+}
+
 .strike-badge {
     background-color: var(--primary-color); /* Green for strike */
 }
@@ -302,6 +325,39 @@ body.with-header-footer {
     background-color: var(--danger-color); /* Red for ball */
 }
 
+.badge-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.badge-text-main {
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.badge-text-zone {
+    font-weight: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.badge-edit {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    padding-left: 8px;
+}
+
+.badge-edit:hover {
+    color: #fff;
+}
+
+/* Keep original zone display for compatibility */
 .zone-display {
     display: flex;
     align-items: center;
@@ -540,6 +596,21 @@ body.with-header-footer {
 
 #player-status-message.found {
     color: var(--primary-color);
+}
+
+/* Error Message Container */
+.error-message-container {
+    display: none;
+    background-color: rgba(216, 67, 21, 0.1);
+    border: 1px solid var(--danger-color);
+    color: var(--danger-color);
+    padding: 12px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    margin: 10px 0;
+    font-weight: bold;
+    font-size: 0.95rem;
+    animation: fadeIn 0.3s ease-out;
 }
 
 /* Animations */

@@ -191,32 +191,43 @@ function renderPitchingPage() {
         unitText.textContent = "km/h";
         pitchRow.appendChild(unitText);
 
-        // If zone is selected, show strike/ball badge and zone display
+        // If zone is selected, show unified zone badge
         if (pitch.zone) {
-            // Strike/Ball badge
+            // Create unified badge with strike/ball and zone info
+            const isStrike = isStrikeZone(pitch.zone);
+            const zoneName = getZoneName(pitch.zone);
             const badge = document.createElement("div");
-            badge.className = `badge ${
-                isStrikeZone(pitch.zone) ? "strike-badge" : "ball-badge"
+            badge.className = `unified-badge ${
+                isStrike ? "strike-badge" : "ball-badge"
             }`;
-            badge.textContent = isStrikeZone(pitch.zone) ? "Strike" : "Ball";
-            pitchRow.appendChild(badge);
-
-            // Zone display
-            const zoneDisplay = document.createElement("div");
-            zoneDisplay.className = "zone-display";
-
-            const zoneText = document.createElement("span");
-            zoneText.className = "zone-display-text";
-            zoneText.textContent = getZoneName(pitch.zone);
-            zoneDisplay.appendChild(zoneText);
-
+            
+            // Badge content section
+            const badgeContent = document.createElement("div");
+            badgeContent.className = "badge-content";
+            
+            // Badge text - split into two parts with different styling
+            const badgeTextMain = document.createElement("span");
+            badgeTextMain.className = "badge-text-main";
+            badgeTextMain.textContent = isStrike ? "Strike" : "Ball";
+            badgeContent.appendChild(badgeTextMain);
+            
+            const badgeTextZone = document.createElement("span");
+            badgeTextZone.className = "badge-text-zone";
+            badgeTextZone.textContent = ` - ${zoneName}`;
+            badgeContent.appendChild(badgeTextZone);
+            
+            // Edit button
             const editText = document.createElement("span");
-            editText.className = "zone-edit-text";
+            editText.className = "badge-edit";
             editText.textContent = "Edit";
-            editText.onclick = () => editPitchZone(pitch.id);
-            zoneDisplay.appendChild(editText);
-
-            pitchRow.appendChild(zoneDisplay);
+            editText.onclick = (e) => {
+                e.stopPropagation();
+                editPitchZone(pitch.id);
+            };
+            badgeContent.appendChild(editText);
+            
+            badge.appendChild(badgeContent);
+            pitchRow.appendChild(badge);
         } else {
             // Zone selection button
             const zoneSelectButton = document.createElement("button");
@@ -326,31 +337,56 @@ async function saveAll() {
     console.log("🔍 Current playerTryoutID:", playerTryoutID);
     console.log("🔍 Matched playerID:", playerID);
 
+    // Display error messages container if it doesn't exist
+    let errorMessageContainer = document.getElementById("error-message-container");
+    if (!errorMessageContainer) {
+        errorMessageContainer = document.createElement("div");
+        errorMessageContainer.id = "error-message-container";
+        errorMessageContainer.className = "error-message-container";
+        // Insert before the pitches container
+        const pitchesContainer = document.getElementById("pitches-container");
+        if (pitchesContainer) {
+            pitchesContainer.parentNode.insertBefore(errorMessageContainer, pitchesContainer);
+        }
+    }
+    
+    // Clear previous error messages
+    errorMessageContainer.innerHTML = "";
+    errorMessageContainer.style.display = "none";
+    
+    // Function to show error message
+    const showErrorMessage = (message) => {
+        errorMessageContainer.textContent = message;
+        errorMessageContainer.style.display = "block";
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+            errorMessageContainer.style.display = "none";
+        }, 5000);
+    };
+
     if (!playerID) {
-        alert(
-            "No player found with this tryout ID. Note: ID is case-sensitive."
-        );
+        showErrorMessage("No player found with this tryout ID. Note: ID is case-sensitive.");
         console.log("❌ No player found, aborting save.");
         return;
     }
 
-    // speedが空のpitchがある場合は保存しない
+    // Do not save if there are pitches with empty speed values
     const hasEmptySpeed = pitches.some(
         (pitch) => !pitch.speed || pitch.speed.trim() === ""
     );
     if (hasEmptySpeed) {
-        alert("すべてのピッチにスピードを入力してください。");
+        showErrorMessage("Please enter speed for all pitches.");
         return;
     }
 
     if (pitches.length === 0) {
-        alert("Please add at least one pitch data.");
+        showErrorMessage("Please add at least one pitch data.");
         return;
     }
 
     // Format the data
     const formattedPitches = pitches.map((pitch) => ({
-        speed: pitch.speed ? Number(pitch.speed) : null, // 文字列から数値型に変換
+        speed: pitch.speed ? Number(pitch.speed) : null, // Convert string to number type
         outcome: isStrikeZone(pitch.zone) ? "Strike" : "Ball",
         pitchingZone: pitch.zone,
     }));
@@ -395,7 +431,17 @@ async function saveAll() {
         renderPitchingPage();
     } catch (error) {
         console.error("❌ Error saving pitching data:", error);
-        alert(`Failed to save. Error: ${error.message}`);
+        
+        // Use the error message container to display the error
+        const errorMessageContainer = document.getElementById("error-message-container");
+        if (errorMessageContainer) {
+            errorMessageContainer.textContent = `Failed to save. Error: ${error.message}`;
+            errorMessageContainer.style.display = "block";
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                errorMessageContainer.style.display = "none";
+            }, 5000);
+        }
     }
 }
 
