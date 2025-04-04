@@ -472,5 +472,3 @@ document.querySelectorAll('.card').forEach(card => {
     window.location.href = `graphs.html?cardId=${cardId}`;  // Navigate with query parameter
   });
 });
-
-

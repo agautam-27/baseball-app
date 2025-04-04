@@ -42,7 +42,8 @@ const fetchPlayerData = async (user) => {
                     break;
                 case '3':
                     fetchData("baseRunning", 3);
-                    document.querySelector("#graph-title").innerHTML = "Base Running Time"
+                    document.querySelector("#graph-title").innerHTML = "Base Running Time (Home to 1st)"
+                    document.querySelector("#graph-title2").innerHTML = "Base Running Time (Home to 2nd)"
                     break;
                 case '4':
                     fetchData("FieldingFlyBall", 4);
@@ -136,7 +137,9 @@ const fetchData = async (page, type) => {
                 });
 
                 console.log(dist)
-                initializeSecondaryChart(dist, modifier)
+                // initializeSecondaryChart(dist, modifier)
+                initializeGrid();
+
 
                 break;
             case 2:
@@ -183,10 +186,10 @@ const fetchData = async (page, type) => {
                 sum2 = processedPlayerData.reduce((acc, curr) => acc + curr.count2, 0);
                 total2 = processedPlayerData.reduce((acc, curr) => acc + curr.total2, 0);  // Sum of all elements
                 average2 = Math.round((sum2 / total2) * 10) / 10;
-                modifier = { binAmount: 0.1, unit: "Time (s)" }
+                modifier = { binAmount: 0.5, unit: "Time (s)" }
 
 
-                initializeChart(processedData, average2, modifier, ctx2)
+                initializeChart(processedData2, average2, modifier, ctx2)
 
                 break;
             case 4:
@@ -308,8 +311,8 @@ function processData(data, type) {
 
 // Function to bin data into groups of 5
 function binData(data, binSize) {
-    const minAttempt = Math.min(...data);
-    const maxAttempt = Math.max(...data);
+    const minAttempt = Math.min(...data) - binSize;
+    const maxAttempt = Math.max(...data) + binSize;
 
     const bins = [];
     for (let i = minAttempt; i <= maxAttempt; i += binSize) {
@@ -411,7 +414,7 @@ function initializeChart(playerData, x, modifier, thisCTX) {
         },
         scales: {
             x: { title: { display: true, text: modifier.unit } },
-            y: { title: { display: false, text: "" } },
+            y: { title: { display: true, text: "Number of players" } },
         },
     };
 
@@ -478,4 +481,12 @@ function initializeSecondaryChart(playerData, modifier) {
         options: options2,
     });
     // console.log("b");
+}
+
+
+function initializeGrid(){
+    const grid = document.getElementById("gridContainer")
+    console.log(grid)
+    // grid.style = "flex"
+
 }

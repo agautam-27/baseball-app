@@ -1,39 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Stats Graphs</title>
-        <link rel="stylesheet" href="../styles/style.css" />
-        <link rel="stylesheet" href="../styles/graph.css" />
-        <link rel="stylesheet" href="../styles/header-footer.css" />
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    </head>
 
-    <body class="with-header-footer">
-        <div id="header-container"></div>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stats Graphs</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="stylesheet" href="../styles/graph.css" />
+    <link rel="stylesheet" href="../styles/header-footer.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
 
-        <div id="error-msg"></div>
+<body class="with-header-footer">
+    <div id="header-container"></div>
 
-        <p id="graph-title"></p>
-        <div class="chartContainer">
-            <canvas id="statsChart"></canvas>
+    <div id="error-msg"></div>
+
+    <p id="graph-title"></p>
+    <div class="chartContainer">
+        <canvas id="statsChart"></canvas>
+    </div>
+
+    <p id="graph-title2">s</p>
+    <!-- chart container has to only contain the canvas-->
+    <div class="chartContainer">
+        <canvas id="statsChart2"></canvas>
+    </div>
+
+    <div class="zone-matrix-container" id="gridContainer">
+        <h3 class="zone-matrix-title">Pitching Zones</h3>
+
+        <div class="outer-container">
+            <!-- Top section with zones 11, 12 -->
+            <div class="top-row">
+                <div class="zone-11" >
+                    11
+                </div>
+                <div class="zone-12" >
+                    12
+                </div>
+            </div>
+
+            <!-- Middle section -->
+            <div class="middle-section">
+                <!-- Left side area - extended zones 11 and 13 -->
+                <div class="left-column">
+                    <div class="left-top" ></div>
+                    <div class="left-bottom" ></div>
+                </div>
+
+                <!-- Central 3x3 matrix -->
+                <div class="matrix-3x3">
+                    <!-- Row 1 -->
+                    <div class="zone-row">
+                        <div class="zone">
+                            1
+                        </div>
+                        <div class="zone">
+                            2
+                        </div>
+                        <div class="zone">
+                            3
+                        </div>
+                    </div>
+                    <!-- Row 2 -->
+                    <div class="zone-row">
+                        <div class="zone">
+                            4
+                        </div>
+                        <div class="zone">
+                            5
+                        </div>
+                        <div class="zone">
+                            6
+                        </div>
+                    </div>
+                    <!-- Row 3 -->
+                    <div class="zone-row">
+                        <div class="zone">
+                            7
+                        </div>
+                        <div class="zone">
+                            8
+                        </div>
+                        <div class="zone">
+                            9
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right side area - extended zones 12 and 14 -->
+                <div class="right-column">
+                    <div class="right-top" ></div>
+                    <div class="right-bottom" ></div>
+                </div>
+            </div>
+
+            <!-- Bottom section with zones 13, 14 -->
+            <div class="bottom-row">
+                <div class="zone-13" >
+                    13
+                </div>
+                <div class="zone-14" >
+                    14
+                </div>
+            </div>
         </div>
+    </div>
 
-        <p id="graph-title2">s</p>
-        <!-- chart container has to only contain the canvas-->
-        <div class="chartContainer">
-            <canvas id="statsChart2"></canvas>
-        </div>
 
-        <div id="footer-container"></div>
+    <div id="footer-container"></div>
 
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-        <script src="../js/firebase-config.js"></script>
-        <script src="../js/authGuard.js"></script>
-        <script src="../js/header.js"></script>
-        <script src="../js/graphs.js"></script>
-    </body>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/authGuard.js"></script>
+    <script src="../js/header.js"></script>
+    <script src="../js/graphs.js"></script>
+</body>
+
 </html>
