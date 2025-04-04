@@ -124,6 +124,11 @@ const fetchData = async (page, type) => {
                 // Flatten the array of arrays into a single array
                 allData = attempts.flat();
                 console.log(allData)
+
+                for(i = 1; i <= 14; i++){
+                    dist[i] = 0;
+                }
+
                 // Count occurrences of each position
                 allData.forEach(play => {
                     const zone = play.pitchingZone; // Extract position
@@ -138,7 +143,7 @@ const fetchData = async (page, type) => {
 
                 console.log(dist)
                 // initializeSecondaryChart(dist, modifier)
-                initializeGrid();
+                initializeGrid(dist);
 
 
                 break;
@@ -484,9 +489,48 @@ function initializeSecondaryChart(playerData, modifier) {
 }
 
 
-function initializeGrid(){
+function initializeGrid(data){
     const grid = document.getElementById("gridContainer")
-    console.log(grid)
-    // grid.style = "flex"
+    grid.style.display = "flex"
+    const canvas = document.getElementById("statsChart2")
+    canvas.style.display = "none"
+
+    
+   for(let zone in data) {
+        console.log(zone)
+        const setZone = document.querySelector(`#zone${zone}`);
+        if (setZone) {
+            setZone.innerHTML = data[zone] + "%";
+            setZone.parentElement.style.backgroundColor = getGreenShade(data[zone])
+        }
+    };
+
+    const leftTop = document.querySelector(".left-top");
+    leftTop.style.backgroundColor = getGreenShade(data[11])
+    const leftBot = document.querySelector(".left-bottom");
+    leftBot.style.backgroundColor = getGreenShade(data[12])
+    const rightTop = document.querySelector(".right-top");
+    rightTop.style.backgroundColor = getGreenShade(data[13])
+    const rightBot = document.querySelector(".right-bottom");
+    rightBot.style.backgroundColor = getGreenShade(data[14])
+
+
 
 }
+
+function getGreenShade(percent) {
+    // Clamp percentage
+    percent = Math.max(0, Math.min(100, percent));
+
+    // Define start (light) and end (dark) RGB values
+    const startColor = { r: 232, g: 245, b: 233 }; // #E8F5E9
+    const endColor   = { r: 27,  g: 94,  b: 32 };  // #1B5E20
+
+    // Linearly interpolate each RGB channel
+    const r = Math.round(startColor.r + (endColor.r - startColor.r) * (percent / 100));
+    const g = Math.round(startColor.g + (endColor.g - startColor.g) * (percent / 100));
+    const b = Math.round(startColor.b + (endColor.b - startColor.b) * (percent / 100));
+
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
