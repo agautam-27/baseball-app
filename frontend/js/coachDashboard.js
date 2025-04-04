@@ -1,42 +1,46 @@
 const db = firebase.firestore();
 
-document.getElementById('toggle-tryout-form').addEventListener('click', () => {
-  const card = document.getElementById('tryout-form-card');
-  const statusText = document.getElementById('tryout-status');
-  const toggleBtn = document.getElementById('toggle-tryout-form');
+document.addEventListener('DOMContentLoaded', function() {
+    const introParagraph = document.querySelector('#welcome-text + p');
+    
+    if (introParagraph) {
+      introParagraph.innerHTML = "Manage your tryouts and track player performance from this dashboard. Select from the options below to get started.";
+    }
+  });   
 
-  // If currently hidden, show with animation
-  if (card.classList.contains('hidden')) {
-      card.classList.remove('hidden');
-      // Force reflow for animation
-      void card.offsetWidth;
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(-10px)';
-      
-      // Trigger animation
-      setTimeout(() => {
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-      }, 10);
-      
-      toggleBtn.textContent = '✖';
-      statusText.textContent = '';
-      statusText.className = '';
-  } else {
-      // Hide with animation
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(-10px)';
-      
-      // After animation completes, hide the element
-      setTimeout(() => {
-          card.classList.add('hidden');
-          card.style.opacity = '';
-          card.style.transform = '';
-      }, 200);
-      
-      toggleBtn.textContent = '➕';
-  }
-});
+document.getElementById('toggle-tryout-form').addEventListener('click', () => {
+    const card = document.getElementById('tryout-form-card');
+    const statusText = document.getElementById('tryout-status');
+    const toggleBtn = document.getElementById('toggle-tryout-form');
+    const plusIcon = toggleBtn.querySelector('.plus-icon');
+  
+    if (card.classList.contains('hidden')) {
+        card.classList.remove('hidden');
+        void card.offsetWidth;
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 10);
+        
+        plusIcon.classList.add('is-active');
+        statusText.textContent = '';
+        statusText.className = '';
+    } else {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(-10px)';
+        
+        setTimeout(() => {
+            card.classList.add('hidden');
+            card.style.opacity = '';
+            card.style.transform = '';
+        }, 200);
+        
+        plusIcon.classList.remove('is-active');
+    }
+  });
 
 function generateTryoutID() {
     const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -60,33 +64,46 @@ function createTryout() {
         return;
     }
 
-    const tryout = {
-        tryoutID,
-        name,
-        date,
-        createdAt: new Date(),
-        coachId: firebase.auth().currentUser.uid,
-        count: 0
-    };
+    const userId = firebase.auth().currentUser.uid;
+    
+    db.collection("users").doc(userId).get()
+        .then((doc) => {
+            if (!doc.exists) {
+                throw new Error("Coach data not found");
+            }
+            
+            const userData = doc.data();
+            const coachID = userData.coachID;
+            
+            if (!coachID) {
+                throw new Error("Coach ID not found in user data");
+            }
+            
+            const tryout = {
+                tryoutID,
+                name,
+                date,
+                createdAt: new Date(),
+                coachID: coachID,
+                coachUid: userId
+            };
 
-    db.collection("tryouts")
-        .add(tryout)
+            return db.collection("tryouts").add(tryout);
+        })
         .then(() => {
             statusText.textContent = "✅ Tryout created successfully!";
             statusText.className = "success";
             nameInput.value = "";
             dateInput.value = "";
 
-            // Collapse form after saving
             document.getElementById('tryout-form-card').classList.add('hidden');
             document.getElementById('toggle-tryout-form').textContent = '➕';
-
-            // Reload tryouts list
             loadTryouts();
         })
+
         .catch((error) => {
             console.error("Error creating tryout:", error);
-            statusText.textContent = "❌ Failed to create tryout.";
+            statusText.textContent = "❌ Failed to create tryout: " + error.message;
             statusText.className = "";
         });
 }
@@ -95,41 +112,99 @@ function loadTryouts() {
     const tryoutList = document.getElementById("tryout-list");
     tryoutList.innerHTML = ""; // Clear existing list
   
-    db.collection("tryouts")
-        .orderBy("createdAt", "desc")
-        .get()
-        .then((querySnapshot) => {
-            if (querySnapshot.empty) {
-                tryoutList.innerHTML = "<p>No tryouts found.</p>";
-                return;
+    // Get the current coach's UID
+    const currentCoachUid = firebase.auth().currentUser.uid;
+    
+    // Get the coach's numeric coachID from their user document
+    db.collection("users").doc(currentCoachUid).get()
+        .then((doc) => {
+            if (!doc.exists) {
+                throw new Error("Coach data not found");
             }
-  
-            querySnapshot.forEach((doc) => {
-                const tryout = doc.data();
-  
-                // Create tryout card with improved labeling
-                const tryoutCard = document.createElement("div");
-                tryoutCard.className = "tryout-card";
-                tryoutCard.dataset.tryoutId = tryout.tryoutID;
-  
-                // Updated format with clear labels
-                tryoutCard.innerHTML = `
-                    <div>
-                        <p><strong>Tryout Name:</strong> ${tryout.name}</p>
-                        <p><strong>Tryout ID:</strong> ${tryout.tryoutID}</p>
-                        <p><strong>Date:</strong> ${tryout.date}</p>
-                        <button class="select-btn">Select</button>
-                    </div>
-                `;
-  
-                tryoutList.appendChild(tryoutCard);
-            });
-  
-            // Attach select button event listeners
-            attachTryoutCardListeners();
+            
+            const userData = doc.data();
+            const coachID = userData.coachID; // The numeric ID
+            
+            // Query tryouts that match either format (for backward compatibility)
+            return db.collection("tryouts")
+                .where(firebase.firestore.FieldPath.documentId(), "!=", "placeholder")
+                .get()
+                .then((querySnapshot) => {
+                    if (querySnapshot.empty) {
+                        tryoutList.innerHTML = "<p>No tryouts found.</p>";
+                        return;
+                    }
+                    
+                    // Filter tryouts that belong to this coach (using either field)
+                    const coachTryouts = [];
+                    querySnapshot.forEach((doc) => {
+                        const tryout = doc.data();
+                        const tryoutDocId = doc.id;
+                        
+                        // Check if this tryout belongs to the current coach
+                        // using either the new coachID field or the old coachId field
+                        if ((tryout.coachID && tryout.coachID === coachID) || 
+                            (tryout.coachId && tryout.coachId === currentCoachUid) ||
+                            (tryout.coachUid && tryout.coachUid === currentCoachUid)) {
+                            
+                            coachTryouts.push({
+                                ...tryout,
+                                id: tryoutDocId
+                            });
+                        }
+                    });
+                    
+                    if (coachTryouts.length === 0) {
+                        tryoutList.innerHTML = "<p>No tryouts found.</p>";
+                        return;
+                    }
+                    
+                    // Sort tryouts by creation date (newest first)
+                    coachTryouts.sort((a, b) => {
+                        const dateA = a.createdAt && a.createdAt.toDate ? a.createdAt.toDate() : new Date(0);
+                        const dateB = b.createdAt && b.createdAt.toDate ? b.createdAt.toDate() : new Date(0);
+                        return dateB - dateA;
+                    });
+                    
+                    // Render the tryouts
+                    coachTryouts.forEach((tryout) => {
+                        // Create tryout card with improved labeling
+                        const tryoutCard = document.createElement("div");
+                        tryoutCard.className = "tryout-card";
+                        tryoutCard.dataset.tryoutId = tryout.tryoutID;
+                        
+                        // Format the date in a user-friendly way (from YYYY-MM-DD to Month Day, Year)
+                        let formattedDate = tryout.date;
+                        try {
+                            const dateObj = new Date(tryout.date);
+                            formattedDate = dateObj.toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            });
+                        } catch (e) {
+                            // If date formatting fails, use the original date
+                        }
+          
+                        // Updated format with clear labels
+                        tryoutCard.innerHTML = `
+                            <div>
+                                <p><strong>Tryout Name:</strong> ${tryout.name}</p>
+                                <p><strong>Tryout ID:</strong> ${tryout.tryoutID}</p>
+                                <p><strong>Date:</strong> ${formattedDate}</p>
+                                <button class="select-btn">Select</button>
+                            </div>
+                        `;
+          
+                        tryoutList.appendChild(tryoutCard);
+                    });
+          
+                    attachTryoutCardListeners();
+                });
         })
         .catch((error) => {
             console.error("Error loading tryouts:", error);
+            tryoutList.innerHTML = `<p>Error loading tryouts: ${error.message}</p>`;
         });
 }
 

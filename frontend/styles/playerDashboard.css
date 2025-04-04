@@ -6,14 +6,13 @@ body {
   padding: 0;
 }
 
-/* Header and Footer container styling */
-#header-container,
+/* #header-container,
 #footer-container {
   background-color: #1B5E20; 
   color: white;
   padding: 20px;
   text-align: center;
-}
+} */
 
 /* Main content area styling */
 #player-content {
@@ -159,3 +158,79 @@ button:hover {
       font-size: 13px;
   }
 }
+
+/* Add these styles to the end of your playerDashboard.css file */
+
+/* Loading indicator styling */
+.card {
+  position: relative;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  z-index: 10;
+}
+
+.loading-spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #1B5E20;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add visual feedback for real-time updates */
+@keyframes highlight {
+  0% { background-color: rgba(27, 94, 32, 0.1); }
+  100% { background-color: transparent; }
+}
+
+.highlight-update {
+  animation: highlight 1.5s ease-out;
+}
+
+/* Make cards more interactive */
+.card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Add some visual indication that the data is live */
+#performance-cards h3 {
+  position: relative;
+}
+
+#performance-cards h3::after {
+  content: "• Live";
+  color: #1B5E20;
+  font-size: 0.8em;
+  margin-left: 10px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
