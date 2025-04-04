@@ -144,22 +144,21 @@ async function saveAll() {
     const playerID = userData.playerID;
 
     const fieldingRef = db.collection("FieldingFlyBall");
-    const existingDocs = await fieldingRef.where("playerTryoutID", "==", playerTryoutID).get();
-    const newDocId = playerTryoutID + "-" + (existingDocs.size + 1);
+    const newDocRef = fieldingRef.doc();
 
     const indexedAttempts = attempts.map((attempt) => ({
       CatchOrMiss: attempt.result,
       catchType: attempt.catchType,
     }));
 
-    await fieldingRef.doc(newDocId).set({
+    await newDocRef.set({
       playerID: playerID,
       playerTryoutID: playerTryoutID,
       notes: notesInput.value,
       attempts: indexedAttempts, 
     });
 
-    showMessage("✅ Fielding Fly Ball data saved as " + newDocId + "!", true);
+    showMessage("✅ Fielding Fly Ball data saved as " + newDocRef.id + "!", true);
     clearPage(); // Clear the page after saving
   } catch (err) {
     console.error("❌ Error saving data:", err);
