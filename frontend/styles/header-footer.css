@@ -1,156 +1,158 @@
+/* --- HEADER AND FOOTER MODERN GLASS DESIGN (ULTRA-SLEEK VERSION) --- */
+
+/* Shared styles for glass effect - using higher specificity selectors */
+.scoutly-glass-effect {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(8px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(8px) saturate(120%) !important;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Header with top border */
+.scoutly-header.scoutly-glass-effect {
+  border-bottom: 1px solid rgba(200, 200, 200, 0.3) !important;
+}
+
+/* Footer with bottom border */
+.scoutly-footer.scoutly-glass-effect {
+  border-top: 1px solid rgba(200, 200, 200, 0.3) !important;
+  border-bottom: none !important;
+}
+
 /* --- HEADER --- */
-.app-header {
-    background-color: white;
-    color: #1f2937;
-    padding: 12px 16px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.scoutly-header {
+  color: #1f2937 !important;
+  padding: 0 16px !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 1000 !important;
+  transition: all 0.3s ease !important;
+  height: 42px !important; /* Even more reduced height */
+  display: flex !important;
+  align-items: center !important;
 }
 
-.header-content {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.scoutly-header-content {
+  position: relative !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
 }
 
-.app-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.hamburger {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-/* --- OVERLAY --- */
-.menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 998;
-    display: none;
-}
-
-.menu-overlay.active {
-    display: block;
-}
-
-/* --- SIDEMENU --- */
-.side-menu {
-    background-color: white;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 66%;
-    padding-top: 40px;
-    padding-left: 16px;
-    padding-right: 16px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    z-index: 999;
-}
-
-/* Close button styling */
-.close-menu-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: none;
-    border: none;
-    font-size: 22px;
-    cursor: pointer;
-    color: #333;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    z-index: 1001;
-    transition: background-color 0.2s;
-}
-
-.close-menu-btn:hover {
-    background-color: #f0f0f0;
-}
-
-.close-menu-btn:active {
-    background-color: #e0e0e0;
-}
-
-.side-menu.active {
-    transform: translateX(0);
-}
-
-.side-menu ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-
-.side-menu li {
-    margin: 0;
-    padding: 15px 0;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.side-menu li:last-child {
-    border-bottom: none;
-}
-
-.side-menu a {
-    color: #333;
-    text-decoration: none;
-    font-size: 0.95rem;
-    display: block;
+.scoutly-title {
+  font-size: 1.5rem !important; /* Balanced font size */
+  font-weight: 600 !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+  background: linear-gradient(120deg, #2c3e50, #4a6baf) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  letter-spacing: 0.5px !important;
 }
 
 /* --- FOOTER --- */
-.app-footer {
-    background-color: white;
-    color: #1f2937;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    padding: 12px 0;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+.scoutly-footer {
+  color: #1f2937 !important;
+  position: fixed !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: space-around !important;
+  padding: 6px 0 !important; /* Minimal padding */
+  height: 48px !important; /* Ultra-sleek height */
+  z-index: 1000 !important;
+  transition: all 0.3s ease !important;
 }
 
-.app-footer button,
-.app-header button {
-    background: none;
-    border: none;
-    padding: 0;
-    margin: 0;
-    outline: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.scoutly-footer button,
+.scoutly-header button {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  outline: none !important;
+  cursor: pointer !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  transition: transform 0.2s ease !important;
+  min-width: 48px !important; /* Minimum touch target */
+  min-height: 36px !important;
+}
+
+.scoutly-footer button:active {
+  transform: scale(0.95) !important;
+  background-color: transparent !important;
 }
 
 /* --- ICON STYLING --- */
-.icon-img {
-    width: 35px;
-    height: 35px;
-    object-fit: contain;
+.scoutly-icon {
+  width: 30px !important; 
+  height: 30px !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05)) !important;
+}
+
+/* Override any button highlight effects */
+.scoutly-footer button,
+.scoutly-header button {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  outline: none !important;
+}
+
+.scoutly-footer button:focus,
+.scoutly-header button:focus {
+  outline: none !important;
+  background-color: transparent !important;
+}
+
+.scoutly-footer button:active,
+.scoutly-header button:active {
+  background-color: transparent !important;
+}
+
+/* Add very small label to footer buttons */
+.scoutly-button-label {
+  font-size: 8.5px !important; /* Minimal font size */
+  margin-top: 1px !important; /* Minimal margin */
+  color: #555 !important;
+  font-weight: 500 !important;
+  opacity: 0.8 !important;
+}
+
+/* Style for active footer button */
+.scoutly-footer button.active .scoutly-button-label {
+  color: #4a6baf !important;
+  opacity: 1 !important;
+}
+
+/* Media query for iPhone notch support */
+@supports (padding: max(0px)) {
+  .scoutly-header {
+    padding-top: max(0px, env(safe-area-inset-top)) !important;
+    height: max(42px, calc(env(safe-area-inset-top) + 42px)) !important;
+  }
+  
+  .scoutly-footer {
+    padding-bottom: max(0px, env(safe-area-inset-bottom)) !important;
+    height: max(50px, calc(env(safe-area-inset-bottom) + 48px)) !important;
+  }
+}
+
+/* Update page padding to match new header/footer heights */
+body.with-header-footer {
+  padding-top: 42px !important;
+  padding-bottom: 48px !important;
 }

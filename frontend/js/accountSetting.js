@@ -7,8 +7,11 @@ const birthdayContainer = document.getElementById("birthday-container");
 const currentPasswordInput = document.getElementById("currentPassword");
 const newPasswordInput = document.getElementById("newPassword");
 const saveButton = document.getElementById("saveButton");
+const logoutButton = document.getElementById("logoutButton");
 const statusMessage = document.getElementById("statusMessage");
 const idContainer = document.getElementById("id-container");
+const loadingOverlay = document.getElementById("loading-overlay");
+const accountSettingsContainer = document.querySelector(".account-settings-container");
 
 // Firebase references
 const db = firebase.firestore();
@@ -27,14 +30,13 @@ let coachId = null;
  * Initialize the page when DOM is loaded
  */
 document.addEventListener("DOMContentLoaded", function () {
-    // Footer container should be loaded by authGuard
-    const footerContainer = document.getElementById("footer-placeholder");
-    if (footerContainer) {
-        footerContainer.id = "footer-container";
-    }
-
     // Initialize the page
     initAccountSettings();
+    
+    // Set up the logout button handler
+    if (logoutButton) {
+        logoutButton.addEventListener("click", handleLogout);
+    }
 });
 
 /**
@@ -51,9 +53,73 @@ function initAccountSettings() {
 
     // Add event listener for save button
     saveButton.addEventListener("click", handleSaveChanges);
+    
+    // Check if we have the role in sessionStorage
+    const storedRole = sessionStorage.getItem('userRole');
+    if (storedRole) {
+        // Pre-configure the UI for the correct role before fetching data
+        userRole = storedRole;
+        
+        if (storedRole === "player") {
+            // Show birthday field for players
+            birthdayContainer.style.display = "block";
+            // Hide coach-specific elements if needed
+        } else if (storedRole === "coach") {
+            // Hide birthday field for coaches
+            birthdayContainer.style.display = "none";
+            // Show coach-specific elements if needed
+        }
+    }
 
     // Fetch user data from Firebase
     fetchUserData();
+}
+
+/**
+ * Handle user logout
+ */
+function handleLogout() {
+    // Check if the global logout function exists
+    if (typeof window.logout === 'function') {
+        window.logout();
+    } else {
+        // Fallback logout implementation
+        auth.signOut()
+            .then(() => {
+                // Clear any stored data
+                localStorage.clear();
+                sessionStorage.clear();
+                sessionStorage.setItem('hasLoggedOut', 'true');
+                
+                // Redirect to login page
+                window.location.href = "../index.html";
+            })
+            .catch((error) => {
+                console.error("Logout error:", error);
+                // Still try to redirect even if there's an error
+                window.location.href = "../index.html";
+            });
+    }
+}
+
+// Keep the loading overlay visible until all data is loaded
+function showLoading() {
+    if (loadingOverlay) {
+        loadingOverlay.style.display = "flex";
+    }
+    if (accountSettingsContainer) {
+        accountSettingsContainer.style.display = "none";
+    }
+}
+
+// Hide loading overlay and show the form
+function hideLoading() {
+    if (loadingOverlay) {
+        loadingOverlay.style.display = "none";
+    }
+    if (accountSettingsContainer) {
+        accountSettingsContainer.style.display = "block";
+    }
 }
 
 /**
@@ -61,68 +127,96 @@ function initAccountSettings() {
  */
 async function fetchUserData() {
     try {
-        // Wait for auth state to be ready
-        auth.onAuthStateChanged(async (user) => {
-            if (!user) {
-                showErrorMessage("No user logged in. Please log in again.");
-                setTimeout(() => {
-                    window.location.href = "../index.html";
-                }, 2000);
-                return;
-            }
-
-            const docRef = db.collection("users").doc(user.uid);
-            const docSnap = await docRef.get();
-
-            if (!docSnap.exists) {
-                showErrorMessage("User data not found in database");
-                return;
-            }
-
-            const data = docSnap.data();
-            userRole = data.role;
-
-            // Set up the ID field based on role
-            if (userRole === "player") {
-                playerId = data.playerID || null;
-                idContainer.innerHTML = `
-          <label class="label">Player ID</label>
-          <input type="text" class="input read-only-input" value="${
-              playerId || ""
-          }" readonly />
-        `;
-                
-                // Show birthday field for players
-                birthdayContainer.style.display = "block";
-                birthdayInput.value = data.birthday || "";
-                originalBirthday = data.birthday || "";
-                
-            } else if (userRole === "coach") {
-                coachId = data.coachID || null;
-                idContainer.innerHTML = `
-          <label class="label">Coach ID</label>
-          <input type="text" class="input read-only-input" value="${
-              coachId || ""
-          }" readonly />
-        `;
-                
-                // Hide birthday field for coaches
-                birthdayContainer.style.display = "none";
-            }
-
-            // Populate form fields
-            firstNameInput.value = data.firstName || "";
-            lastNameInput.value = data.lastName || "";
-            emailInput.value = data.email || "";
-
-            // Save original values for change detection
-            originalFirstName = data.firstName || "";
-            originalLastName = data.lastName || "";
-            originalEmail = data.email || "";
-        });
+        // Keep loading visible
+        showLoading();
+        
+        // Get current user
+        const user = auth.currentUser;
+        
+        if (!user) {
+            // Wait a moment in case auth is still initializing
+            setTimeout(async () => {
+                const currentUser = auth.currentUser;
+                if (!currentUser) {
+                    showErrorMessage("No user logged in. Please log in again.");
+                    setTimeout(() => {
+                        window.location.href = "../index.html";
+                    }, 2000);
+                    return;
+                }
+                await loadUserData(currentUser);
+            }, 1000);
+        } else {
+            await loadUserData(user);
+        }
     } catch (error) {
         console.error("Error fetching user data:", error);
         showErrorMessage("Failed to load account information");
+        hideLoading();
+    }
+}
+
+/**
+ * Load user data from Firestore
+ */
+async function loadUserData(user) {
+    try {
+        const docRef = db.collection("users").doc(user.uid);
+        const docSnap = await docRef.get();
+
+        if (!docSnap.exists) {
+            showErrorMessage("User data not found in database");
+            hideLoading();
+            return;
+        }
+
+        const data = docSnap.data();
+        userRole = data.role;
+
+        // Set up the ID field based on role
+        if (userRole === "player") {
+            playerId = data.playerID || null;
+            idContainer.innerHTML = `
+                <label class="label">Player ID</label>
+                <input type="text" class="input read-only-input" value="${
+                    playerId || ""
+                }" readonly />
+            `;
+            
+            // Show birthday field for players
+            birthdayContainer.style.display = "block";
+            birthdayInput.value = data.birthday || "";
+            originalBirthday = data.birthday || "";
+            
+        } else if (userRole === "coach") {
+            coachId = data.coachID || null;
+            idContainer.innerHTML = `
+                <label class="label">Coach ID</label>
+                <input type="text" class="input read-only-input" value="${
+                    coachId || ""
+                }" readonly />
+            `;
+            
+            // Hide birthday field for coaches
+            birthdayContainer.style.display = "none";
+        }
+
+        // Populate form fields
+        firstNameInput.value = data.firstName || "";
+        lastNameInput.value = data.lastName || "";
+        emailInput.value = data.email || "";
+
+        // Save original values for change detection
+        originalFirstName = data.firstName || "";
+        originalLastName = data.lastName || "";
+        originalEmail = data.email || "";
+        
+        // Now that everything is loaded, show the form
+        hideLoading();
+    } catch (error) {
+        console.error("Error loading user data:", error);
+        showErrorMessage("Failed to load account information");
+        hideLoading();
     }
 }
 

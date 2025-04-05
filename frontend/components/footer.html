@@ -1,12 +1,16 @@
-<footer class="app-footer">
-    <button onclick="history.back()">
-      <img src="../assets/FooterIcons/FavoriteIcon.png" alt="Back" class="icon-img">
-    </button>
-    <button onclick="location.href='/../../index.html'">
-      <img src="../assets/FooterIcons/HomeIcon.png" alt="Home" class="icon-img">
-    </button>
-    <button onclick="logout()">
-      <img src="../assets/FooterIcons/ProfileIcon.png" alt="Profile/Logout" class="icon-img">
-    </button>
-  </footer>
-  
+<footer class="scoutly-footer scoutly-glass-effect">
+  <button onclick="goBack()" class="scoutly-button">
+    <img src="../assets/FooterIcons/BackIcon.png" alt="Back" class="scoutly-icon">
+    <span class="scoutly-button-label">Back</span>
+  </button>
+  <button onclick="goToDashboard()" id="home-button" class="scoutly-button">
+    <img src="../assets/FooterIcons/HomeIcon.png" alt="Home" class="scoutly-icon home-icon">
+    <img src="../assets/FooterIcons/HomeIconActive.png" alt="Home" class="scoutly-icon home-icon-active" style="display: none;">
+    <span class="scoutly-button-label">Home</span>
+  </button>
+  <button onclick="goToAccountSettings()" id="account-button" class="scoutly-button">
+    <img src="../assets/FooterIcons/ProfileIcon.png" alt="Account Settings" class="scoutly-icon account-icon">
+    <img src="../assets/FooterIcons/ProfileIconActive.png" alt="Account Settings" class="scoutly-icon account-icon-active" style="display: none;">
+    <span class="scoutly-button-label">Profile</span>
+  </button>
+</footer>

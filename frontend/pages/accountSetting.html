@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Account Settings - Baseball App</title>
+        <title>Account Settings - Scoutly</title>
         <link rel="stylesheet" href="../styles/header-footer.css" />
         <link rel="stylesheet" href="../styles/accountSetting.css" />
 
@@ -14,10 +14,13 @@
         <script src="../js/firebase-config.js"></script>
         <script src="../js/authGuard.js"></script>
     </head>
-    <body>
-        <!-- Header Component -->
+    <body class="with-header-footer">
         <div id="header-container"></div>
 
+        <div id="loading-overlay" class="loading-overlay">
+            <div class="loading-spinner"></div>
+        </div>
+    
         <main class="account-settings-container">
             <div class="scroll-content">
                 <h2 class="title">Your account information</h2>
@@ -79,6 +82,11 @@
                     Save Changes
                 </button>
 
+                <!-- Logout Button -->
+                <button id="logoutButton" class="logout-button" onclick="handleLogout()">
+                    Logout
+                </button>
+
                 <!-- Status Message -->
                 <div id="statusMessage" class="status-message"></div>
             </div>
@@ -88,7 +96,7 @@
         <div id="footer-container"></div>
 
         <!-- Scripts -->
-        <script src="../js/header.js"></script>
         <script src="../js/accountSetting.js"></script>
+        <script src="../js/footerIcons.js"></script>
     </body>
 </html>
