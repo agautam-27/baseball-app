@@ -326,7 +326,6 @@ const joinTryout = async (tryoutID, tryoutDocID, count) => {
 
     const playerDocSnap = await playerDocRef.get();
     if (playerDocSnap.exists && playerDocSnap.data().currentTryout) {
-      alert("You are already in a tryout. You cannot join another.");
       return;
     }
 
@@ -342,7 +341,6 @@ const joinTryout = async (tryoutID, tryoutDocID, count) => {
     });
 
     // Don't need to fetch data again - listeners will update UI
-    alert(`You have successfully joined Tryout: ${tryoutID}`);
   } catch (error) {
     console.error("Error joining tryout:", error);
   }
@@ -369,7 +367,6 @@ const cancelTryout = async (tryoutID, tryoutDocID) => {
     });
 
     // Don't need to fetch data again - listeners will update UI
-    alert("You have successfully canceled your tryout.");
   } catch (error) {
     console.error("Error canceling tryout:", error);
   }
