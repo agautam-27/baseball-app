@@ -21,7 +21,7 @@
         <canvas id="statsChart"></canvas>
     </div>
 
-    <p id="graph-title2">s</p>
+    <p id="graph-title2"></p>
     <!-- chart container has to only contain the canvas-->
     <div class="chartContainer">
         <canvas id="statsChart2"></canvas>
@@ -31,10 +31,10 @@
         <div class="outer-container">
             <!-- Top section with zones 11, 12 -->
             <div class="top-row">
-                <div class="zone-11" >
+                <div class="zone-11">
                     <div id="zone11"></div>
                 </div>
-                <div class="zone-12" >
+                <div class="zone-12">
                     <div id="zone12"></div>
                 </div>
             </div>
@@ -43,8 +43,8 @@
             <div class="middle-section">
                 <!-- Left side area - extended zones 11 and 13 -->
                 <div class="left-column">
-                    <div class="left-top" ></div>
-                    <div class="left-bottom" ></div>
+                    <div class="left-top"></div>
+                    <div class="left-bottom"></div>
                 </div>
 
                 <!-- Central 3x3 matrix -->
@@ -89,20 +89,41 @@
 
                 <!-- Right side area - extended zones 12 and 14 -->
                 <div class="right-column">
-                    <div class="right-top" ></div>
-                    <div class="right-bottom" ></div>
+                    <div class="right-top"></div>
+                    <div class="right-bottom"></div>
                 </div>
             </div>
 
             <!-- Bottom section with zones 13, 14 -->
             <div class="bottom-row">
-                <div class="zone-13" >
+                <div class="zone-13">
                     <div id="zone13"></div>
                 </div>
-                <div class="zone-14" >
+                <div class="zone-14">
                     <div id="zone14"></div>
                 </div>
             </div>
+        </div>
+    </div>
+
+
+    <!-- Hit Zone Matrix Modal Using Field Image -->
+    <div id="hit-zone-image-container">
+        <!-- Adjust the src path to where your field.png is stored -->
+        <img src="../assets/HittingPageImages/baseballField.png" alt="Field" class="field-image" />
+        <!-- Overlay clickable areas for each hit zone -->
+        <div class="hit-zone-overlay" data-zone="Infield Left"></div>
+        <div class="hit-zone-overlay" data-zone="Infield Center">
+        </div>
+        <div class="hit-zone-overlay" data-zone="Infield Right"></div>
+        <div class="hit-zone-overlay" data-zone="Outfield Left"></div>
+        <div class="hit-zone-overlay" data-zone="Outfield Center">
+        </div>
+        <div class="hit-zone-overlay" data-zone="Outfield Right">
+        </div>
+        <div class="hit-zone-overlay" data-zone="Foul Ball Left">
+        </div>
+        <div class="hit-zone-overlay" data-zone="Foul Ball Right">
         </div>
     </div>
 

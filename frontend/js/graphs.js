@@ -96,9 +96,9 @@ const fetchData = async (page, type) => {
 
             if (data.playerID === playerID) {
                 attempts.push(data.attempts)
-            } else {
+            } 
                 allAttempts.push(data.attempts)
-            }
+            
         });
         console.log(attempts)
         // console.log(allAttempts)
@@ -161,6 +161,16 @@ const fetchData = async (page, type) => {
                 allData = attempts.flat();
                 console.log(allData)
                 // Count occurrences of each position
+
+                dist["Outfield Left"] = 0;
+                dist["Outfield Center"] = 0;
+                dist["Outfield Right"] = 0;
+                dist["Infield Left"] = 0;
+                dist["Infield Center"] = 0;
+                dist["Infield Right"] = 0;
+                dist["Foul Left"] = 0;
+                dist["Foul Right"] = 0;
+
                 allData.forEach(play => {
                     const position = play.hitZone; // Extract position
                     if (position) {
@@ -170,16 +180,14 @@ const fetchData = async (page, type) => {
 
                 Object.keys(dist).forEach(x => {
                     dist[x] = Math.round((dist[x] / allData.length) * 100 * 10) / 10; // Rounded to 1 decimal place
-                    const newKey = x.replace("Infield", "In").replace("Outfield", "Out");
-                    dist[newKey] = dist[x];
-                    delete dist[x];
                 });
 
                 console.log(dist)
-                initializeSecondaryChart(dist, modifier)
+                initializeField(dist)
                 break;
             case 3:
                 processedData2 = processedData.map((x) => x.total2 ? (Math.round((x.count2 / x.total2) * 10) / 10) : null);
+                console.log(processedData2)
 
                 processedData = processedData.map((x) => x.total ? (Math.round((x.count / x.total) * 10) / 10) : null);
                 console.log(processedData)
@@ -314,10 +322,20 @@ function processData(data, type) {
 
 }
 
-// Function to bin data into groups of 5
+// Function to bin data into groups
 function binData(data, binSize) {
+    console.log("data: ",data)
+    data = data.filter(item => item !== null);
+    console.log("data: ",data)
+
+    // for(let record in data){
+    //     if(record == null){
+    //         record.destroy
+    //     }
+    // }
     const minAttempt = Math.min(...data) - binSize;
     const maxAttempt = Math.max(...data) + binSize;
+    console.log(minAttempt)
 
     const bins = [];
     for (let i = minAttempt; i <= maxAttempt; i += binSize) {
@@ -343,6 +361,7 @@ function initializeChart(playerData, x, modifier, thisCTX) {
 
     // Generate initial dataset
     const chartData = binData(playerData, modifier.binAmount);
+    // console.log(chartData)
 
     // Find the y-value for the threshold line at x=50 (or any other value you choose)
     const thresholdX = x;
@@ -368,6 +387,7 @@ function initializeChart(playerData, x, modifier, thisCTX) {
     console.log(chartData)
     const minX = Math.min(...chartData.map(point => point.x)) - modifier.binAmount;
     const maxX = Math.max(...chartData.map(point => point.x)) + modifier.binAmount;
+    console.log(minX)
     const labels = [];
     const binSize = 0.1
     for (let i = minX; i <= maxX; i += binSize) {
@@ -412,7 +432,7 @@ function initializeChart(playerData, x, modifier, thisCTX) {
         responsive: false,
         maintainAspectRatio: true,
         layout: {
-            padding: { left: 20, right: 20 }, // Reduce space on the sides
+            padding: {  }, // Reduce space on the sides
         },
         plugins: {
             // legend: { display: false, },
@@ -431,8 +451,6 @@ function initializeChart(playerData, x, modifier, thisCTX) {
     });
     // console.log("b");
 }
-
-
 
 
 
@@ -508,14 +526,11 @@ function initializeGrid(data){
     const leftTop = document.querySelector(".left-top");
     leftTop.style.backgroundColor = getGreenShade(data[11])
     const leftBot = document.querySelector(".left-bottom");
-    leftBot.style.backgroundColor = getGreenShade(data[12])
+    leftBot.style.backgroundColor = getGreenShade(data[13])
     const rightTop = document.querySelector(".right-top");
-    rightTop.style.backgroundColor = getGreenShade(data[13])
+    rightTop.style.backgroundColor = getGreenShade(data[12])
     const rightBot = document.querySelector(".right-bottom");
     rightBot.style.backgroundColor = getGreenShade(data[14])
-
-
-
 }
 
 function getGreenShade(percent) {
@@ -534,3 +549,19 @@ function getGreenShade(percent) {
     return `rgb(${r}, ${g}, ${b})`;
 }
 
+
+function initializeField(data){
+    const grid = document.getElementById("hit-zone-image-container")
+    grid.style.display = "flex"
+    const canvas = document.getElementById("statsChart2")
+    canvas.style.display = "none"
+
+    
+   for(let zone in data) {
+        console.log(zone)
+        const setZone = document.querySelector(`[data-zone="${zone}"]`);
+        if (setZone) {
+            setZone.innerHTML = data[zone] + "%";
+        }
+    };
+}
