@@ -1,548 +1,565 @@
 :root {
-  --primary-color: #1B5E20;         
-  --glass-white: rgba(255, 255, 255, 0.7);
-  --background-color: #F4F6F8;
-  --font-color: #212121;
-  --danger-color: #D84315;
-  --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  --border-radius: 12px;
-  --accent-color: #1B5E20;
+    --primary-color: #1b5e20;
+    --glass-white: rgba(255, 255, 255, 0.7);
+    --background-color: #f4f6f8;
+    --font-color: #212121;
+    --danger-color: #d84315;
+    --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    --border-radius: 12px;
+    --accent-color: #1b5e20;
 }
 
 /* Layout */
 body.with-header-footer {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: var(--background-color);
-  margin: 0;
-  padding: 0;
+    font-family: "Segoe UI", sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
 }
 
 #hitting-content {
-  max-width: 500px;
-  margin: auto;
-  padding: 70px 20px 20px;
-  box-sizing: border-box;
+    max-width: 500px;
+    margin: auto;
+    padding: 70px 20px 20px;
+    box-sizing: border-box;
 }
 
 /* Typography */
 #hitting-content h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  font-size: 1.3rem;
-  color: var(--font-color);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    color: var(--font-color);
 }
 
 /* Input Fields */
 .input-group {
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
-  margin-bottom: 20px;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
 }
 
 .input-group input,
 .input-group textarea {
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: var(--border-radius);
-  background-color: #fff;
-  outline: none;
-  transition: border-color 0.2s;
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.2s;
 }
 
 .input-group textarea {
-  width: 100%;
-  box-sizing: border-box;
-  min-height: 80px;
-  resize: vertical;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 80px;
+    resize: vertical;
 }
 
 .input-group label {
-  position: absolute;
-  top: 12px;
-  left: 16px;
-  font-size: 1rem;
-  color: #999;
-  pointer-events: none;
-  transition: 0.2s ease all;
-  background: #fff;
-  padding: 0 5px;
+    position: absolute;
+    top: 12px;
+    left: 16px;
+    font-size: 1rem;
+    color: #999;
+    pointer-events: none;
+    transition: 0.2s ease all;
+    background: #fff;
+    padding: 0 5px;
 }
 
 .input-group input:focus + label,
 .input-group input:not(:placeholder-shown) + label,
 .input-group textarea:focus + label,
 .input-group textarea:not(:placeholder-shown) + label {
-  top: -10px;
-  left: 12px;
-  font-size: 0.8rem;
-  color: var(--primary-color);
+    top: -10px;
+    left: 12px;
+    font-size: 0.8rem;
+    color: var(--primary-color);
 }
 
 /* Attempt Card */
 .attempt-card {
-  width: 100%;
-  background-color: white;
-  border-radius: var(--border-radius);
-  padding: 14px;
-  margin-bottom: 16px;
-  box-shadow: var(--box-shadow);
-  animation: fadeIn 0.25s ease-in-out;
-  box-sizing: border-box;
+    width: 100%;
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: 14px;
+    margin-bottom: 16px;
+    box-shadow: var(--box-shadow);
+    animation: fadeIn 0.25s ease-in-out;
+    box-sizing: border-box;
 }
 
 .timer-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 /* Delete Button */
 .remove-btn {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  color: var(--danger-color);
-  cursor: pointer;
-  transition: transform 0.2s;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--danger-color);
+    cursor: pointer;
+    transition: transform 0.2s;
 }
 .remove-btn:active {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 /* Toggle button for Hit/Strike selection */
 .result-toggle {
-  display: flex;
-  width: 100%;
-  margin-bottom: 16px;
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  border: 1px solid #ccc;
-  box-shadow: var(--box-shadow);
+    display: flex;
+    width: 100%;
+    margin-bottom: 16px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 1px solid #ccc;
+    box-shadow: var(--box-shadow);
 }
 
 .result-toggle-option {
-  flex: 1;
-  padding: 5px 5px;
-  text-align: center;
-  background-color: #f0f0f0;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  user-select: none;
-  font-size: 1rem;
-  position: relative;
+    flex: 1;
+    padding: 5px 5px;
+    text-align: center;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    user-select: none;
+    font-size: 1rem;
+    position: relative;
 }
 
 .result-toggle-option.selected {
-  background-color: var(--primary-color);
-  color: white;
-  font-weight: 500;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 500;
 }
 
 /* Remove the old result-radio styles if they're not used elsewhere */
 .result-radio {
-  display: none;
+    display: none;
 }
 
 /* Custom Dropdown */
 .custom-dropdown {
-  position: relative;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: var(--border-radius);
-  background: #fff;
-  box-sizing: border-box;
-  margin-bottom: 12px;
-  z-index: 2;
+    position: relative;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    background: #fff;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+    z-index: 2;
 }
 
 .dropdown-selected {
-  padding: 10px;
-  cursor: pointer;
-  font-size: 1rem;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1rem;
 }
 
 .dropdown-selected::after {
-  content: "▼";
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.75rem;
-  color: #555;
-  pointer-events: none;
+    content: "▼";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    color: #555;
+    pointer-events: none;
 }
 
 .dropdown-options {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  max-height: 150px;
-  overflow-y: auto;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-top: none;
-  border-radius: 0 0 var(--border-radius) var(--border-radius);
-  display: none;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  box-shadow: var(--box-shadow);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 150px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    display: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: var(--box-shadow);
 }
 
 .dropdown-options li.selected {
-  background-color: #e0f2f1;
-  font-weight: bold;
+    background-color: #e0f2f1;
+    font-weight: bold;
 }
 
 .dropdown-options li {
-  padding: 10px;
-  font-size: 1rem;
-  cursor: pointer;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
 }
 
 .dropdown-options li:hover {
-  background-color: #f0f0f0;
+    background-color: #f0f0f0;
 }
 
 .custom-dropdown.open .dropdown-options {
-  display: block;
+    display: block;
 }
 
 /* Hit Zone Button */
 .zone-select-button {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0 12px;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: var(--border-radius);
-  font-size: 1rem;
-  cursor: pointer;
-  text-align: left;
-  transition: all 0.2s;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 12px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
 }
 
 .zone-select-button:hover {
-  border-color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 .zone-select-button::after {
-  content: "▼";
-  float: right;
-  font-size: 0.75rem;
-  color: #555;
+    content: "▼";
+    float: right;
+    font-size: 0.75rem;
+    color: #555;
 }
 
 /* Add Attempt Button */
 #add-attempt-btn {
-  background-color: var(--primary-color);
-  color: #fff;
-  border: none;
-  border-radius: var(--border-radius);
-  padding: 10px;
-  font-size: 1rem;
-  width: 100%;
-  cursor: pointer;
-  margin-bottom: 20px;
-  transition: background-color 0.2s;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 10px;
+    font-size: 1rem;
+    width: 100%;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.2s;
 }
 
 #add-attempt-btn:hover {
-  background-color: #164316;
+    background-color: #164316;
 }
 
 /* Inline Add Button */
 .inline-add-btn {
-  display: flex;
-  justify-content: center;
-  margin-top: -30px;
-  margin-bottom: 30px;
-  position: relative;
-  z-index: 1;
+    display: flex;
+    justify-content: center;
+    margin-top: -30px;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
 }
 
 .inline-add-btn button {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: var(--primary-color);
-  color: white;
-  font-size: 1.5rem;
-  border: none;
-  box-shadow: var(--box-shadow);
-  transition: background-color 0.2s, transform 0.1s;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white;
+    font-size: 1.5rem;
+    border: none;
+    box-shadow: var(--box-shadow);
+    transition: background-color 0.2s, transform 0.1s;
 }
 
 .inline-add-btn button:hover {
-  background-color: #164316;
+    background-color: #164316;
 }
 
 .inline-add-btn button:active {
-  transform: scale(0.95);
+    transform: scale(0.95);
 }
 
 /* Save Button */
 #save-btn {
-  display: block;
-  width: 60%;
-  /* margin: 20px auto; */
-  margin: 10px auto 20px;
-  font-size: 1rem;
-  padding: 12px 0;
-  border-radius: var(--border-radius);
-  background-color: var(--primary-color);
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s;
+    display: block;
+    width: 60%;
+    /* margin: 20px auto; */
+    margin: 10px auto 20px;
+    font-size: 1rem;
+    padding: 12px 0;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 #save-btn:hover {
-  background-color: #164316;
+    background-color: #164316;
 }
 
 #save-btn:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 /* Error Message */
 #error-message {
-  display: none;
-  color: var(--danger-color);
-  font-size: 0.95rem;
-  text-align: center;
-  margin: 8px 0 16px;
-  animation: fadeInOut 2.5s ease-in-out;
+    display: none;
+    color: var(--danger-color);
+    font-size: 0.95rem;
+    text-align: center;
+    margin: 8px 0 16px;
+    animation: fadeInOut 2.5s ease-in-out;
 }
 
 /* Save Confirmation */
 #save-confirmation {
-  display: none;
-  text-align: center;
-  color: var(--accent-color);
-  font-size: 1rem;
-  margin-top: 8px;
-  animation: fadeInOut 2s ease-in-out;
+    display: none;
+    text-align: center;
+    color: var(--accent-color);
+    font-size: 1rem;
+    margin-top: 8px;
+    animation: fadeInOut 2s ease-in-out;
 }
 
 /* Modal Styles */
 .modal {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  opacity: 0;
-  visibility: hidden;
-  transition: 
-    opacity 0.3s ease-in-out, 
-    visibility 0.3s ease-in-out;
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
 .modal.show {
-  display: flex;
-  opacity: 1;
-  visibility: visible;
-  align-items: flex-end;
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+    align-items: flex-end;
 }
 
 .modal-content {
-  background-color: white;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  transform: translateY(100%);
-  opacity: 0;
-  transition: 
-    transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
-    opacity 0.4s ease-in-out;
+    background-color: white;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+        opacity 0.4s ease-in-out;
+    padding-bottom: 60px;
 }
 
 .modal.show .modal-content {
-  transform: translateY(0);
-  opacity: 1;
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .hit-zone-matrix-title {
-  text-align: center;
-  padding: 15px;
-  background-color: #f0f0f0;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  margin: 0;
-  color: var(--font-color);
+    text-align: center;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    margin: 0;
+    color: var(--font-color);
 }
 
 .hit-zone-image-container {
-  position: relative;
-  width: 110%;
-  left: -5%;
-  max-height: 290vh;
-  overflow: hidden;
+    position: relative;
+    width: 110%;
+    left: -5%;
+    max-height: 290vh;
+    overflow: hidden;
 }
 
 .field-image {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
 }
 
 .hit-zone-overlay {
-  position: absolute;
-  border: 2px solid rgba(27, 94, 32, 0.5);
-  background-color: rgba(27, 94, 32, 0.2);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: absolute;
+    border: 2px solid rgba(27, 94, 32, 0.5);
+    background-color: rgba(27, 94, 32, 0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .hit-zone-overlay::before {
-  content: '•';
-  color: var(--primary-color);
-  font-size: 20px;
-  font-weight: bold;
-  opacity: 0.7;
+    content: "•";
+    color: var(--primary-color);
+    font-size: 20px;
+    font-weight: bold;
+    opacity: 0.7;
 }
 
 .hit-zone-overlay[data-zone]::after {
-  content: attr(data-zone);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-bottom: 5px;
-  /* background-color: rgba(27, 94, 32, 0.8); */
-  background-color: yellow;
-  color: black;
-  padding: 3px 6px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  white-space: nowrap;
-  opacity: 1;
-  pointer-events: none;
+    content: attr(data-zone);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 5px;
+    /* background-color: rgba(27, 94, 32, 0.8); */
+    background-color: yellow;
+    color: black;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    opacity: 1;
+    pointer-events: none;
 }
 
 .close-button {
-  display: block;
-  width: 100%;
-  padding: 15px;
-  background-color: #f0f0f0;
-  border: none;
-  border-top: 1px solid #ddd;
-  color: var(--primary-color);
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+    display: block;
+    width: 200px;
+    max-width: 200px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 16px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: var(--border-radius);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .close-button:hover {
-  background-color: #e0e0e0;
+    background-color: #164719;
 }
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes fadeInOut {
-  0% { opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 /* Responsive adjustments */
 @media (max-width: 480px) {
-  .dropdown-selected {
-    font-size: 0.95rem;
-    padding: 12px;
-  }
+    .dropdown-selected {
+        font-size: 0.95rem;
+        padding: 12px;
+    }
 }
 
 /* Maintain the specific hit zone positions */
 .hit-zone-overlay[data-zone="Infield Left"] {
-  left: 32%;
-  bottom: 45%;
-  width: 8%;
-  height: 12%;
+    left: 32%;
+    bottom: 45%;
+    width: 8%;
+    height: 12%;
 }
 
 .hit-zone-overlay[data-zone="Infield Center"] {
-  left: 44%;
-  bottom: 28%;
-  width: 10%;
-  height: 20%;
+    left: 44%;
+    bottom: 28%;
+    width: 10%;
+    height: 20%;
 }
 
 .hit-zone-overlay[data-zone="Infield Right"] {
-  left: 60%;
-  bottom: 45%;
-  width: 8%;
-  height: 12%;
+    left: 60%;
+    bottom: 45%;
+    width: 8%;
+    height: 12%;
 }
 
 .hit-zone-overlay[data-zone="Outfield Left"] {
-  left: 22%;
-  top: 15%;
-  width: 12%;
-  height: 15%;
+    left: 22%;
+    top: 15%;
+    width: 12%;
+    height: 15%;
 }
 
 .hit-zone-overlay[data-zone="Outfield Center"] {
-  left: 40%;
-  top: 8%;
-  width: 20%;
-  height: 20%;
+    left: 40%;
+    top: 8%;
+    width: 20%;
+    height: 20%;
 }
 
 .hit-zone-overlay[data-zone="Outfield Right"] {
-  left: 65%;
-  top: 15%;
-  width: 12%;
-  height: 15%;
+    left: 65%;
+    top: 15%;
+    width: 12%;
+    height: 15%;
 }
 
 .hit-zone-overlay[data-zone="Foul Ball Left"] {
-  left: 15%;
-  top: 50%;
-  width: 25%;
-  height: 8%;
-  transform: rotate(45deg);
-  transform-origin: left center;
+    left: 15%;
+    top: 50%;
+    width: 25%;
+    height: 8%;
+    transform: rotate(45deg);
+    transform-origin: left center;
 }
 
 .hit-zone-overlay[data-zone="Foul Ball Right"] {
-  right: 15%;
-  top: 50%;
-  width: 25%;
-  height: 8%;
-  transform: rotate(-45deg);
-  transform-origin: right center;
+    right: 15%;
+    top: 50%;
+    width: 25%;
+    height: 8%;
+    transform: rotate(-45deg);
+    transform-origin: right center;
 }
 
 .save-footer {
-  width: 100%;
-  padding: 10px 0;
-  text-align: center;
-  margin-bottom: 60px; 
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    margin-bottom: 60px;
 }
 
 #hitting-content {
-  max-width: 500px;
-  margin: auto;
-  padding: 70px 20px 20px; 
-  box-sizing: border-box;
+    max-width: 500px;
+    margin: auto;
+    padding: 70px 20px 20px;
+    box-sizing: border-box;
 }
