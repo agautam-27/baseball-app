@@ -1,20 +1,20 @@
 :root {
-  --primary-color: #1B5E20;         
-  --glass-white: rgba(255, 255, 255, 0.7);
-  --background-color: #F4F6F8;
-  --font-color: #212121;
-  --danger-color: #D84315;
-  --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  --border-radius: 12px;
-  --accent-color: #1B5E20;
+    --primary-color: #1b5e20;
+    --glass-white: rgba(255, 255, 255, 0.7);
+    --background-color: #f4f6f8;
+    --font-color: #212121;
+    --danger-color: #d84315;
+    --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    --border-radius: 12px;
+    --accent-color: #1b5e20;
 }
 
 /* Layout */
 body.with-header-footer {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: var(--background-color);
-  margin: 0;
-  padding: 0;
+    font-family: "Segoe UI", sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
 }
 
 /* Main container */
@@ -24,7 +24,7 @@ body.with-header-footer {
     margin: auto;
     display: flex;
     flex-direction: column;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: "Segoe UI", sans-serif;
     box-sizing: border-box;
 }
 
@@ -219,7 +219,7 @@ body.with-header-footer {
 .save-footer {
     display: flex;
     justify-content: center;
-    margin-bottom: 60px; 
+    margin-bottom: 60px;
 }
 
 .save-footer button {
@@ -235,7 +235,6 @@ body.with-header-footer {
 #save-btn:disabled {
     opacity: 0.6;
 }
-
 
 /* Input Fields */
 .input-group {
@@ -457,6 +456,7 @@ body.with-header-footer {
     flex-direction: column;
     align-items: center;
     padding: 20px 0;
+    margin-bottom: 60px;
 }
 
 .zone-matrix-title {
@@ -572,6 +572,7 @@ body.with-header-footer {
     color: white;
     cursor: pointer;
     transition: background-color 0.2s;
+    margin-bottom: 10px;
 }
 
 /* Save Confirmation */
@@ -615,15 +616,29 @@ body.with-header-footer {
 
 /* Animations */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes fadeInOut {
-    0% { opacity: 0; }
-    20% { opacity: 1; }
-    80% { opacity: 1; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
 /* Responsive adjustments */
