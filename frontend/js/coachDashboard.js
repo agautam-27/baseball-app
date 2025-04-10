@@ -85,7 +85,8 @@ function createTryout() {
                 date,
                 createdAt: new Date(),
                 coachID: coachID,
-                coachUid: userId
+                coachUid: userId,
+                count: 0
             };
 
             return db.collection("tryouts").add(tryout);
