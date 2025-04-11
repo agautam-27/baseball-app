@@ -30,51 +30,145 @@
                     <!-- This will be populated via JavaScript -->
                 </div>
 
-                <!-- First Name -->
-                <div class="field-container">
-                    <label for="firstName" class="label">First Name</label>
-                    <input type="text" id="firstName" class="input" />
+                <!-- Coach Invitation Code Section (only for coaches) -->
+                <div id="coach-invite-section" class="field-container" style="display: none;">
+                    <h3 class="section-title">Coach Invitation Codes</h3>
+                    <p class="section-desc">Create and manage invitation codes for new coaches.</p>
+                    
+                    <div class="invite-controls">
+                        <button id="createInviteBtn" class="invite-button">
+                            <span class="btn-icon">+</span> Create New Code
+                        </button>
+                        <button id="viewActiveCodesBtn" class="invite-button view-codes-btn">
+                            <span class="btn-icon">👁️</span> View Active Codes
+                        </button>
+                    </div>
+                    
+                    <!-- Active Codes Modal -->
+                    <div id="active-codes-modal" class="modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3>Active Invitation Codes</h3>
+                                <span id="active-codes-close" class="close-modal">&times;</span>
+                            </div>
+                            <div class="modal-body">
+                                <div class="codes-table-container">
+                                    <table class="codes-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Expires</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="active-codes-list">
+                                            <!-- Will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="no-active-codes" class="no-data-message" style="display: none;">
+                                    No active invitation codes found.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- New Code Modal -->
+                    <div id="new-code-modal" class="modal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3>Create New Invitation Code</h3>
+                                <span id="new-code-close" class="close-modal">&times;</span>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="use-random-code" class="checkbox-label">
+                                        <input type="checkbox" id="use-random-code" checked />
+                                        Generate random code
+                                    </label>
+                                </div>
+                                
+                                <div id="code-input-container" class="form-group" style="display: none;">
+                                    <label for="code-value">Code Value:</label>
+                                    <input type="text" id="code-value" class="input" placeholder="Enter code value" />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="expire-days">Expires in (days):</label>
+                                    <input type="number" id="expire-days" class="input" value="30" min="1" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="new-code-cancel" class="cancel-button">Cancel</button>
+                                <button id="new-code-create" class="action-button">Create</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Latest Code Created -->
+                    <div id="latest-code-card" class="latest-code-card" style="display: none;">
+                        <div class="latest-code-header">
+                            <h4>Latest Code Created:</h4>
+                        </div>
+                        <div id="latest-code" class="latest-code">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Last Name -->
-                <div class="field-container">
-                    <label for="lastName" class="label">Last Name</label>
-                    <input type="text" id="lastName" class="input" />
-                </div>
+                <!-- User Information Section -->
+                <div class="account-section">
+                    <h3 class="section-title">Personal Information</h3>
 
-                <!-- Email -->
-                <div class="field-container">
-                    <label for="email" class="label">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        class="input"
-                        autocapitalize="none"
-                    />
-                </div>
+                    <!-- First Name -->
+                    <div class="field-container">
+                        <label for="firstName" class="label">First Name</label>
+                        <input type="text" id="firstName" class="input" />
+                    </div>
 
-                <!-- Birthday (Player only) -->
-                <div
-                    id="birthday-container"
-                    class="field-container"
-                    style="display: none"
-                >
-                    <label for="birthday" class="label">Date of Birth</label>
-                    <input type="date" id="birthday" class="input" />
-                </div>
+                    <!-- Last Name -->
+                    <div class="field-container">
+                        <label for="lastName" class="label">Last Name</label>
+                        <input type="text" id="lastName" class="input" />
+                    </div>
 
-                <!-- Current Password -->
-                <div class="field-container">
-                    <label for="currentPassword" class="label"
-                        >Current Password</label
+                    <!-- Email -->
+                    <div class="field-container">
+                        <label for="email" class="label">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            class="input"
+                            autocapitalize="none"
+                        />
+                    </div>
+
+                    <!-- Birthday (Player only) -->
+                    <div
+                        id="birthday-container"
+                        class="field-container"
+                        style="display: none"
                     >
-                    <input type="password" id="currentPassword" class="input" />
+                        <label for="birthday" class="label">Date of Birth</label>
+                        <input type="date" id="birthday" class="input" />
+                    </div>
                 </div>
 
-                <!-- New Password -->
-                <div class="field-container">
-                    <label for="newPassword" class="label">New Password</label>
-                    <input type="password" id="newPassword" class="input" />
+                <!-- Password Section -->
+                <div class="account-section">
+                    <h3 class="section-title">Change Password</h3>
+                    
+                    <!-- Current Password -->
+                    <div class="field-container">
+                        <label for="currentPassword" class="label">Current Password</label>
+                        <input type="password" id="currentPassword" class="input" />
+                    </div>
+
+                    <!-- New Password -->
+                    <div class="field-container">
+                        <label for="newPassword" class="label">New Password</label>
+                        <input type="password" id="newPassword" class="input" />
+                    </div>
                 </div>
 
                 <!-- Save Change button -->
