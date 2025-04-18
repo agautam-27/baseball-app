@@ -43,24 +43,53 @@ function renderAttempts() {
     catchTypeContainer.className = "catch-type-container";
 
     const catchTypeLabel = document.createElement("label");
-    catchTypeLabel.textContent = "Catch Type: ";
+    catchTypeLabel.textContent = "Catch Type:";
     catchTypeLabel.className = "catch-type-label";
 
-    const select = document.createElement("select");
+    // Custom dropdown
+    const dropdown = document.createElement("div");
+    dropdown.className = "custom-dropdown";
+
+    const selected = document.createElement("div");
+    selected.className = "dropdown-selected";
+    selected.textContent = attempt.catchType || "Select Catch Type";
+
+    const options = document.createElement("ul");
+    options.className = "dropdown-options";
+
     ["Drop step catch", "Conventional catch"].forEach((type) => {
-      const option = document.createElement("option");
-      option.value = type;
-      option.textContent = type;
-      if (attempt.catchType === type) option.selected = true;
-      select.appendChild(option);
+      const li = document.createElement("li");
+      li.textContent = type;
+      li.dataset.value = type;
+
+      if (attempt.catchType === type) li.classList.add("selected");
+
+      li.onclick = () => {
+        attempt.catchType = type;
+        selected.textContent = type;
+        options.querySelectorAll("li").forEach(opt => opt.classList.remove("selected"));
+        li.classList.add("selected");
+        dropdown.classList.remove("open");
+        saveAttempts();
+      };
+
+      options.appendChild(li);
     });
-    select.onchange = (e) => {
-      attempt.catchType = e.target.value;
-      saveAttempts();  // Save attempts to localStorage whenever there's a change
-    };
+
+    selected.onclick = () => dropdown.classList.toggle("open");
+
+    // Close dropdown if clicked outside
+    document.addEventListener("click", (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove("open");
+      }
+    });
+
+    dropdown.appendChild(selected);
+    dropdown.appendChild(options);
 
     catchTypeContainer.appendChild(catchTypeLabel);
-    catchTypeContainer.appendChild(select);
+    catchTypeContainer.appendChild(dropdown);
 
     const radioDiv = document.createElement("div");
     radioDiv.className = "radio-group";
